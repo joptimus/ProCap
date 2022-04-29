@@ -1,0 +1,329 @@
+<ion-header>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Select</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <!-- Default Item -->
+    <ion-item lines="none">
+      <ion-card-header class="ionHeads">
+        <ion-card-title>Please select a customer</ion-card-title>
+      </ion-card-header>
+    </ion-item>
+    <ion-item>
+      <ion-label>Customer Name</ion-label>
+      <ion-select [(ngModel)]="selectedOption" [interfaceOptions]="customActionSheetOptions" interface="action-sheet"
+        placeholder="Select One" (ionChange)="disable($event)" [value]="client.fullName">
+      <ion-select-option  *ngFor="let client of client" [value]="client.fullName">{{ client.fullName }}</ion-select-option>
+        <!-- <ion-select-option value="Bob Files">Bob Files</ion-select-option>
+        <ion-select-option value="John Claude Van Damme">John Claude Van Damme</ion-select-option>
+        <ion-select-option value="Shaquille O'Neal">Shaquille O'Neal</ion-select-option>
+        <ion-select-option value="Jeff Bezos">Jeff Bezos</ion-select-option> -->
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Vessel</ion-label>
+      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One"
+        (ionChange)="selectedVessel($event.target.value)">
+        <ion-select-option value="What the F?">What the F?</ion-select-option>
+        <ion-select-option value="A Crewed Interest">A Crewed Interest</ion-select-option>
+        <ion-select-option value="Baron Trenck">Baron Trenck</ion-select-option>
+        <ion-select-option value="Skid Marks">Skid Marks</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>Report Date</ion-label>
+      <ion-label slot="end">{{ date | date}}</ion-label>
+    </ion-item>
+  </ion-card>
+  <div *ngIf="vesselSelected">
+    <ion-card>
+      <ion-card-header>
+        <img src="http://www.dumpaday.com/wp-content/uploads/2013/06/funny-boat-names-dumpaday-20.jpg">
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-subtitle>2008 Silverton 39 Motor Yacht</ion-card-subtitle>
+        
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Year
+            </ion-col>
+            <ion-col>
+              2008
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Make
+            </ion-col>
+            <ion-col>
+              Silverton
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Model
+            </ion-col>
+            <ion-col>
+              39 Motor Yacht
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Class
+            </ion-col>
+            <ion-col>
+              Motor Yacht
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Length
+            </ion-col>
+            <ion-col>
+              39 feet
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Fuel Type
+            </ion-col>
+            <ion-col>
+              Gas
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Last Inspected
+            </ion-col>
+            <ion-col>
+              {{date | date }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="skidSelected">
+    <ion-card>
+      <ion-card-header>
+        <img src="https://www.coolpun.com/images/coolpun/a5/a50ab326b70f35be93f44e19a5e69b44.jpeg">
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-subtitle>2008 Silverton 39 Motor Yacht</ion-card-subtitle>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Year
+            </ion-col>
+            <ion-col>
+              2008
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Make
+            </ion-col>
+            <ion-col>
+              Silverton
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Model
+            </ion-col>
+            <ion-col>
+              39 Motor Yacht
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Class
+            </ion-col>
+            <ion-col>
+              Motor Yacht
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Length
+            </ion-col>
+            <ion-col>
+              39 feet
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Fuel Type
+            </ion-col>
+            <ion-col>
+              Gas
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Last Inspected
+            </ion-col>
+            <ion-col>
+              {{date | date }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="crewSelected">
+    <ion-card>
+      <ion-card-header>
+        <img
+          src="https://images.boatsgroup.com/resize/1/35/43/8183543_20220114104300246_1_XLARGE.jpg?w=1600&h=800&t=1642185855000">
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-subtitle>1998 Sea Ray 370 Sundancer</ion-card-subtitle>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Year
+            </ion-col>
+            <ion-col>
+              1998
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Make
+            </ion-col>
+            <ion-col>
+              Sea Ray
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Model
+            </ion-col>
+            <ion-col>
+              370 Sundancer
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Class
+            </ion-col>
+            <ion-col>
+              Motor Yacht
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Length
+            </ion-col>
+            <ion-col>
+              37 feet
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Fuel Type
+            </ion-col>
+            <ion-col>
+              Gas
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Last Inspected
+            </ion-col>
+            <ion-col>
+              {{date | date }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="baronSelected">
+    <ion-card>
+      <ion-card-header>
+        <img
+          src="https://images.boatsgroup.com/resize/1/80/61/8158061_20211216013234850_1_XLARGE.jpg?w=1600&h=800&t=1639650445000 1600w">
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-subtitle>2011 Eurocraft Explorer</ion-card-subtitle>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="bold">
+              Year
+            </ion-col>
+            <ion-col>
+              2011
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Make
+            </ion-col>
+            <ion-col>
+              Eurocraft
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Model
+            </ion-col>
+            <ion-col>
+              Explorer
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Class
+            </ion-col>
+            <ion-col>
+              Motor Yacht
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Length
+            </ion-col>
+            <ion-col>
+              142.72 feet
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Fuel Type
+            </ion-col>
+            <ion-col>
+              Diesel
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Last Inspected
+            </ion-col>
+            <ion-col>
+              {{date | date }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        BARON TRENCK is in the top 30% by LOA in the world. She is one of 546 motor yachts in the 40-45m size range,
+        and, compared to similarly sized motor yachts, her volume is 109.46 GT above the average.
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ion-button (click)="next()" color="#009ca6" expand="block">Next</ion-button>
+</ion-content>

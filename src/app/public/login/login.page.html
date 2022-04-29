@@ -1,0 +1,46 @@
+<ion-header>
+  <!-- <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content>
+  <div class="bodyBack">
+
+    <div class="login-wrap">
+      <div class="login-top">
+        <h2>Login</h2>
+        <form [formGroup]="credentials" (ngSubmit)="login()">
+          <div class="input-wrap">
+            <ion-item class="ion-margin-bottom">
+              <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+              <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Email is invalid</ion-note>
+            </ion-item>
+          </div>
+          <div class="input-wrap">
+            <ion-item class="ion-margin-bottom">
+              <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+              <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Password needs to
+                be 6 characters</ion-note>
+            </ion-item>
+            </div>
+            <div class="input-wrap">
+            <ion-button type="submit" [disabled]="!credentials.valid">Log in</ion-button>
+            
+          </div>
+          <ion-button type="button"  (click)="register()">Create account</ion-button>
+        </form>
+      </div>
+
+
+
+    <div class="login-bottom">
+      <ul>
+        <li><i class="fab fa-facebook-f"></i></li>
+        <li><i class="fab fa-twitter"></i></li>
+        <li><i class="fab fa-youtube"></i></li>
+      </ul>
+    </div>
+    </div>
+  </div>
+</ion-content>

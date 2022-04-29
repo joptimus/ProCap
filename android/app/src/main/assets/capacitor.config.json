@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ProCap",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Bilge Inspection</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-list>
+      <ion-item *ngFor="let bilge of bilgeData">
+        <ion-label>{{ bilge.label}}</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="bilge.isChecked" (ionChange)="log()"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    </ion-card>
+</ion-content>

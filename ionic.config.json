@@ -1,0 +1,7 @@
+{
+  "name": "ProCap",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

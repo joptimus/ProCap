@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Report #{{reportFinal}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-icon name="boat-outline" slot="start"></ion-icon>
+      <ion-label>{{ vessel }}</ion-label>
+      <ion-badge slot="end">PREMIUM</ion-badge>
+
+    </ion-item>
+  
+    <ion-card-content>
+      <ion-row>
+              <ion-icon id="person" name="person-circle-outline" ></ion-icon>
+        <ion-label>{{ customer }}</ion-label>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+    <ion-item lines="none" (click)="engine()" button="true" class="ion-activated">
+      <ion-icon name="clipboard" slot="start"></ion-icon>
+      <ion-label>Engines</ion-label>
+    </ion-item>
+  
+    <ion-item lines="none" (click)="generator()" button="true" class="ion-activated">
+      <ion-icon name="aperture" slot="start"></ion-icon>
+      <ion-label>Generator</ion-label>
+    </ion-item>
+  
+    <ion-item lines="none" (click)="hvac()" button="true" class="ion-activated">
+      <ion-icon name="rainy" slot="start"></ion-icon>
+      <ion-label>AC System</ion-label>
+    </ion-item>
+  
+    <ion-item lines="none" (click)="bilge()" button="true" class="ion-activated">
+      <ion-icon name="fish" slot="start"></ion-icon>
+      <ion-label>Bilge</ion-label>
+    </ion-item>
+
+    <ion-item lines="none" (click)="misc()" button="true" class="ion-activated">
+      <ion-icon name="hammer" slot="start"></ion-icon>
+      <ion-label>Misc</ion-label>
+    </ion-item>
+  </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+
+      <ion-icon name="images-outline"></ion-icon>
+      PICTURES
+    </ion-card-header>
+
+    <div class="preview">
+      <img [src]="photo" />
+      <ion-avatar (click)="uploadPhoto2()">
+        <img *ngIf="profile?.imageUrl; else placheolder_avatar;" [src]="profile.imageUrl" />
+        <img [src]="image2" />
+        <ng-template #placheolder_avatar>
+          <div class="fallback">
+            <p>Select avatar</p>
+          </div>
+        </ng-template>
+      </ion-avatar>
+    </div>
+  </ion-card>
+  <div (click)="logStuff()" id="bottom" class="color" color="#009ca6">
+    <ion-button class="color" expand="block">Submit</ion-button>
+
+  </div>
+  <img [src]="photo" />
+
+</ion-content>
