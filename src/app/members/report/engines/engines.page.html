@@ -10,7 +10,7 @@
 
 <ion-content>
 
-  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+  <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="Port" checked>
       <ion-label>Port</ion-label>
     </ion-segment-button>
@@ -23,7 +23,7 @@
   </ion-segment>
 
 
-  <div [ngSwitch]="segment">
+  <div [ngSwitch]="type">
     <ion-card *ngSwitchCase="'Port'">
       <ion-card-header>
         Port Engine Checklist
@@ -44,7 +44,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let star of engineStarboard">
+          <ion-item lines="none" *ngFor="let star of engineStarboard; let i=index">
             <ion-label>{{ star.label}}</ion-label>
             <ion-checkbox slot="end" [(ngModel)]="star.isChecked" (ionChange)="log()"></ion-checkbox>
           </ion-item>
@@ -58,7 +58,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let main of engineMain">
+          <ion-item lines="none" *ngFor="let main of engineMain">
             <ion-label>{{ main.label}}</ion-label>
             <ion-checkbox slot="end" [(ngModel)]="main.isChecked" (ionChange)="log()"></ion-checkbox>
           </ion-item>
@@ -85,7 +85,7 @@
     <h3 *ngIf="images.length == 0" class="ion-padding ion-text-center">Please Select Image!</h3>
  
     <ion-list>
-      <ion-item *ngFor="let file of images; let i = index">
+      <ion-item *ngFor="let file of images; let i=index">
         <ion-thumbnail slot="start">
           <ion-img [src]="file.data"></ion-img>
         </ion-thumbnail>

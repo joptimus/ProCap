@@ -12,7 +12,7 @@
     <ion-item>
       <ion-icon name="boat-outline" slot="start"></ion-icon>
       <ion-label>{{ vessel }}</ion-label>
-      <ion-badge slot="end">PREMIUM</ion-badge>
+      <ion-badge (click)="refreshPics()" slot="end">ADMIRALS</ion-badge>
 
     </ion-item>
   
@@ -54,29 +54,35 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
 
-      <ion-icon name="images-outline"></ion-icon>
-      PICTURES
-    </ion-card-header>
+    <ion-toolbar color="primary">
+      <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
+        <ion-icon slot="start" name="camera"></ion-icon>
+        Report Images
+      </ion-button>
+    </ion-toolbar>
 
     <div class="preview">
-      <img [src]="photo" />
-      <ion-avatar (click)="uploadPhoto2()">
-        <img *ngIf="profile?.imageUrl; else placheolder_avatar;" [src]="profile.imageUrl" />
-        <img [src]="image2" />
-        <ng-template #placheolder_avatar>
-          <div class="fallback">
-            <p>Select avatar</p>
-          </div>
-        </ng-template>
-      </ion-avatar>
+      <ion-list>
+        <ion-item *ngFor="let file of images; let i=index">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="file.data"></ion-img>
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap">
+            {{ file.name }}
+          </ion-label>
+  
+          <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
     </div>
   </ion-card>
   <div (click)="logStuff()" id="bottom" class="color" color="#009ca6">
     <ion-button class="color" expand="block">Submit</ion-button>
 
   </div>
-  <img [src]="photo" />
+
 
 </ion-content>
