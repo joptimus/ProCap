@@ -18,13 +18,14 @@
     </ion-card>
 
     <ion-card>
-
-      <ion-toolbar color="primary">
-        <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
+      <div class="parent">
+      <ion-toolbar class="buttonTool" color="primary">
+        <ion-button class="upload" fill="clear" color="light" (click)="selectImage()">
           <ion-icon slot="start" name="camera"></ion-icon>
           Select Image
         </ion-button>
       </ion-toolbar>
+    </div>
       <ion-card-header>
     
         <ion-icon name="images-outline"></ion-icon>

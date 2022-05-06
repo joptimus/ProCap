@@ -25,6 +25,9 @@
     </ion-card-content>
   </ion-card>
   <ion-card>
+    <ion-card-header>
+      <ion-label>Checklist</ion-label>
+    </ion-card-header>
     <ion-card-content>
     <ion-item lines="none" (click)="engine()" button="true" class="ion-activated">
       <ion-icon name="clipboard" slot="start"></ion-icon>
@@ -81,7 +84,7 @@
   </ion-card>
   <div (click)="logStuff()" id="bottom" class="color" color="#009ca6">
     <ion-button class="color" expand="block">Submit</ion-button>
-
+    <!-- <ion-button class="color" (click)="downloadPdF()" expand="block">Submit</ion-button> -->
   </div>
 
 

@@ -8,6 +8,11 @@ import { DataService } from 'src/app/services/data.service';
 import { PhotosService } from 'src/app/services/photos.service';
 import { resourceLimits } from 'worker_threads';
 import { Directory, Filesystem } from '@capacitor/filesystem';
+
+import pdfMake from 'pdfmake/build/pdfMake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 const IMAGE_DIR = 'stored-images';
 
 interface LocalFile {
@@ -79,6 +84,7 @@ export class MainPage implements OnInit {
     console.log(this.data.clients);
     console.log(this.data.photos);
     console.log(this.reportFinal);
+    this.createPdf();
 
   }
   engine() {
@@ -214,4 +220,27 @@ export class MainPage implements OnInit {
   goToMain() {
     this.route.navigate(['members', 'main']);
   }
+
+
+  createPdf() {
+    const data = this.data.customer;
+    const report = this.reportFinal;
+    const image = this.images ? {image: this.images, width: 100 } : {};
+    const dataa = this.data.engineMain;
+    
+
+    const docDefinition = {
+      content: [
+        {
+          // text: report,
+         
+          
+        }
+
+      ]
+    }
+    pdfMake.createPdf(docDefinition).open();
+    console.log(docDefinition);
+  }
+  
 }
