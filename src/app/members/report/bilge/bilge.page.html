@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color='#009ca6'>
+  <ion-toolbar color="#009ca6">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -12,41 +12,47 @@
     <ion-list>
       <ion-item *ngFor="let bilge of bilgeData">
         <ion-label>{{ bilge.label}}</ion-label>
-        <ion-checkbox slot="end" [(ngModel)]="bilge.isChecked" (ionChange)="log()"></ion-checkbox>
+        <ion-checkbox
+          slot="end"
+          [(ngModel)]="bilge.isChecked"
+          (ionChange)="log()"
+        ></ion-checkbox>
       </ion-item>
     </ion-list>
-    </ion-card>
+  </ion-card>
 
-    <ion-card>
-      <div class="parent">
+  <ion-card>
+    <div class="parent">
       <ion-toolbar class="buttonTool" color="primary">
-        <ion-button class="upload" fill="clear" color="light" (click)="selectImage()">
+        <ion-button
+          class="upload"
+          fill="clear"
+          color="light"
+          (click)="selectImage()"
+        >
           <ion-icon slot="start" name="camera"></ion-icon>
           Select Image
         </ion-button>
       </ion-toolbar>
     </div>
-      <ion-card-header>
-    
-        <ion-icon name="images-outline"></ion-icon>
-        PICTURES
-      </ion-card-header>
-    
-      <div class="preview">
-        <ion-list>
-          <ion-item *ngFor="let file of images; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="file.data"></ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ file.name }}
-            </ion-label>
-    
-            <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
-              <ion-icon slot="icon-only" name="trash"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-list>
-      </div>
-    </ion-card>
+    <ion-card-header>
+      <ion-icon name="images-outline"></ion-icon>
+      PICTURES
+    </ion-card-header>
+
+    <div class="preview">
+      <ion-list>
+        <ion-item *ngFor="let file of images; let i=index">
+          <ion-thumbnail slot="start">
+            <ion-img [src]="file.data"></ion-img>
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap"> {{ file.name }} </ion-label>
+
+          <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-card>
 </ion-content>

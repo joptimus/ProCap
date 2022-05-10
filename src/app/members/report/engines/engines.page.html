@@ -1,15 +1,13 @@
 <ion-header>
-  <ion-toolbar color='#009ca6'>
+  <ion-toolbar color="#009ca6">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Engine Inspection</ion-title>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="Port" checked>
       <ion-label>Port</ion-label>
@@ -22,45 +20,53 @@
     </ion-segment-button>
   </ion-segment>
 
-
   <div [ngSwitch]="type">
     <ion-card *ngSwitchCase="'Port'">
-      <ion-card-header>
-        Port Engine Checklist
-      </ion-card-header>
+      <ion-card-header> Port Engine Checklist </ion-card-header>
       <ion-card-content>
         <ion-list>
           <ion-item lines="none" *ngFor="let data of enginePort">
             <ion-label>{{ data.label}}</ion-label>
-            <ion-checkbox slot="end" [(ngModel)]="data.isChecked" (ionChange)="log()"></ion-checkbox>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="data.isChecked"
+              (ionChange)="log()"
+            ></ion-checkbox>
           </ion-item>
         </ion-list>
       </ion-card-content>
     </ion-card>
 
     <ion-card *ngSwitchCase="'Starboard'">
-      <ion-card-header>
-        Starboard Engine Checklist
-      </ion-card-header>
+      <ion-card-header> Starboard Engine Checklist </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item lines="none" *ngFor="let star of engineStarboard; let i=index">
+          <ion-item
+            lines="none"
+            *ngFor="let star of engineStarboard; let i=index"
+          >
             <ion-label>{{ star.label}}</ion-label>
-            <ion-checkbox slot="end" [(ngModel)]="star.isChecked" (ionChange)="log()"></ion-checkbox>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="star.isChecked"
+              (ionChange)="log()"
+            ></ion-checkbox>
           </ion-item>
         </ion-list>
-        </ion-card-content>
+      </ion-card-content>
     </ion-card>
 
     <ion-card *ngSwitchCase="'Main'">
-      <ion-card-header>
-        Main Engine Checklist
-      </ion-card-header>
+      <ion-card-header> Main Engine Checklist </ion-card-header>
       <ion-card-content>
         <ion-list>
           <ion-item lines="none" *ngFor="let main of engineMain">
             <ion-label>{{ main.label}}</ion-label>
-            <ion-checkbox slot="end" [(ngModel)]="main.isChecked" (ionChange)="log()"></ion-checkbox>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="main.isChecked"
+              (ionChange)="log()"
+            ></ion-checkbox>
           </ion-item>
         </ion-list>
       </ion-card-content>
@@ -68,30 +74,39 @@
   </div>
   <div class="comments">
     <ion-col>Comments</ion-col>
-    <ion-col><ion-item>
-      
-      <ion-textarea position="floating" [(ngModel)]="engineComments.comments" (ionChange)="updateRemarks()"></ion-textarea>
-    </ion-item></ion-col>
+    <ion-col
+      ><ion-item>
+        <ion-textarea
+          position="floating"
+          [(ngModel)]="engineComments.comments"
+          (ionChange)="updateRemarks()"
+        ></ion-textarea> </ion-item
+    ></ion-col>
   </div>
 
   <ion-footer>
     <ion-toolbar color="primary">
-      <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
+      <ion-button
+        fill="clear"
+        expand="full"
+        color="light"
+        (click)="selectImage()"
+      >
         <ion-icon slot="start" name="camera"></ion-icon>
         Select Image
       </ion-button>
     </ion-toolbar>
 
-    <h3 *ngIf="images.length == 0" class="ion-padding ion-text-center">Please Select Image!</h3>
- 
+    <h3 *ngIf="images.length == 0" class="ion-padding ion-text-center">
+      Please Select Image!
+    </h3>
+
     <ion-list>
       <ion-item *ngFor="let file of images; let i=index">
         <ion-thumbnail slot="start">
           <ion-img [src]="file.data"></ion-img>
         </ion-thumbnail>
-        <ion-label class="ion-text-wrap">
-          {{ file.name }}
-        </ion-label>
+        <ion-label class="ion-text-wrap"> {{ file.name }} </ion-label>
 
         <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>

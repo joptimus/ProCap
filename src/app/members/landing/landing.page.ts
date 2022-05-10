@@ -15,5 +15,8 @@ export class LandingPage implements OnInit {
   startReport() {
     this.route.navigate(['members','select']);
   }
+  admin() {
+    this.route.navigate(['clients']);
+  }
 
 }

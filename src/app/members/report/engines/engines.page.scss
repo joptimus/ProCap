@@ -1,24 +1,24 @@
 ion-toolbar {
-    background-color: #009ca6 !important;
+  background-color: #009ca6 !important;
 }
 ion-segment {
-    background-color: #009ca6;
-    color: #fff;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    --border-radius: none !important;
+  background-color: #009ca6;
+  color: #fff;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  --border-radius: none !important;
 }
 ion-segment-button {
-    height: 40px;
-    border-radius: 0;
-    font-size: 14px;
-    background-color: #009ca6;
-    color: #fff;
+  height: 40px;
+  border-radius: 0;
+  font-size: 14px;
+  background-color: #009ca6;
+  color: #fff;
 }
 ion-segment-button:activated {
-    background-color: #009ca6;
+  background-color: #009ca6;
 }
-.comments{
-    margin: 20px;
-    border: 1px solid;
+.comments {
+  margin: 20px;
+  border: 1px solid;
 }

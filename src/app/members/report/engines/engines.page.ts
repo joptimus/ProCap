@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 // import { PhotosService } from 'src/app/services/photos.service';
@@ -19,29 +24,26 @@ interface LocalFile {
   templateUrl: './engines.page.html',
   styleUrls: ['./engines.page.scss'],
 })
-
 export class EnginesPage implements OnInit {
-
   images: LocalFile[] = [];
 
   enginePort = [];
   engineStarboard = [];
   engineMain = [];
   engineComments = [];
-  type: string = "Port";
+  type: string = 'Port';
   myInput: any;
   tabSelected: string;
 
   constructor(
-
     private data: DataService,
     private route: Router,
     private platform: Platform,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
-    // private photo: PhotosService
+  ) // private photo: PhotosService
 
-  ) { }
+  {}
 
   async ngOnInit() {
     this.type = 'Port';
@@ -67,9 +69,8 @@ export class EnginesPage implements OnInit {
     this.tabSelected = 'Port';
     // this.loadFiles();
   }
-  
-  async loadFiles() {
 
+  async loadFiles() {
     this.images = [];
     const loading = await this.loadingCtrl.create({
       message: 'Loading data...',
@@ -79,21 +80,22 @@ export class EnginesPage implements OnInit {
     Filesystem.readdir({
       path: IMAGE_DIR,
       directory: Directory.Data,
-    }).then(result => {
-
-      this.loadFileData(result.files);
-
-    },
-      async (err) => {
-        // Folder does not yet exists!
-        await Filesystem.mkdir({
-          path: IMAGE_DIR,
-          directory: Directory.Data,
-        });
-      }
-    ).then(_ => {
-      loading.dismiss();
-    });
+    })
+      .then(
+        (result) => {
+          this.loadFileData(result.files);
+        },
+        async (err) => {
+          // Folder does not yet exists!
+          await Filesystem.mkdir({
+            path: IMAGE_DIR,
+            directory: Directory.Data,
+          });
+        }
+      )
+      .then((_) => {
+        loading.dismiss();
+      });
   }
 
   // Get the actual base64 data of an image
@@ -113,8 +115,9 @@ export class EnginesPage implements OnInit {
         data: `data:image/jpeg;base64,${readFile.data}`,
       });
       //Load file based on what the file starts with
-      this.images = this.images.filter(file => file.name.startsWith(this.tabSelected));
-     
+      this.images = this.images.filter((file) =>
+        file.name.startsWith(this.tabSelected)
+      );
     }
   }
 
@@ -123,7 +126,7 @@ export class EnginesPage implements OnInit {
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
+      source: CameraSource.Photos,
     });
     console.log(image);
     if (image) {
@@ -139,7 +142,7 @@ export class EnginesPage implements OnInit {
     const savedFile = await Filesystem.writeFile({
       path: `${IMAGE_DIR}/${fileName}`,
       data: base64Data,
-      directory: Directory.Data
+      directory: Directory.Data,
     });
     console.log('saved: ', savedFile);
     this.loadFiles();
@@ -148,33 +151,33 @@ export class EnginesPage implements OnInit {
   private async readAsBase64(photo: Photo) {
     if (this.platform.is('hybrid')) {
       const file = await Filesystem.readFile({
-        path: photo.path
+        path: photo.path,
       });
 
       return file.data;
-    }
-    else {
+    } else {
       // Fetch the photo, read as a blob, then convert to base64 format
       const response = await fetch(photo.webPath);
       const blob = await response.blob();
 
-      return await this.convertBlobToBase64(blob) as string;
+      return (await this.convertBlobToBase64(blob)) as string;
     }
   }
   // Helper function
-  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
-    const reader = new FileReader;
-    reader.onerror = reject;
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-    reader.readAsDataURL(blob);
-  });
-  
+  convertBlobToBase64 = (blob: Blob) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
+
   async deleteImage(file: LocalFile) {
     await Filesystem.deleteFile({
       directory: Directory.Data,
-      path: file.path
+      path: file.path,
     });
     this.loadFiles();
   }
@@ -184,11 +187,11 @@ export class EnginesPage implements OnInit {
 
   updateRemarks() {
     this.data.engineComments = this.engineComments;
-    console.log(this.engineComments)
+    console.log(this.engineComments);
   }
 
   log() {
-    console.log(this.enginePort)
+    console.log(this.enginePort);
     this.data.enginePort = this.enginePort;
   }
 
@@ -197,7 +200,5 @@ export class EnginesPage implements OnInit {
     this.loadFiles();
     console.log('Segment changed', ev.detail);
     console.log(this.tabSelected);
-
   }
 }
-

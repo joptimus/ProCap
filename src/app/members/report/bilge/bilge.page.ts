@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Directory, Filesystem } from '@capacitor/filesystem';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from '@capacitor/camera';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
 
 const IMAGE_DIR = 'stored-images';
@@ -18,17 +23,15 @@ interface LocalFile {
   styleUrls: ['./bilge.page.scss'],
 })
 export class BilgePage implements OnInit {
-
   images: LocalFile[] = [];
 
   bilgeData = [];
 
-  constructor(    
+  constructor(
     private data: DataService,
     private platform: Platform,
     private loadingCtrl: LoadingController
-    
-    ) { }
+  ) {}
 
   ngOnInit() {
     this.loadFiles();
@@ -145,9 +148,9 @@ export class BilgePage implements OnInit {
     this.loadFiles();
   }
 
-  log(){
+  log() {
     this.data.bilgeData = this.bilgeData;
-    console.log(this.bilgeData)
+    console.log(this.bilgeData);
   }
 
   // public bilgeData = [
@@ -159,6 +162,6 @@ export class BilgePage implements OnInit {
   //   { id: '', label: 'Blowers', isChecked: false },
   //   { id: '', label: 'Cleanliness', isChecked: false },
   //   { id: '', label: 'Converters', isChecked: false },
-    
+
   // ];
 }

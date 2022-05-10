@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Client</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+  <ion-list>
+    <ion-item>
+      <ion-label name="full" position="floating">Full Name</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">First Name</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Last Name</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label multiple="true" position="stacked">Address</ion-label>
+      <ion-input placeholder="Street"></ion-input>
+      <ion-input placeholder="City"></ion-input>
+      <ion-input placeholder="State" maxlength="2" ></ion-input>
+      <ion-input placeholder="ZIP" type="number" maxlength="5" max="99999"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ship Name</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Ship Photo</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" type="email">Email</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-card>
+  <ion-button expand="block">Submit</ion-button>
+</ion-content>

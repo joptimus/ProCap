@@ -1,5 +1,8 @@
 <ion-header>
-  <ion-toolbar color='#009ca6'>
+  <ion-toolbar color="#009ca6">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,13 +11,18 @@
   <ion-card (click)="startReport()">
     <div id="icon">
       <ion-icon name="newspaper-outline"></ion-icon>
-
     </div>
-     <div id="label">
+    <div id="label">
       <ion-label>Start a new inspection</ion-label>
-      </div>
+    </div>
+  </ion-card>
 
-
-    </ion-card>
-
+  <ion-card (click)="admin()">
+    <div id="icon">
+      <ion-icon name="settings"></ion-icon>
+    </div>
+    <div id="label">
+      <ion-label>Admin</ion-label>
+    </div>
+  </ion-card>
 </ion-content>
