@@ -31,6 +31,9 @@ export class EnginesPage implements OnInit {
   engineStarboard = [];
   engineMain = [];
   engineComments = [];
+  engineHoursPort = [];
+  engineHoursStarboard = [];
+  engineHoursMain = [];
   type: string = 'Port';
   myInput: any;
   tabSelected: string;
@@ -51,9 +54,12 @@ export class EnginesPage implements OnInit {
     this.engineStarboard = this.data.engineStarboard;
     this.engineMain = this.data.engineMain;
     this.engineComments = this.data.engineComments;
+    this.engineHoursMain = this.data.engineHoursMain;
+    this.engineHoursPort = this.data.engineHoursPort;
+    this.engineHoursStarboard = this.data.engineHoursStarboard;
 
     this.loadFiles();
-    console.log('1');
+    console.log(this.engineHoursStarboard);
     this.loadFilesAgain();
     // this.images = this.photo.getImages();
   }
@@ -190,9 +196,26 @@ export class EnginesPage implements OnInit {
     console.log(this.engineComments);
   }
 
+  updateEngineHoursMain() {
+    this.data.engineHoursMain = this.engineHoursMain;
+    console.log(this.engineHoursMain);
+  }
+
+  updateEngineHoursStarboard() {
+    this.data.engineHoursStarboard = this.engineHoursStarboard;
+    console.log(this.engineHoursStarboard);
+  }
+
+  updateEngineHoursPort() {
+    this.data.engineHoursPort = this.engineHoursPort;
+    console.log(this.engineHoursPort);
+  }
+
+
   log() {
     console.log(this.enginePort);
     this.data.enginePort = this.enginePort;
+    
   }
 
   segmentChanged(ev: any) {

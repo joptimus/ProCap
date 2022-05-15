@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import { DbDataService, Client } from 'src/app/services/db-data.service';
 
 @Component({
   selector: 'app-select',
@@ -8,6 +9,8 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./select.page.scss'],
 })
 export class SelectPage implements OnInit {
+
+  clients = [];
 
   client = [];
   date = Date.now();
@@ -18,7 +21,12 @@ export class SelectPage implements OnInit {
   selectedOption = true;
   custVessel = [];
 
-  constructor(private route: Router, private data: DataService) { }
+  constructor(private route: Router, private data: DataService, private clientService: DbDataService) {    this.clientService.getClients().subscribe(res => {
+    console.log(res);
+    this.clients = res;
+ 
+  })
+}
 
   ngOnInit() {
     this.client = this.data.clients;

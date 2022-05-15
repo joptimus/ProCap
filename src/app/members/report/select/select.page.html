@@ -17,18 +17,15 @@
     </ion-item>
     <ion-item>
       <ion-label>Customer Name</ion-label>
-      <ion-select [(ngModel)]="selectedOption" [interfaceOptions]="customActionSheetOptions" interface="action-sheet"
-        placeholder="Select One" (ionChange)="disable($event)" [value]="client.fullName">
-      <ion-select-option  *ngFor="let client of client" [value]="client.fullName">{{ client.fullName }}</ion-select-option>
-        <!-- <ion-select-option value="Bob Files">Bob Files</ion-select-option>
-        <ion-select-option value="John Claude Van Damme">John Claude Van Damme</ion-select-option>
-        <ion-select-option value="Shaquille O'Neal">Shaquille O'Neal</ion-select-option>
-        <ion-select-option value="Jeff Bezos">Jeff Bezos</ion-select-option> -->
+      <ion-select [(ngModel)]="selectedOption"  interface="action-sheet"
+        placeholder="Select One" (ionChange)="disable($event)" >
+      <ion-select-option  *ngFor="let client of clients" [value]="client.fullName">{{ client.fullName }}</ion-select-option>
+
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Vessel</ion-label>
-      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One"
+      <ion-select interface="action-sheet" placeholder="Select One"
         (ionChange)="selectedVessel($event.target.value)">
         <ion-select-option value="What the F?">What the F?</ion-select-option>
         <ion-select-option value="A Crewed Interest">A Crewed Interest</ion-select-option>

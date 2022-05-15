@@ -22,3 +22,7 @@ ion-segment-button:activated {
   margin: 20px;
   border: 1px solid;
 }
+ion-input {
+  --padding-start: 120px;
+  justify-content: flex-end;
+}
