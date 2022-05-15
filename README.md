@@ -11,3 +11,4 @@ This is the Pro Cap Staff report app
 ## Deploy
 - `firebase login`
 - `firebase deploy`
+- Web URL: procapdb.web.app
