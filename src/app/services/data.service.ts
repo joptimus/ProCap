@@ -11,7 +11,9 @@ export class engineCheck {
   isChecked: boolean;
   toDisplay?: string;
 }
-
+export class getHours {
+  hours: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -126,13 +128,13 @@ export class DataService {
     { comments: 'NA' },
   ];
   public engineHoursMain = [
-    { hours: '0' },
+    { hours: 0 },
   ];
   public engineHoursPort = [
-    { hours: '0' },
+     {hours: 0 },
   ];
   public engineHoursStarboard = [
-    { hours: '0' },
+    { hours: 0 },
   ];
 
   public clients = [

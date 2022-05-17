@@ -23,9 +23,14 @@ const routes: Routes = [
   {
     path: 'modal',
     loadChildren: () => import('./admin/modal/modal.module').then( m => m.ModalPageModule)
-  },  {
+  },
+  {
     path: 'add',
     loadChildren: () => import('./admin/add/add.module').then( m => m.AddPageModule)
+  },
+  {
+    path: 'options',
+    loadChildren: () => import('./admin/options/options.module').then( m => m.OptionsPageModule)
   },
 
 

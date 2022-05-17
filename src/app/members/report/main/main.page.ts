@@ -11,6 +11,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 
 import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const IMAGE_DIR = 'stored-images';
@@ -19,6 +20,9 @@ interface LocalFile {
   name: string;
   path: string;
   data: string;
+}
+interface hours {
+  hours: number;
 }
 @Component({
   selector: 'app-main',
@@ -266,7 +270,7 @@ export class MainPage implements OnInit {
     //  for (var j = 0; j < this.bilgePics.length; j++) {
     //    this.bilgePics.push({image: this.bilgePics[j].data, width: 300})
     //  }
-
+    console.log();
    console.log(path);
    console.log(portHours);
   

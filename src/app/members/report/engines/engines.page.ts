@@ -9,6 +9,7 @@ import {
 } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
+import { getHours } from 'src/app/model/localFile';
 // import { PhotosService } from 'src/app/services/photos.service';
 
 const IMAGE_DIR = 'stored-images';
@@ -18,6 +19,7 @@ interface LocalFile {
   path: string;
   data: string;
 }
+hours: getHours;
 
 @Component({
   selector: 'app-engines',
@@ -31,8 +33,8 @@ export class EnginesPage implements OnInit {
   engineStarboard = [];
   engineMain = [];
   engineComments = [];
-  engineHoursPort = [];
-  engineHoursStarboard = [];
+  engineHoursPort;
+  engineHoursStarboard;
   engineHoursMain = [];
   type: string = 'Port';
   myInput: any;
@@ -59,7 +61,7 @@ export class EnginesPage implements OnInit {
     this.engineHoursStarboard = this.data.engineHoursStarboard;
 
     this.loadFiles();
-    console.log(this.engineHoursStarboard);
+    console.log(this.engineHoursStarboard[0]);
     this.loadFilesAgain();
     // this.images = this.photo.getImages();
   }

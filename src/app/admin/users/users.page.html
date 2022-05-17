@@ -1,9 +1,32 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>users</ion-title>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Users</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-card>
+
+    <form [formGroup]="credentials">
+      <div class="creds">
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+      </div>
+      <div class="btnClass">
+        <ion-button expand="block" (click)="register()">Add User</ion-button>
+      </div>
+    </form>
+
+  </ion-card>
 </ion-content>

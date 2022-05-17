@@ -6,4 +6,7 @@ export class LocalFile {
     path: string;
     data: string;
   }
+  export class getHours {
+    hours?: number;
+  }
   

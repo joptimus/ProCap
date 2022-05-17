@@ -16,7 +16,7 @@ export class LandingPage implements OnInit {
     this.route.navigate(['members','select']);
   }
   admin() {
-    this.route.navigate(['clients']);
+    this.route.navigate(['options']);
   }
 
 }
