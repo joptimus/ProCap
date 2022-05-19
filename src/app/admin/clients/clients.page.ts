@@ -3,6 +3,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { OnInit } from '@angular/core';
 import { DbDataService, Client } from 'src/app/services/db-data.service';
 import { ModalPage } from '../modal/modal.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -13,7 +14,12 @@ export class ClientsPage implements OnInit {
 
   clients = [];
 
-  constructor(private clientService: DbDataService,  private cd: ChangeDetectorRef, private alertCtrl: AlertController, private modalCtrl: ModalController) { 
+  constructor(
+    private clientService: DbDataService, 
+    private route: Router, 
+    private cd: ChangeDetectorRef, 
+    private alertCtrl: AlertController, 
+    private modalCtrl: ModalController) { 
     this.clientService.getClients().subscribe(res => {
       console.log(res);
       this.clients = res;
@@ -121,6 +127,10 @@ export class ClientsPage implements OnInit {
     });
  
     await modal.present();
+  }
+
+  goToAddClient() {
+    this.route.navigate(['add']);
   }
 }
 

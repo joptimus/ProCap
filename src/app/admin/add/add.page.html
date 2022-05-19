@@ -9,44 +9,46 @@
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="credentials">
   <ion-card>
   <ion-list>
     <ion-item>
-      <ion-label name="full" position="floating">Full Name</ion-label>
-      <ion-input></ion-input>
+      <ion-label position="floating">Full Name</ion-label>
+      <ion-input formControlName="fullName"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">First Name</ion-label>
-      <ion-input></ion-input>
+      <ion-input formControlName="fName"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Last Name</ion-label>
-      <ion-input></ion-input>
+      <ion-input formControlName="lName"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label multiple="true" position="stacked">Address</ion-label>
-      <ion-input placeholder="Street"></ion-input>
-      <ion-input placeholder="City"></ion-input>
-      <ion-input placeholder="State" maxlength="2" ></ion-input>
-      <ion-input placeholder="ZIP" type="number" maxlength="5" max="99999"></ion-input>
+      <ion-input formControlName="street" placeholder="Street"></ion-input>
+      <ion-input formControlName="city" placeholder="City"></ion-input>
+      <ion-input formControlName="state" placeholder="State" maxlength="2" ></ion-input>
+      <ion-input formControlName="zip" placeholder="ZIP" type="number" maxlength="5" max="99999"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Ship Name</ion-label>
-      <ion-input></ion-input>
+      <ion-input formControlName="vessel"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Ship Photo</ion-label>
-      <ion-input></ion-input>
+      <ion-input formControlName="photo"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating" type="email">Email</ion-label>
-      <ion-input></ion-input>
+      <ion-input formControlName="email"></ion-input>
     </ion-item>
   </ion-list>
 </ion-card>
-  <ion-button expand="block">Submit</ion-button>
+  <ion-button expand="block" (click)="addClient()">Submit</ion-button>
+</form>
 </ion-content>

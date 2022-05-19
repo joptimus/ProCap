@@ -49,7 +49,7 @@ export class MainPage implements OnInit {
 
   
   constructor(
-    private dom: DomSanitizer,
+    // private dom: DomSanitizer,
     private authService: AuthenticationService,
     private route: Router, 
     private photoService: PhotosService,
@@ -80,7 +80,7 @@ export class MainPage implements OnInit {
    this.customer = this.data.customer;
    this.vessel = this.data.vessel;
    this.image = this.data.photos;
-
+    console.log('vessel = ' + this.vessel);
    this.loadFiles();
   }
   async logout() {
@@ -1483,6 +1483,11 @@ export class MainPage implements OnInit {
     },
     {
       image: this.bilgePics[2].data,
+      width: 150,
+ 
+    },
+    {
+      image: this.bilgePics[2] && this.bilgePics[2].data,
       width: 150,
  
     },

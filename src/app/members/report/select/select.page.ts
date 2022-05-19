@@ -37,7 +37,7 @@ export class SelectPage implements OnInit {
     this.route.navigate(['members', 'main']);
   }
   disable(event) {
-    this.selectedOption = false;
+    // this.selectedOption = false;
     this.custVessel = event.detail.value;
     this.data.customer = event.detail.value;
     console.log('cust vessel :', this.custVessel);

@@ -26,11 +26,12 @@
     <ion-item>
       <ion-label>Vessel</ion-label>
       <ion-select interface="action-sheet" placeholder="Select One"
-        (ionChange)="selectedVessel($event.target)">
-        <ion-select-option value="What the F?">What the F?</ion-select-option>
+        (ionChange)="selectedVessel($event.target.value)">
+        <ion-select-option  *ngFor="let client of clients" [value]="client.vesselName">{{ client.vesselName }}</ion-select-option>
+        <!-- <ion-select-option value="What the F?">What the F?</ion-select-option>
         <ion-select-option value="A Crewed Interest">A Crewed Interest</ion-select-option>
         <ion-select-option value="Baron Trenck">Baron Trenck</ion-select-option>
-        <ion-select-option value="Skid Marks">Skid Marks</ion-select-option>
+        <ion-select-option value="Skid Marks">Skid Marks</ion-select-option> -->
       </ion-select>
     </ion-item>
 

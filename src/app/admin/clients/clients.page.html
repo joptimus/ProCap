@@ -9,7 +9,10 @@
 </ion-header>
  
 <ion-content>
- 
+ <div class="addButton">
+<ion-button expand="block" (click)="goToAddClient()">Add Client</ion-button>
+
+ </div>
   <ion-list>
     <ion-item *ngFor="let client of clients" (click)="openClient(client)">
       <ion-label>
