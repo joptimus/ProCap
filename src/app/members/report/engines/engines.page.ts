@@ -32,10 +32,10 @@ export class EnginesPage implements OnInit {
   enginePort = [];
   engineStarboard = [];
   engineMain = [];
-  engineComments = [];
+  engineComments;
   engineHoursPort;
   engineHoursStarboard;
-  engineHoursMain = [];
+  engineHoursMain;
   type: string = 'Port';
   myInput: any;
   tabSelected: string;
@@ -55,7 +55,7 @@ export class EnginesPage implements OnInit {
     this.enginePort = this.data.enginePort;
     this.engineStarboard = this.data.engineStarboard;
     this.engineMain = this.data.engineMain;
-    this.engineComments = this.data.engineComments;
+    this.engineComments = this.data.engineComments[0].comments;
     this.engineHoursMain = this.data.engineHoursMain;
     this.engineHoursPort = this.data.engineHoursPort;
     this.engineHoursStarboard = this.data.engineHoursStarboard;
@@ -193,29 +193,33 @@ export class EnginesPage implements OnInit {
     this.route.navigate(['members', 'main']);
   }
 
-  updateRemarks() {
-    this.data.engineComments = this.engineComments;
+  updateRemarks(event) {
+    this.engineComments = event.target.value;
+    this.data.engineComments[0].comments = this.engineComments;
     console.log(this.engineComments);
   }
 
-  updateEngineHoursMain() {
-    this.data.engineHoursMain = this.engineHoursMain;
-    console.log(this.engineHoursMain);
+  updateEngineHoursMain(event) {
+    this.engineHoursMain = event.target.value;
+    this.data.engineHoursMain[0].hours = this.engineHoursMain;
+    console.log('dataService engineHoursMain value = ', this.data.engineHoursMain[0].hours);
   }
 
-  updateEngineHoursStarboard() {
-    this.data.engineHoursStarboard = this.engineHoursStarboard;
-    console.log(this.engineHoursStarboard);
+  updateEngineHoursStarboard(event) {
+    this.engineHoursStarboard = event.target.value;
+    this.data.engineHoursStarboard[0].hours = this.engineHoursStarboard;
+    console.log('dataService engineHoursStarboard value = ', this.data.engineHoursStarboard[0].hours);
   }
 
-  updateEngineHoursPort() {
-    this.data.engineHoursPort = this.engineHoursPort;
-    console.log(this.engineHoursPort);
+  updateEngineHoursPort(event) {
+    this.engineHoursPort = event.target.value;
+    this.data.engineHoursPort[0].hours = this.engineHoursPort;
+    console.log('dataService engineHoursPort value = ', this.data.engineHoursPort[0].hours);
   }
 
 
   log() {
-    console.log(this.enginePort);
+    console.log('log again', this.enginePort);
     this.data.enginePort = this.enginePort;
     
   }

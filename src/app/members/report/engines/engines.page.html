@@ -35,8 +35,8 @@
           </ion-item>
           <ion-item>
             <ion-label>Hours</ion-label>
-            <ion-input placeholder={{engineHoursPort[0].hours}} [(ngModel)]="engineHoursPort"
-            (ionChange)="updateEngineHoursPort()" type="number"></ion-input>
+            <ion-input placeholder="Enter Hours" [(ngModel)]="engineHoursPort"
+            (ionChange)="updateEngineHoursPort($event)" type="number"></ion-input>
           </ion-item>
         </ion-list>
       </ion-card-content>
@@ -59,8 +59,8 @@
           </ion-item>
           <ion-item>
             <ion-label>Hours</ion-label>
-            <ion-input placeholder={{engineHoursStarboard[0].hours}} [(ngModel)]="engineHoursStarboard"
-            (ionChange)="updateEngineHoursStarboard()" type="number"></ion-input>
+            <ion-input placeholder="Enter Hours" [(ngModel)]="engineHoursStarboard"
+            (ionChange)="updateEngineHoursStarboard($event)" type="number"></ion-input>
           </ion-item>
         </ion-list>
       </ion-card-content>
@@ -81,7 +81,7 @@
           <ion-item>
             <ion-label>Hours</ion-label>
             <ion-input class="inputRow" placeholder="Enter Hours" [(ngModel)]="engineHoursMain"
-            (ionChange)="updateEngineHoursMain()" type="number"></ion-input>
+            (ionChange)="updateEngineHoursMain($event)" type="number"></ion-input>
           </ion-item>
         </ion-list>
       </ion-card-content>
@@ -95,7 +95,7 @@
           placeholder={{engineComments[0].comments}}
           position="floating"
           [(ngModel)]="engineComments"
-          (ionChange)="updateRemarks()"
+          (ionChange)="updateRemarks($event)"
         ></ion-textarea> </ion-item
     ></ion-col>
   </div>
