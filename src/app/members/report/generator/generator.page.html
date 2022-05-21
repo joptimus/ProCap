@@ -14,6 +14,11 @@
       <ion-label>{{ gens.label}}</ion-label>
       <ion-checkbox slot="end" [(ngModel)]="gens.isChecked" (ionChange)="log()"></ion-checkbox>
     </ion-item>
+    <ion-item>
+      <ion-label>Hours</ion-label>
+      <ion-input placeholder={{genHours[0].hours}} [(ngModel)]="generatorHours"
+      (ionChange)="updateGenHours($event)" type="number"></ion-input>
+    </ion-item>
   </ion-list>
   </ion-card>
 

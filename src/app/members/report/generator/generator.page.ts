@@ -22,6 +22,8 @@ export class GeneratorPage implements OnInit {
   images: LocalFile[] = [];
 
   generatorData = [];
+  genHours = [];
+  generatorHours;
 
   constructor(
     
@@ -34,11 +36,19 @@ export class GeneratorPage implements OnInit {
   ngOnInit() {
     this.loadFiles();
     this.generatorData = this.data.generatorData;
+    this.genHours = this.data.genHours;
+    console.log('ngOnInit generatorData = ', this.generatorData, ' genHours = ', this.genHours)
   }
 
   log(){
     console.log(this.generatorData)
     this.data.generatorData = this.generatorData;
+  }
+
+  updateGenHours(event) {
+    this.genHours[0].hours = event.target.value;
+    this.data.genHours = this.genHours;
+    console.log('dataService genHours = ', this.data.genHours[0].hours);
   }
 
   // public generatorData = [
