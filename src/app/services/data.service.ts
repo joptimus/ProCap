@@ -11,9 +11,7 @@ export class engineCheck {
   isChecked: boolean;
   toDisplay?: string;
 }
-export class getHours {
-  hours: number;
-}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -90,9 +88,7 @@ export class DataService {
     { id: '', label: 'Belts', isChecked: false },
     { id: '', label: 'Batteries', isChecked: false },
     { id: '', label: 'Seacocks', isChecked: false },
-    { id: '', label: 'Strainers', isChecked: false },
-    { id: '', label: 'Hours', isChecked: false },
-    
+    { id: '', label: 'Strainers', isChecked: false },    
   ];
 
   public hvacData = [
@@ -124,6 +120,10 @@ export class DataService {
     { value: '' },
   ];
 
+  public dateText = [
+    { value: '' },
+  ];
+
   public engineComments = [
     { comments: 'NA' },
   ];
@@ -134,6 +134,9 @@ export class DataService {
      {hours: 0 },
   ];
   public engineHoursStarboard = [
+    { hours: 0 },
+  ];
+  public genHours = [
     { hours: 0 },
   ];
 
