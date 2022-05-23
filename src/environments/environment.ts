@@ -12,8 +12,11 @@ export const environment = {
     authDomain: 'procapdb.firebaseapp.com',
     messagingSenderId: '206498918561',
   },
+  appVersion: require('../../package.json').version + '-dev',
   production: false
 };
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file

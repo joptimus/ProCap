@@ -86,10 +86,7 @@
       </ion-list>
     </div>
   </ion-card>
-  <div (click)="logStuff()" id="bottom" class="color" color="#009ca6">
-    <ion-button class="color" expand="block">Submit</ion-button>
 
-  </div>
   <div class="comments">
     <ion-col>Comments</ion-col>
     <ion-col
@@ -98,9 +95,14 @@
           placeholder={{engineComments[0].comments}}
           position="floating"
           [(ngModel)]="engineComments"
-          (ionChange)="updateRemarks($event)"
+          (ionChange)="updateRemarks($event)" autoGrow="true"
         ></ion-textarea> </ion-item
     ></ion-col>
+  </div>
+
+  <div (click)="logStuff()" id="bottom" class="color" color="#009ca6">
+    <ion-button class="color" expand="block">Submit</ion-button>
+
   </div>
 <div>v3.1</div>
 

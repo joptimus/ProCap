@@ -35,7 +35,7 @@
           </ion-item>
           <ion-item>
             <ion-label>Hours</ion-label>
-            <ion-input placeholder="Enter Hours" [(ngModel)]="engineHoursPort"
+            <ion-input inputmode="tel" placeholder="Enter Hours" [(ngModel)]="engineHoursPort"
             (ionChange)="updateEngineHoursPort($event)" type="number"></ion-input>
           </ion-item>
         </ion-list>
@@ -59,7 +59,7 @@
           </ion-item>
           <ion-item>
             <ion-label>Hours</ion-label>
-            <ion-input placeholder="Enter Hours" [(ngModel)]="engineHoursStarboard"
+            <ion-input inputmode="tel" placeholder="Enter Hours" [(ngModel)]="engineHoursStarboard"
             (ionChange)="updateEngineHoursStarboard($event)" type="number"></ion-input>
           </ion-item>
         </ion-list>
@@ -80,7 +80,8 @@
           </ion-item>
           <ion-item>
             <ion-label>Hours</ion-label>
-            <ion-input class="inputRow" placeholder="Enter Hours" [(ngModel)]="engineHoursMain"
+
+            <ion-input inputmode="tel" placeholder="Enter Hours" [(ngModel)]="engineHoursMain"
             (ionChange)="updateEngineHoursMain($event)" type="number"></ion-input>
           </ion-item>
         </ion-list>

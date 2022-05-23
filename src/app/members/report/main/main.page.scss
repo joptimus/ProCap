@@ -51,8 +51,11 @@ ion-list {
   align-items: center;
   font-weight: 500;
 }
-
 .comments {
+    margin: 10px;
+}
+.comments textarea {
+    height: 200px;
   margin: 20px;
   border: 1px solid;
 }
