@@ -1,7 +1,12 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from '@capacitor/camera';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -30,7 +35,6 @@ interface hours {
   styleUrls: ['./main.page.scss'],
 })
 export class MainPage implements OnInit {
-
   images: LocalFile[] = [];
   reportNumber;
   reportFinal;
@@ -46,49 +50,55 @@ export class MainPage implements OnInit {
   genPics = [];
   miscPics = [];
   hvacPics = [];
-  
+  engineComments;
 
-  
   constructor(
     // private dom: DomSanitizer,
     private authService: AuthenticationService,
-    private route: Router, 
+    private route: Router,
     private photoService: PhotosService,
     private loadingController: LoadingController,
     private alertController: AlertController,
     private platform: Platform,
     private loadingCtrl: LoadingController,
     private data: DataService
-    ) { 
+  ) {
     this.photoService.getUserProfile().subscribe((data) => {
-       this.profile = data;
+      this.profile = data;
     });
     this.genRandom();
     this.reportId();
   }
-  genRandom(){
+  genRandom() {
     this.reportNumber = Math.floor(Math.random() * 10000000);
   }
-  reportId () {
-    var string1 = new String( "PCS" )
-    var string2 = new String ( this.reportNumber );
+  reportId() {
+    var string1 = new String('PCS');
+    var string2 = new String(this.reportNumber);
     var string3 = string1.concat(string2.toString());
     this.reportFinal = string3;
-    console.log(string1 , string2 , string3 );
+    console.log(string1, string2, string3);
   }
 
-  ngOnInit() { 
-   this.customer = this.data.customer;
-   this.vessel = this.data.vessel;
-   this.image = this.data.photos;
+  ngOnInit() {
+    this.engineComments = this.data.engineComments[0].comments;
+    this.customer = this.data.customer;
+    this.vessel = this.data.vessel;
+    this.image = this.data.photos;
     console.log('vessel = ' + this.vessel);
-   this.loadFiles();
+    this.loadFiles();
   }
+  updateRemarks(event) {
+    this.engineComments = event.target.value;
+    this.data.engineComments[0].comments = this.engineComments;
+    console.log(this.engineComments);
+  }
+
   async logout() {
     await this.authService.logout();
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
-  logStuff() {
+  async logStuff() {
     console.log(this.data.engineMain);
     console.log(this.data.enginePort);
     console.log(this.data.bilgeData);
@@ -97,11 +107,13 @@ export class MainPage implements OnInit {
     console.log(this.data.clients);
     console.log(this.data.photos);
     console.log(this.reportFinal);
-    this.createPdf();
-
+    const loading = await this.loadingController.create();
+    await loading.present();
+    await this.createPdf();
+    await loading.dismiss();
   }
   engine() {
-    this.route.navigate(['members','engines']);
+    this.route.navigate(['members', 'engines']);
   }
   generator() {
     this.route.navigate(['members', 'generator']);
@@ -117,7 +129,6 @@ export class MainPage implements OnInit {
   }
 
   async loadFiles() {
-
     this.images = [];
     console.log(this.images);
     const loading = await this.loadingCtrl.create({
@@ -128,21 +139,22 @@ export class MainPage implements OnInit {
     Filesystem.readdir({
       path: IMAGE_DIR,
       directory: Directory.Data,
-    }).then(result => {
-
-      this.loadFileData(result.files);
-
-    },
-      async (err) => {
-        // Folder does not yet exists!
-        await Filesystem.mkdir({
-          path: IMAGE_DIR,
-          directory: Directory.Data,
-        });
-      }
-    ).then(_ => {
-      loading.dismiss();
-    });
+    })
+      .then(
+        (result) => {
+          this.loadFileData(result.files);
+        },
+        async (err) => {
+          // Folder does not yet exists!
+          await Filesystem.mkdir({
+            path: IMAGE_DIR,
+            directory: Directory.Data,
+          });
+        }
+      )
+      .then((_) => {
+        loading.dismiss();
+      });
   }
 
   // Get the actual base64 data of an image
@@ -163,7 +175,6 @@ export class MainPage implements OnInit {
       });
       //Load file based on what the file starts with
       //  this.images = this.images.filter(file => file.name.startsWith(this.tabSelected));
-     
     }
   }
 
@@ -172,7 +183,7 @@ export class MainPage implements OnInit {
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
+      source: CameraSource.Photos,
     });
     console.log(image);
     if (image) {
@@ -188,7 +199,7 @@ export class MainPage implements OnInit {
     const savedFile = await Filesystem.writeFile({
       path: `${IMAGE_DIR}/${fileName}`,
       data: base64Data,
-      directory: Directory.Data
+      directory: Directory.Data,
     });
     console.log('saved: ', savedFile);
     this.loadFiles();
@@ -197,33 +208,33 @@ export class MainPage implements OnInit {
   private async readAsBase64(photo: Photo) {
     if (this.platform.is('hybrid')) {
       const file = await Filesystem.readFile({
-        path: photo.path
+        path: photo.path,
       });
 
       return file.data;
-    }
-    else {
+    } else {
       // Fetch the photo, read as a blob, then convert to base64 format
       const response = await fetch(photo.webPath);
       const blob = await response.blob();
 
-      return await this.convertBlobToBase64(blob) as string;
+      return (await this.convertBlobToBase64(blob)) as string;
     }
   }
   // Helper function
-  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
-    const reader = new FileReader;
-    reader.onerror = reject;
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-    reader.readAsDataURL(blob);
-  });
-  
+  convertBlobToBase64 = (blob: Blob) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
+
   async deleteImage(file: LocalFile) {
     await Filesystem.deleteFile({
       directory: Directory.Data,
-      path: file.path
+      path: file.path,
     });
     this.loadFiles();
   }
@@ -235,20 +246,17 @@ export class MainPage implements OnInit {
     this.route.navigate(['members', 'main']);
   }
 
-
   getDocumentDefinition() {
-    this.bilgePics = this.images.filter(file => file.name.startsWith('Gen'));
-    let path  = this.bilgePics;
-     for (var j = 0; j < this.bilgePics.length; j++) {
-       this.bilgePics.push({image: this.bilgePics[j].data, width: 300})
-     }
+    this.bilgePics = this.images.filter((file) => file.name.startsWith('Gen'));
+    let path = this.bilgePics;
+    for (var j = 0; j < this.bilgePics.length; j++) {
+      this.bilgePics.push({ image: this.bilgePics[j].data, width: 300 });
+    }
 
     var dd = {
-      content: [
-         path
-      ],
-    }
-    return dd
+      content: [path],
+    };
+    return dd;
   }
   createPdf() {
     const reportId = this.reportFinal;
@@ -261,25 +269,31 @@ export class MainPage implements OnInit {
     var date = new Date();
     let dateText = date.toLocaleDateString();
 
-   
     // Filter Images to display in different sections of report
-    this.bilgePics = this.images.filter(file => file.name.startsWith('BILGE'));
-    this.enginePort = this.images.filter(file => file.name.startsWith('Port'));
-    this.engineStar = this.images.filter(file => file.name.startsWith('Starboard'));
-    this.engineMain = this.images.filter(file => file.name.startsWith('Main'));
-    this.genPics = this.images.filter(file => file.name.startsWith('Gen'));
-    this.hvacPics = this.images.filter(file => file.name.startsWith('HVAC'));
-    this.miscPics = this.images.filter(file => file.name.startsWith('MISC'));
+    this.bilgePics = this.images.filter((file) =>
+      file.name.startsWith('BILGE')
+    );
+    this.enginePort = this.images.filter((file) =>
+      file.name.startsWith('Port')
+    );
+    this.engineStar = this.images.filter((file) =>
+      file.name.startsWith('Starboard')
+    );
+    this.engineMain = this.images.filter((file) =>
+      file.name.startsWith('Main')
+    );
+    this.genPics = this.images.filter((file) => file.name.startsWith('Gen'));
+    this.hvacPics = this.images.filter((file) => file.name.startsWith('HVAC'));
+    this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
 
-
-    let path  = this.bilgePics;
+    let path = this.bilgePics;
     //  for (var j = 0; j < this.bilgePics.length; j++) {
     //    this.bilgePics.push({image: this.bilgePics[j].data, width: 300})
     //  }
     console.log();
-   console.log(path);
-   console.log(portHours);
-  
+    console.log(path);
+    console.log(portHours);
+
     console.log(this.bilgePics);
 
     const docDefinition = {
@@ -396,9 +410,7 @@ export class MainPage implements OnInit {
               width: 200,
             },
             {
-              text:
-                this.customer +
-                '\n 123 Main Street \n Lewisville, TX 77777 \n (817) 999-9999',
+              text: this.customer + '\n  \n  \n',
               bold: true,
               color: '#333333',
               alignment: 'right',

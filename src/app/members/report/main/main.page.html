@@ -63,6 +63,10 @@
         <ion-icon slot="start" name="camera"></ion-icon>
         Report Images
       </ion-button>
+      <ion-button fill="clear" expand="full" color="light" (click)="refreshPics()">
+        <ion-icon slot="end" name="refresh"></ion-icon>
+        refresh Images
+      </ion-button>
     </ion-toolbar>
 
     <div class="preview">
@@ -86,6 +90,18 @@
     <ion-button class="color" expand="block">Submit</ion-button>
 
   </div>
-<div>v3</div>
+  <div class="comments">
+    <ion-col>Comments</ion-col>
+    <ion-col
+      ><ion-item>
+        <ion-textarea
+          placeholder={{engineComments[0].comments}}
+          position="floating"
+          [(ngModel)]="engineComments"
+          (ionChange)="updateRemarks($event)"
+        ></ion-textarea> </ion-item
+    ></ion-col>
+  </div>
+<div>v3.1</div>
 
 </ion-content>

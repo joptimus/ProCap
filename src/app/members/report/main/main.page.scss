@@ -1,53 +1,58 @@
 #bottom {
-    position: relative;                 
-    bottom:0;                         
-    --background-color: #009ca6 !important; 
+  position: relative;
+  bottom: 0;
+  --background-color: #009ca6 !important;
 }
 .color {
-    --color: #fff;
-    --background: #009ca6;
+  --color: #fff;
+  --background: #009ca6;
 }
 body {
-    font-family: 'Shanti', sans-serif;
+  font-family: "Shanti", sans-serif;
 }
 ion-badge {
-    background-color: #FFD700;
-    padding: 10px;
+  background-color: #ffd700;
+  padding: 10px;
 }
 #person {
-    height: 20px;
-    width: 20px;
-    padding-right: 10px;
+  height: 20px;
+  width: 20px;
+  padding-right: 10px;
 }
 ion-toolbar {
-    background-color: #009ca6 !important;
+  background-color: #009ca6 !important;
 }
 .ion-activated {
-    background: #fff;
-    --color-activated: none;
+  background: #fff;
+  --color-activated: none;
 }
 ion-avatar {
-    width: 128px;
-    height: 128px;
-  }
-   
-  .preview {
-    padding: 10px 10px 10px 10px;
-    display: flex;
-    justify-content: center;
-  }
-ion-list {
-    width: 100%;
-}   
+  width: 128px;
+  height: 128px;
+}
 
-  .fallback {
-    width: 128px;
-    height: 128px;
-    border-radius: 50%;
-    background: #bfbfbf;
-   
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-  }
+.preview {
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  justify-content: center;
+}
+ion-list {
+  width: 100%;
+}
+
+.fallback {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: #bfbfbf;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+.comments {
+  margin: 20px;
+  border: 1px solid;
+}

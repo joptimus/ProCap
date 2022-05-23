@@ -4,21 +4,26 @@ ion-toolbar {
 ion-card {
     margin-top: 40px;
     height: 200px;
-    width: 50vw;
+    width: 40vw;
 }
-#icon {
+.icon {
     height: 100px;
     width: 100px;
+    
 }
 ion-icon {
     height: 80px;
     width: 80px;
     vertical-align: middle;
-    padding-left: 60px;
+
     padding-top: 20px;
 }
 #label {
     width: 100%;
     padding-top: 20px;
     text-align: center;
+}
+.ion-justify-content-start {
+    padding: 20px;
+    flex-wrap: nowrap;
 }
