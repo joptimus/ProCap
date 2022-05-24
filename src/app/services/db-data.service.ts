@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  docData,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface Client {
@@ -15,40 +24,38 @@ export interface Client {
   vesselPhoto: string;
   lastInspec?: number;
   email: string;
-
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class DbDataService {
+  constructor(private firestore: Firestore) {}
 
-  constructor(private firestore: Firestore) { }
- 
   getClients(): Observable<Client[]> {
     const notesRef = collection(this.firestore, 'clients');
-    return collectionData(notesRef, { idField: 'id'}) as Observable<Client[]>;
+    return collectionData(notesRef, { idField: 'id' }) as Observable<Client[]>;
   }
- 
+
   getClientById(id): Observable<Client> {
     const noteDocRef = doc(this.firestore, `clients/${id}`);
     return docData(noteDocRef, { idField: 'id' }) as Observable<Client>;
   }
- 
+
   addClient(client: Client) {
     const notesRef = collection(this.firestore, 'clients');
     return addDoc(notesRef, client);
   }
- 
+
   deleteClient(client: Client) {
     const noteDocRef = doc(this.firestore, `clients/${client.id}`);
     return deleteDoc(noteDocRef);
   }
- 
+
   updateClient(client: Client) {
     const noteDocRef = doc(this.firestore, `clients/${client.id}`);
-    return updateDoc(noteDocRef, {               fullName: client.fullName,
+    return updateDoc(noteDocRef, {
+      fullName: client.fullName,
       fName: client.fName,
       lName: client.lName,
       address: client.address,
@@ -58,6 +65,7 @@ export class DbDataService {
       vesselName: client.vesselName,
       vesselPhoto: client.vesselPhoto,
       lastInspec: client.lastInspec,
-      email: client.email });
+      email: client.email,
+    });
   }
 }
