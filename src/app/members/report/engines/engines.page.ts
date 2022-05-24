@@ -39,6 +39,7 @@ export class EnginesPage implements OnInit {
   type: string = 'Port';
   myInput: any;
   tabSelected: string;
+  disableButton = false;
 
   constructor(
     private data: DataService,
@@ -55,7 +56,7 @@ export class EnginesPage implements OnInit {
     this.enginePort = this.data.enginePort;
     this.engineStarboard = this.data.engineStarboard;
     this.engineMain = this.data.engineMain;
-    this.engineComments = this.data.engineComments[0].comments;
+    // this.engineComments = this.data.engineComments[0].comments;
     this.engineHoursMain = this.data.engineHoursMain;
     this.engineHoursPort = this.data.engineHoursPort;
     this.engineHoursStarboard = this.data.engineHoursStarboard;
@@ -123,9 +124,16 @@ export class EnginesPage implements OnInit {
         data: `data:image/jpeg;base64,${readFile.data}`,
       });
       //Load file based on what the file starts with
-      this.images = this.images.filter((file) =>
-        file.name.startsWith(this.tabSelected)
-      );
+      this.images = this.images.filter((file) => file.name.startsWith(this.tabSelected));
+      this.disableCheck();
+    }
+  }
+
+  disableCheck() {
+    if(this.images.length ==1) {
+      this.disableButton = true;
+    } else {
+      this.disableButton = false;
     }
   }
 
@@ -193,11 +201,11 @@ export class EnginesPage implements OnInit {
     this.route.navigate(['members', 'main']);
   }
 
-  updateRemarks(event) {
-    this.engineComments = event.target.value;
-    this.data.engineComments[0].comments = this.engineComments;
-    console.log(this.engineComments);
-  }
+  // updateRemarks(event) {
+  //   this.engineComments = event.target.value;
+  //   this.data.engineComments[0].comments = this.engineComments;
+  //   console.log(this.engineComments);
+  // }
 
   updateEngineHoursMain(event) {
     this.engineHoursMain = event.target.value;
