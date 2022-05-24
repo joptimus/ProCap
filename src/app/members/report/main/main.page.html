@@ -58,16 +58,21 @@
 
   <ion-card>
 
-    <ion-toolbar color="primary">
-      <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
-        <ion-icon slot="start" name="camera"></ion-icon>
-        Report Images
-      </ion-button>
-      <ion-button fill="clear" expand="full" color="light" (click)="refreshPics()">
-        <ion-icon slot="end" name="refresh"></ion-icon>
-        refresh Images
-      </ion-button>
-    </ion-toolbar>
+      <ion-card-header class="imageCard">
+    
+
+          <ion-label>
+            <ion-icon slot="start" name="camera"></ion-icon>
+            Report Images
+          </ion-label>
+
+
+          <ion-button class="button" fill="clear" color="light" (click)="refreshPics()">
+            <ion-icon name="refresh"></ion-icon>
+          </ion-button>
+
+    
+      </ion-card-header>
 
     <div class="preview">
       <ion-list>
