@@ -98,9 +98,7 @@ export class HvacPage implements OnInit {
   }
 
   disableCheck() {
-    this.cleanImages = this.images.filter((file) =>
-      file.name.startsWith('HVAC-Clean')
-    );
+    this.cleanImages = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
     if (this.cleanImages.length == 1) {
       this.cleanPicDisable = true;
     }
