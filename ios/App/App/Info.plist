@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>ProCap</string>
+	<string>ProCap</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -50,11 +50,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>To capture images</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>To add images</string>
-	<key>NSPhotoLibraryUsageDiscription</key>
-	<string>To store images</string>
 </dict>
 </plist>
