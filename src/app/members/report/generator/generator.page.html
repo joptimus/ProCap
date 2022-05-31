@@ -6,46 +6,43 @@
     <ion-title>Generator Inspection</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-card>
-  <ion-list>
-    <ion-item *ngFor="let gens of generatorData">
-      <ion-label>{{ gens.label}}</ion-label>
-      <ion-checkbox slot="end" [(ngModel)]="gens.isChecked" (ionChange)="log()"></ion-checkbox>
-    </ion-item>
-    <ion-item>
-      <ion-label>Hours</ion-label>
-      <ion-input placeholder={{genHours[0].hours}} [(ngModel)]="generatorHours"
-      (ionChange)="updateGenHours($event)" type="number"></ion-input>
-    </ion-item>
-  </ion-list>
+    <ion-card-content>
+
+      <ion-list>
+        <ion-item *ngFor="let gens of generatorData" lines="none">
+          <ion-label>{{ gens.label}}</ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="gens.isChecked" (ionChange)="log()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Hours</ion-label>
+          <ion-input placeholder={{genHours[0].hours}} [(ngModel)]="generatorHours" (ionChange)="updateGenHours($event)" inputmode="tel" type="number"></ion-input>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
   </ion-card>
 
   <ion-card>
-
-    <ion-toolbar color="primary">
-      <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
-        <ion-icon slot="start" name="camera"></ion-icon>
-        Select Image
+    <ion-toolbar color="#009ca6">
+      <ion-button fill="clear" expand="full" color="light" (click)="uploadGenImage()" [disabled]="genUploadDisable">
+        <ion-icon slot="start" name="add-outline"></ion-icon> Add Photo
       </ion-button>
     </ion-toolbar>
     <ion-card-header>
-
-      <ion-icon name="images-outline"></ion-icon>
-      PICTURES
+      <ion-icon name="images-outline"></ion-icon> PICTURES
     </ion-card-header>
-
     <div class="preview">
       <ion-list>
-        <ion-item *ngFor="let file of images; let i=index">
+        <ion-item class="padding" *ngFor="let file of images; let i=index" lines="none">
           <ion-thumbnail slot="start">
             <ion-img [src]="file.data"></ion-img>
           </ion-thumbnail>
           <ion-label class="ion-text-wrap">
             {{ file.name }}
           </ion-label>
-  
           <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
             <ion-icon slot="icon-only" name="trash"></ion-icon>
           </ion-button>

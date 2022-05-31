@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { OnInit } from '@angular/core';
 import { DbDataService, Client } from 'src/app/services/db-data.service';
@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./clients.page.scss'],
 })
 export class ClientsPage implements OnInit {
-
+  @Input() id: string;
+  client: Client = null;
   clients = [];
 
   constructor(
@@ -28,6 +29,10 @@ export class ClientsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.clientService.getClientById(this.id).subscribe(res => {
+      this.client = res;
+      console.log('clientService : ', res);
+    });
   }
   
   async addClient() {
@@ -127,6 +132,10 @@ export class ClientsPage implements OnInit {
     });
  
     await modal.present();
+  }
+  async deleteClient() {
+    await this.clientService.deleteClient(this.client);
+    
   }
 
   goToAddClient() {

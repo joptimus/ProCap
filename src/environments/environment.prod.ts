@@ -8,5 +8,6 @@ export const environment = {
     authDomain: 'procapdb.firebaseapp.com',
     messagingSenderId: '206498918561',
   },
+  appVersion: require('../../package.json').version,
   production: true
 };

@@ -125,7 +125,7 @@ export class DataService {
   ];
 
   public engineComments = [
-    { comments: 'NA' },
+    { comments: ' ' },
   ];
   public engineHoursMain = [
     { hours: 0 },

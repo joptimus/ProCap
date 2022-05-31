@@ -24,6 +24,7 @@ export class GeneratorPage implements OnInit {
   generatorData = [];
   genHours = [];
   generatorHours;
+  genUploadDisable = false;
 
   constructor(
     
@@ -109,11 +110,20 @@ export class GeneratorPage implements OnInit {
       });
       //Load file based on what the file starts with
         this.images = this.images.filter(file => file.name.startsWith('Gen'));
+        this.disableCheck();
      
     }
   }
 
-  async selectImage() {
+  disableCheck() {
+    if (this.images.length == 1) {
+      this.genUploadDisable = true;
+    } else {
+      this.genUploadDisable = false;
+    }
+  }
+
+  async uploadGenImage() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,

@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card>
   <ion-list>
-    <ion-item *ngFor="let hvac of hvacData">
+    <ion-item *ngFor="let hvac of hvacData" lines="none">
       <ion-label>{{ hvac.label}}</ion-label>
       <ion-checkbox slot="end" [(ngModel)]="hvac.isChecked" (ionChange)="log()"></ion-checkbox>
     </ion-item>
@@ -19,10 +19,14 @@
 
 <ion-card>
 
-  <ion-toolbar color="primary">
-    <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
-      <ion-icon slot="start" name="camera"></ion-icon>
-      Select Image
+  <ion-toolbar color="white">
+    <ion-button fill="clear" [disabled]="dirtyPicDisable" expand="full" color="light" size="default" (click)="selectDirtyImage()">
+      <ion-icon slot="start" name="add-outline"></ion-icon>
+      Upload Dirty Image
+    </ion-button>
+    <ion-button fill="clear" [disabled]="cleanPicDisable" expand="full" color="light" (click)="selectCleanImage()">
+      <ion-icon slot="start" name="add-outline"></ion-icon>
+      Upload Clean Image
     </ion-button>
   </ion-toolbar>
   <ion-card-header>
@@ -30,7 +34,7 @@
     <ion-icon name="images-outline"></ion-icon>
     PICTURES
   </ion-card-header>
-
+<div class="listBorder">
   <div class="preview">
     <ion-list>
       <ion-item *ngFor="let file of images; let i=index">
@@ -46,6 +50,7 @@
         </ion-button>
       </ion-item>
     </ion-list>
+  </div>
   </div>
 </ion-card>
 </ion-content>

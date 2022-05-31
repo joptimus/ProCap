@@ -20,7 +20,7 @@ interface LocalFile {
 export class MiscPage implements OnInit {
 
   images: LocalFile[] = [];
-
+  disableButton = false;
   miscData = [];
   constructor(    
 
@@ -81,6 +81,15 @@ export class MiscPage implements OnInit {
       });
       //Load file based on what the file starts with
       this.images = this.images.filter((file) => file.name.startsWith('MISC'));
+      this.disableCheck();
+    }
+  }
+
+  disableCheck() {
+    if (this.images.length == 2) {
+      this.disableButton = true;
+    } else {
+      this.disableButton = false;
     }
   }
 

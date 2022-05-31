@@ -9,19 +9,19 @@
 
 <ion-content>
   <ion-card>
+
     <ion-item>
       <ion-icon name="boat-outline" slot="start"></ion-icon>
       <ion-label>{{ vessel }}</ion-label>
       <ion-badge (click)="refreshPics()" slot="end">ADMIRALS</ion-badge>
-
     </ion-item>
-  
+
     <ion-card-content>
       <ion-row>
-              <ion-icon id="person" name="person-circle-outline" ></ion-icon>
+        <ion-icon id="person" name="person-circle-outline"></ion-icon>
         <ion-label>{{ customer }}</ion-label>
       </ion-row>
-
+      
     </ion-card-content>
   </ion-card>
   <ion-card>
@@ -29,41 +29,50 @@
       <ion-label>Checklist</ion-label>
     </ion-card-header>
     <ion-card-content>
-    <ion-item lines="none" (click)="engine()" button="true" class="ion-activated">
-      <ion-icon name="clipboard" slot="start"></ion-icon>
-      <ion-label>Engines</ion-label>
-    </ion-item>
-  
-    <ion-item lines="none" (click)="generator()" button="true" class="ion-activated">
-      <ion-icon name="aperture" slot="start"></ion-icon>
-      <ion-label>Generator</ion-label>
-    </ion-item>
-  
-    <ion-item lines="none" (click)="hvac()" button="true" class="ion-activated">
-      <ion-icon name="rainy" slot="start"></ion-icon>
-      <ion-label>AC System</ion-label>
-    </ion-item>
-  
-    <ion-item lines="none" (click)="bilge()" button="true" class="ion-activated">
-      <ion-icon name="fish" slot="start"></ion-icon>
-      <ion-label>Bilge</ion-label>
-    </ion-item>
+      <ion-item lines="none" (click)="engine()" button="true" class="ion-activated">
+        <ion-icon name="clipboard" slot="start"></ion-icon>
+        <ion-label>Engines</ion-label>
+      </ion-item>
 
-    <ion-item lines="none" (click)="misc()" button="true" class="ion-activated">
-      <ion-icon name="hammer" slot="start"></ion-icon>
-      <ion-label>Misc</ion-label>
-    </ion-item>
-  </ion-card-content>
+      <ion-item lines="none" (click)="generator()" button="true" class="ion-activated">
+        <ion-icon name="aperture" slot="start"></ion-icon>
+        <ion-label>Generator</ion-label>
+      </ion-item>
+
+      <ion-item lines="none" (click)="hvac()" button="true" class="ion-activated">
+        <ion-icon name="rainy" slot="start"></ion-icon>
+        <ion-label>AC System</ion-label>
+      </ion-item>
+
+      <ion-item lines="none" (click)="bilge()" button="true" class="ion-activated">
+        <ion-icon name="fish" slot="start"></ion-icon>
+        <ion-label>Bilge</ion-label>
+      </ion-item>
+
+      <ion-item lines="none" (click)="misc()" button="true" class="ion-activated">
+        <ion-icon name="hammer" slot="start"></ion-icon>
+        <ion-label>Misc</ion-label>
+      </ion-item>
+    </ion-card-content>
   </ion-card>
 
   <ion-card>
 
-    <ion-toolbar color="primary">
-      <ion-button fill="clear" expand="full" color="light" (click)="selectImage()">
-        <ion-icon slot="start" name="camera"></ion-icon>
-        Report Images
-      </ion-button>
-    </ion-toolbar>
+      <ion-card-header class="imageCard">
+    
+
+          <ion-label>
+            <ion-icon slot="start" name="camera"></ion-icon>
+            Report Images
+          </ion-label>
+
+
+          <ion-button class="button" fill="clear" color="light" (click)="refreshPics()">
+            <ion-icon name="refresh"></ion-icon>
+          </ion-button>
+
+    
+      </ion-card-header>
 
     <div class="preview">
       <ion-list>
@@ -74,7 +83,7 @@
           <ion-label class="ion-text-wrap">
             {{ file.name }}
           </ion-label>
-  
+
           <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
             <ion-icon slot="icon-only" name="trash"></ion-icon>
           </ion-button>
@@ -82,10 +91,21 @@
       </ion-list>
     </div>
   </ion-card>
+
+  <div class="comments">
+    <ion-col>Comments</ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-textarea placeholder={{engineComments[0].comments}} position="floating" [(ngModel)]="engineComments"
+          (ionChange)="updateRemarks($event)" autoGrow="true"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </div>
+
   <div (click)="logStuff()" id="bottom" class="color" color="#009ca6">
     <ion-button class="color" expand="block">Submit</ion-button>
 
   </div>
-<div>v3</div>
+
 
 </ion-content>
