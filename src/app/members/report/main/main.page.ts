@@ -280,7 +280,7 @@ export class MainPage implements OnInit {
     if (this.platform.is('cordova')) {
       this.pdfObj.getBase64(async (data) => {
         try {
-          let path = `pdf/myletter_${Date.now()}.pdf`;
+          let path = `pdf/${this.reportFinal}.pdf`;
   
           const result = await Filesystem.writeFile({
             path,
@@ -307,8 +307,7 @@ export class MainPage implements OnInit {
     const portHours = this.data.engineHoursPort[0].hours;
     const starHours = this.data.engineHoursStarboard[0].hours;
     const genHours = this.data.genHours[0].hours;
-    const engineComms = this.data.engineComments[0].comments;
-    const logo = this.data.proCapLogo;
+    
     var date = new Date();
     let dateText = date.toLocaleDateString();
 
@@ -321,16 +320,12 @@ export class MainPage implements OnInit {
     this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
     this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
     this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
-
-    let path = this.bilgePics;
-    //  for (var j = 0; j < this.bilgePics.length; j++) {
-    //    this.bilgePics.push({image: this.bilgePics[j].data, width: 300})
-    //  }
-    console.log();
-    console.log(path);
-    console.log(portHours);
-
-    console.log(this.strainerDirty);
+    
+    // Debug Logs
+    // console.log();
+    // console.log(path);
+    // console.log(portHours);
+    // console.log(this.strainerDirty);
 
     const docDefinition = {
       content: [
