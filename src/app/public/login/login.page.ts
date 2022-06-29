@@ -32,6 +32,7 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+    console.log("HEY I LOADED");
   }
   async register() {
     const loading = await this.loadingController.create();
@@ -49,11 +50,14 @@ export class LoginPage implements OnInit {
   }
   async login() {
 
+    console.log('this is start of login');
+
     const loading = await this.loadingController.create();
     await loading.present();
 
 
     const user = await this.authService.login(this.credentials.value);
+
     await loading.dismiss();
 
     if (user) {

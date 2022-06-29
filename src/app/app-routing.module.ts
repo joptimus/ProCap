@@ -6,11 +6,11 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['landing']);
 const routes: Routes = [
  
-  { path: '', loadChildren: () => import('./public/login/login.module').then( m => m.LoginPageModule), ...canActivate(redirectLoggedInToHome), },
-  // { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: 'login', loadChildren: () => import('./public/login/login.module').then( m => m.LoginPageModule), ...canActivate(redirectLoggedInToHome) },
+
   { path: 'login', loadChildren: () => import('./public/login/login.module').then( m => m.LoginPageModule), },
   { path: 'register', loadChildren: () => import('./public/register/register.module').then( m => m.RegisterPageModule) ,},
-  { path: 'members', loadChildren: () => import('./members/member-routing.module').then(m => m.MemberRoutingModule), ...canActivate(redirectUnauthorizedToLogin) ,},
+  { path: 'members', loadChildren: () => import('./members/member-routing.module').then(m => m.MemberRoutingModule), ...canActivate(redirectUnauthorizedToLogin) },
   { path: 'landing',loadChildren: () => import('./members/landing/landing.module').then( m => m.LandingPageModule) },
   {
     path: 'clients',
@@ -33,7 +33,7 @@ const routes: Routes = [
     loadChildren: () => import('./admin/options/options.module').then( m => m.OptionsPageModule)
   },
 
-
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 
 ];
 
