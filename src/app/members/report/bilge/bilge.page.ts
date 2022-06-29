@@ -98,7 +98,7 @@ export class BilgePage implements OnInit {
 
   async selectImage() {
     const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 50,
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
