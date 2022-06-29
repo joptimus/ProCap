@@ -12,12 +12,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { PhotosService } from 'src/app/services/photos.service';
 import { resourceLimits } from 'worker_threads';
-import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Directory, Filesystem, Encoding } from '@capacitor/filesystem';
 
 import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 const IMAGE_DIR = 'stored-images';
 
@@ -52,6 +54,7 @@ export class MainPage implements OnInit {
   strainerDirty = [];
   strainerClean = [];
   engineComments;
+  pdfObj = null;
 
   constructor(
     // private dom: DomSanitizer,
@@ -62,6 +65,7 @@ export class MainPage implements OnInit {
     private alertController: AlertController,
     private platform: Platform,
     private loadingCtrl: LoadingController,
+    private fileOpener: FileOpener,
     private data: DataService
   ) {
     this.photoService.getUserProfile().subscribe((data) => {
@@ -1431,7 +1435,34 @@ export class MainPage implements OnInit {
     }
   
   };
-    pdfMake.createPdf(docDefinition).open();
+    this.pdfObj = pdfMake.createPdf(docDefinition).open();
+    
     console.log(docDefinition);
+    this.downloadPdf();
+  }
+  downloadPdf() {
+    if (this.platform.is('cordova')) {
+      this.pdfObj.getBase64(async (data) => {
+        try {
+          let path = `pdf/myletter_${Date.now()}.pdf`;
+  
+          const result = await Filesystem.writeFile({
+            path,
+            data: data,
+            directory: Directory.Documents,
+            recursive: true
+            // encoding: Encoding.UTF8
+          });
+          this.fileOpener.open(`${result.uri}`, 'application/pdf');
+  
+        } catch (e) {
+          console.error('Unable to write file', e);
+        }
+      });
+    } else {
+      // On a browser simply use download!
+      this.pdfObj.download();
+    }
   }
 }
+
