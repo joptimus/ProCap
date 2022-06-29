@@ -359,8 +359,29 @@ export class MainPage implements OnInit {
                       fontSize: 12,
                       alignment: 'right',
                     },
+                    
                     {
                       text: reportId,
+                      bold: true,
+                      color: '#333333',
+                      fontSize: 12,
+                      alignment: 'right',
+                      width: 100,
+                    },
+                  ],
+                },
+                {
+                  columns: [{
+                      text: 'Inspector',
+                      color: '#aaaaab',
+                      bold: true,
+                      width: '*',
+                      fontSize: 12,
+                      alignment: 'right',
+                    },
+                    
+                    {
+                      text: 'Capt. Bob Files',
                       bold: true,
                       color: '#333333',
                       fontSize: 12,
