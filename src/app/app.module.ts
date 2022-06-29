@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Capacitor } from '@capacitor/core';
 import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { getApp } from 'firebase/app';
     }
   }), 
   provideFirestore(() => getFirestore()), provideStorage(() => getStorage())],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

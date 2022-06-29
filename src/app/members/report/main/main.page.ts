@@ -8,13 +8,14 @@ import { DataService } from 'src/app/services/data.service';
 import { PhotosService } from 'src/app/services/photos.service';
 import { resourceLimits } from 'worker_threads';
 import { Directory, Filesystem, Encoding } from '@capacitor/filesystem';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-import { FileOpener } from '@ionic-native/file-opener/ngx';
+
 
 const IMAGE_DIR = 'stored-images';
 
