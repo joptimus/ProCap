@@ -23,13 +23,15 @@ interface LocalFile {
   styleUrls: ['./hvac.page.scss'],
 })
 export class HvacPage implements OnInit {
-
   images: LocalFile[] = [];
   dirtyImages: LocalFile[] = [];
   cleanImages: LocalFile[] = [];
   cleanPicDisable = false;
   dirtyPicDisable = false;
   hvacData = [];
+  image: string;
+  base64Str: any;
+  kbytes: number;
 
   constructor(
     private data: DataService,
@@ -98,7 +100,9 @@ export class HvacPage implements OnInit {
   }
 
   disableCheck() {
-    this.cleanImages = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
+    this.cleanImages = this.images.filter((file) =>
+      file.name.startsWith('HVAC-Clean')
+    );
     if (this.cleanImages.length == 1) {
       this.cleanPicDisable = true;
     }
@@ -145,7 +149,8 @@ export class HvacPage implements OnInit {
 
   async selectCleanImage() {
     const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 10,
+      width: 175,
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
@@ -159,7 +164,7 @@ export class HvacPage implements OnInit {
   async saveCleanImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
     console.log(base64Data);
-
+    this.calculateImageSize(base64Data);
     const fileName = 'HVAC-Clean' + '.jpeg';
     const savedFile = await Filesystem.writeFile({
       path: `${IMAGE_DIR}/${fileName}`,
@@ -167,6 +172,7 @@ export class HvacPage implements OnInit {
       directory: Directory.Data,
     });
     console.log('saved: ', savedFile);
+    this.calculateImageSize(base64Data);
     this.loadFiles();
   }
 
@@ -203,11 +209,24 @@ export class HvacPage implements OnInit {
     });
     this.loadFiles();
   }
-  // public hvacData = [
-  //   { id: '', label: 'Pumps', isChecked: false },
-  //   { id: '', label: 'Seacock(s)', isChecked: false },
-  //   { id: '', label: 'Strainer(s)', isChecked: false },
-  //   { id: '', label: 'Return Filters', isChecked: false },
+  calculateImageSize(base64String) {
+    let padding;
+    let inBytes;
+    let base64StringLength;
+    if (base64String.endsWith('==')) {
+      padding = 2;
+    } else if (base64String.endsWith('=')) {
+      padding = 1;
+    } else {
+      padding = 0;
+    }
 
-  // ];
+    base64StringLength = base64String.length;
+    console.log(base64StringLength);
+    inBytes = (base64StringLength / 4) * 3 - padding;
+    console.log(inBytes);
+    this.kbytes = inBytes / 1000;
+    console.log(this.kbytes);
+    return this.kbytes;
+  }
 }

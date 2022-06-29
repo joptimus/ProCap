@@ -2,7 +2,7 @@ import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { AlertController, LoadingController, Platform } from '@ionic/angular';
+import { AlertController, AngularDelegate, LoadingController, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { PhotosService } from 'src/app/services/photos.service';
@@ -142,11 +142,14 @@ export class MainPage implements OnInit {
     await loading.present();
     await this.createPdf();
     await loading.dismiss();
-    this.clearPicture();
+    this.deleteAllPictures();
   }
   
-  clearPicture() {
-    this.images.length = 0;
+  deleteAllPictures() {
+    this.images.forEach(file  => {
+      this.deleteImage(file);
+      
+    });
   }
 
   engine() {
@@ -334,6 +337,7 @@ export class MainPage implements OnInit {
     // console.log(this.strainerDirty);
 
     const docDefinition = {
+      compress: true,
       content: [
         {
           columns: [
