@@ -130,19 +130,25 @@ export class MainPage implements OnInit {
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
   async logStuff() {
-    console.log(this.data.engineMain);
-    console.log(this.data.enginePort);
-    console.log(this.data.bilgeData);
-    console.log(this.data.customer);
-    console.log(this.data.engineComments);
-    console.log(this.data.clients);
-    console.log(this.data.photos);
-    console.log(this.reportFinal);
+    // console.log(this.data.engineMain);
+    // console.log(this.data.enginePort);
+    // console.log(this.data.bilgeData);
+    // console.log(this.data.customer);
+    // console.log(this.data.engineComments);
+    // console.log(this.data.clients);
+    // console.log(this.data.photos);
+    // console.log(this.reportFinal);
     const loading = await this.loadingController.create();
     await loading.present();
     await this.createPdf();
     await loading.dismiss();
+    this.clearPicture();
   }
+  
+  clearPicture() {
+    this.images.length = 0;
+  }
+
   engine() {
     this.route.navigate(['members', 'engines']);
   }
