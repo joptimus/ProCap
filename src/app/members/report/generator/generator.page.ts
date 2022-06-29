@@ -125,7 +125,7 @@ export class GeneratorPage implements OnInit {
 
   async uploadGenImage() {
     const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 50,
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos
