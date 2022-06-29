@@ -1,12 +1,7 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  Camera,
-  CameraResultType,
-  CameraSource,
-  Photo,
-} from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
@@ -37,6 +32,8 @@ interface hours {
   styleUrls: ['./main.page.scss'],
 })
 export class MainPage implements OnInit {
+
+  // Initialization of Variables
   images: LocalFile[] = [];
   reportNumber;
   reportFinal;
@@ -249,6 +246,30 @@ export class MainPage implements OnInit {
   }
   goToMain() {
     this.route.navigate(['members', 'main']);
+  }
+  downloadPdf() {
+    if (this.platform.is('cordova')) {
+      this.pdfObj.getBase64(async (data) => {
+        try {
+          let path = `pdf/myletter_${Date.now()}.pdf`;
+  
+          const result = await Filesystem.writeFile({
+            path,
+            data: data,
+            directory: Directory.Documents,
+            recursive: true
+            // encoding: Encoding.UTF8
+          });
+          this.fileOpener.open(`${result.uri}`, 'application/pdf');
+  
+        } catch (e) {
+          console.error('Unable to write file', e);
+        }
+      });
+    } else {
+      // On a browser simply use download!
+      this.pdfObj.download();
+    }
   }
 
   createPdf() {
@@ -1435,34 +1456,10 @@ export class MainPage implements OnInit {
     }
   
   };
-    this.pdfObj = pdfMake.createPdf(docDefinition).open();
+    this.pdfObj = pdfMake.createPdf(docDefinition);
     
     console.log(docDefinition);
     this.downloadPdf();
-  }
-  downloadPdf() {
-    if (this.platform.is('cordova')) {
-      this.pdfObj.getBase64(async (data) => {
-        try {
-          let path = `pdf/myletter_${Date.now()}.pdf`;
-  
-          const result = await Filesystem.writeFile({
-            path,
-            data: data,
-            directory: Directory.Documents,
-            recursive: true
-            // encoding: Encoding.UTF8
-          });
-          this.fileOpener.open(`${result.uri}`, 'application/pdf');
-  
-        } catch (e) {
-          console.error('Unable to write file', e);
-        }
-      });
-    } else {
-      // On a browser simply use download!
-      this.pdfObj.download();
-    }
   }
 }
 
