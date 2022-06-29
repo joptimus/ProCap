@@ -333,1317 +333,1285 @@ export class MainPage implements OnInit {
     console.log(this.strainerDirty);
 
     const docDefinition = {
-      content: [{
-        columns: [{
-            image: this.logoData,
-            width: 250,
-            margin: [0, -30, 0, 0],
-          },
-  
-          [{
-              text: 'Monthly Inspection',
-              color: '#333333',
-              width: '*',
-              fontSize: 20,
+      content: [
+        {
+          columns: [
+            {
+              image: this.logoData,
+              width: 250,
+              margin: [0, -30, 0, 0],
+            },
+
+            [
+              {
+                text: 'Monthly Inspection',
+                color: '#333333',
+                width: '*',
+                fontSize: 20,
+                bold: true,
+                alignment: 'right',
+                margin: [0, 0, 0, 15],
+              },
+              {
+                stack: [
+                  {
+                    columns: [
+                      {
+                        text: 'Inspection No.',
+                        color: '#aaaaab',
+                        bold: true,
+                        width: '*',
+                        fontSize: 12,
+                        alignment: 'right',
+                      },
+
+                      {
+                        text: reportId,
+                        bold: true,
+                        color: '#333333',
+                        fontSize: 12,
+                        alignment: 'right',
+                        width: 100,
+                      },
+                    ],
+                  },
+                  {
+                    columns: [
+                      {
+                        text: 'Inspector',
+                        color: '#aaaaab',
+                        bold: true,
+                        width: '*',
+                        fontSize: 12,
+                        alignment: 'right',
+                      },
+
+                      {
+                        text: 'Capt. Bob Files',
+                        bold: true,
+                        color: '#333333',
+                        fontSize: 12,
+                        alignment: 'right',
+                        width: 100,
+                      },
+                    ],
+                  },
+                  {
+                    columns: [
+                      {
+                        text: 'Date Inspected',
+                        color: '#aaaaab',
+                        bold: true,
+                        width: '*',
+                        fontSize: 12,
+                        alignment: 'right',
+                      },
+                      {
+                        text: dateText,
+                        bold: true,
+                        color: '#333333',
+                        fontSize: 12,
+                        alignment: 'right',
+                        width: 100,
+                      },
+                    ],
+                  },
+                  {
+                    columns: [
+                      {
+                        text: 'Status',
+                        color: '#aaaaab',
+                        bold: true,
+                        fontSize: 12,
+                        alignment: 'right',
+                        width: '*',
+                      },
+                      {
+                        text: 'COMPLETE',
+                        bold: true,
+                        fontSize: 14,
+                        alignment: 'right',
+                        color: 'green',
+                        width: 100,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+        {
+          columns: [
+            {
+              text: 'Vessel',
               bold: true,
-              alignment: 'right',
-              margin: [0, 0, 0, 15],
+              color: '#aaaaab',
+              fontSize: 12,
+              alignment: 'left',
+              margin: [0, 20, 0, 5],
             },
             {
-              stack: [{
-                  columns: [{
-                      text: 'Inspection No.',
-                      color: '#aaaaab',
-                      bold: true,
-                      width: '*',
-                      fontSize: 12,
-                      alignment: 'right',
-                    },
-                    
-                    {
-                      text: reportId,
-                      bold: true,
-                      color: '#333333',
-                      fontSize: 12,
-                      alignment: 'right',
-                      width: 100,
-                    },
-                  ],
-                },
-                {
-                  columns: [{
-                      text: 'Inspector',
-                      color: '#aaaaab',
-                      bold: true,
-                      width: '*',
-                      fontSize: 12,
-                      alignment: 'right',
-                    },
-                    
-                    {
-                      text: 'Capt. Bob Files',
-                      bold: true,
-                      color: '#333333',
-                      fontSize: 12,
-                      alignment: 'right',
-                      width: 100,
-                    },
-                  ],
-                },
-                {
-                  columns: [{
-                      text: 'Date Inspected',
-                      color: '#aaaaab',
-                      bold: true,
-                      width: '*',
-                      fontSize: 12,
-                      alignment: 'right',
-                    },
-                    {
-                      text: dateText,
-                      bold: true,
-                      color: '#333333',
-                      fontSize: 12,
-                      alignment: 'right',
-                      width: 100,
-                    },
-                  ],
-                },
-                {
-                  columns: [{
-                      text: 'Status',
-                      color: '#aaaaab',
-                      bold: true,
-                      fontSize: 12,
-                      alignment: 'right',
-                      width: '*',
-                    },
-                    {
-                      text: 'COMPLETE',
-                      bold: true,
-                      fontSize: 14,
-                      alignment: 'right',
-                      color: 'green',
-                      width: 100,
-                    },
-                  ],
-                },
-              ],
+              text: 'Client',
+              bold: true,
+              color: '#aaaaab',
+              alignment: 'right',
+              margin: [0, 20, 0, 5],
             },
           ],
-        ],
-      },
-      {
-        columns: [{
-            text: 'Vessel',
-            bold: true,
-            color: '#aaaaab',
-            fontSize: 12,
-            alignment: 'left',
-            margin: [0, 20, 0, 5],
-          },
-          {
-            text: 'Client',
-            bold: true,
-            color: '#aaaaab',
-            alignment: 'right',
-            margin: [0, 20, 0, 5],
-          },
-        ],
-      },
-      {
-        columns: [{
-            image: this.comingSoon,
-            width: 200,
-          },
-          {
-            text: this.customer + '\n  \n  \n',
-            bold: true,
-            color: '#333333',
-            alignment: 'right',
-          },
-        ],
-      },
-      {
-        columns: [{
-            text: '',
-            bold: true,
-            color: '#333333',
-            alignment: 'left',
-          },
-          {
-            text: '',
-            bold: true,
-            color: '#333333',
-            alignment: 'left',
-          },
-        ],
-  
-      },
-      '\n\n',
-      {
-        width: '100%',
-        alignment: 'center',
-        text: 'Inspection Report',
-        bold: true,
-        margin: [0, 10, 0, 10],
-        fontSize: 12,
-      },
-  
-  
-  
-  
-      {
-  
-        table: {
-          widths: [59, '*', '*', 10, '*', '*', 10, 71, '*'],
-          //	heights: [20, '*', 20],
-          headerRows: 1,
-          body: [
-            [{
-                //Engines Table
-                //Column 1
-                text: 'Engines',
-                colSpan: 3,
-                alignment: 'center',
-                border: [false, false, false, false],
-                style: 'header',
-  
-              },
-              {
-                //Column 2
-                text: '',
-              },
-              {
-                //Column 3
-                text: '',
-              },
-              {
-                //Middle column
-                //Column 4
-                text: '',
-                border: [false, false, false, false],
-  
-              },
-              {
-                //Column 5
-                text: 'Generator',
-                colSpan: 2,
-                alignment: 'center',
-                border: [false, false, false, false],
-                style: 'header',
-  
-              },
-              {
-                //Column 6
-                text: '',
-              },
-              {
-                //Middle column
-                //Column 7
-                text: '',
-                border: [false, false, false, false],
-  
-              },
-              {
-                //Middle column
-                //Column 8
-                //Column 5
-                text: 'AC System',
-                style: 'header',
-                colSpan: 2,
-                alignment: 'center',
-                border: [false, false, false, false],
-  
-              },
-              {
-                //Middle column
-                //Column 9
-                text: '',
-                border: [false, false, false, false],
-  
-              }
-            ],
-  
-            //Row data
-            [
-              //Row 1
-              {
-                text: '',
-                border: [false, false, false, true],
-              },
-              {
-                text: 'Port',
-                border: [false, false, false, true],
-                style: 'subHeader',
-              },
-              {
-                text: 'Starboard',
-                border: [false, false, false, true],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: '',
-                border: [false, false, false, true],
-              },
-              {
-                text: 'Completed',
-                border: [false, false, false, true],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, true],
-                style: 'subHeader',
-              },
-              {
-                text: 'Completed',
-                border: [false, false, false, true],
-                style: 'subHeader',
-              },
-  
-            ],
-  
-            //Row 2
-  
-            [
-  
-              {
-                text: 'Oil',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Oil',
-                border: [false, false, false, false],
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: 'Pumps',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-  
-            //Row 3
-  
-            [
-  
-              {
-                text: 'Coolant',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Coolant',
-                border: [false, false, false, false],
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: 'Seacock(s)',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 4
-  
-            [
-  
-              {
-                text: 'Trans Fluid',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Hoses',
-                border: [false, false, false, false],
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: 'Strainer(s)',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 5
-  
-            [
-  
-              {
-                text: 'Hoses',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Belts',
-                border: [false, false, false, false],
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: 'Return Filters',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 6
-  
-            [
-  
-              {
-                text: 'Belts',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Batteries',
-                border: [false, false, false, false],
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 7
-  
-            [
-  
-              {
-                text: 'Batteries',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Seacocks',
-                border: [false, false, false, false],
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 8
-  
-            [
-  
-              {
-                text: 'Seacocks',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Strainers',
-                border: [false, false, false, false],
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 9
-  
-            [
-  
-              {
-                text: 'Alternator',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              //Insert Hours here for Generator
-              {
-                text: '# Hours',
-                border: [false, false, false, false],
-              },
-              {
-                text: genHours,
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 10
-  
-            [
-  
-              {
-                text: 'Leak',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              //Insert Hours here for Generator
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 11
-  
-            [
-  
-              {
-                text: 'Test Run',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              //Insert Hours here for Generator
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            //Row 12
-  
-            [
-              //Insert Hours here for Generator
-              {
-                text: '# Hours',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: portHours,
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: starHours,
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-  
-          ],
-  
         },
-  
-  
-      },
-      '\n',
-      {
-  
-        table: {
-  
-          widths: ['*', '*', '*', '*', '*'],
-          body: [
-            [{
-                text: 'Bilge',
-                colSpan: 2,
-                alignment: 'center',
-                border: [false, false, false, false],
-                style: 'header',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'header',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Miscellaneous',
-                colSpan: 2,
-                alignment: 'center',
-                border: [false, false, false, false],
-                style: 'header',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'header',
-              },
-            ],
-            [
-              //Row 1
-              {
-                text: '',
-                border: [false, false, false, true],
-              },
-              {
-                text: 'Completed',
-                border: [false, false, false, true],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: '',
-                border: [false, false, false, true],
-              },
-              {
-                text: 'Completed',
-                border: [false, false, false, true],
-                style: 'subHeader',
-              },
-  
-            ],
-  
-            [
+        {
+          columns: [
+            {
+              image: this.comingSoon,
+              width: 200,
+            },
+            {
+              text: this.customer + '\n  \n  \n',
+              bold: true,
+              color: '#333333',
+              alignment: 'right',
+            },
+          ],
+        },
+        {
+          columns: [
+            {
+              text: '',
+              bold: true,
+              color: '#333333',
+              alignment: 'left',
+            },
+            {
+              text: '',
+              bold: true,
+              color: '#333333',
+              alignment: 'left',
+            },
+          ],
+        },
+        '\n\n',
+        {
+          width: '100%',
+          alignment: 'center',
+          text: 'Inspection Report',
+          bold: true,
+          margin: [0, 10, 0, 10],
+          fontSize: 12,
+        },
+
+        {
+          table: {
+            widths: [59, '*', '*', 10, '*', '*', 10, 71, '*'],
+            //	heights: [20, '*', 20],
+            headerRows: 1,
+            body: [
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  text: 'Engines',
+                  colSpan: 3,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'header',
+                },
+                {
+                  //Column 2
+                  text: '',
+                },
+                {
+                  //Column 3
+                  text: '',
+                },
+                {
+                  //Middle column
+                  //Column 4
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  //Column 5
+                  text: 'Generator',
+                  colSpan: 2,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'header',
+                },
+                {
+                  //Column 6
+                  text: '',
+                },
+                {
+                  //Middle column
+                  //Column 7
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  //Middle column
+                  //Column 8
+                  //Column 5
+                  text: 'AC System',
+                  style: 'header',
+                  colSpan: 2,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                },
+                {
+                  //Middle column
+                  //Column 9
+                  text: '',
+                  border: [false, false, false, false],
+                },
+              ],
+
+              //Row data
+              [
+                //Row 1
+                {
+                  text: '',
+                  border: [false, false, false, true],
+                },
+                {
+                  text: 'Port',
+                  border: [false, false, false, true],
+                  style: 'subHeader',
+                },
+                {
+                  text: 'Starboard',
+                  border: [false, false, false, true],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '',
+                  border: [false, false, false, true],
+                },
+                {
+                  text: 'Completed',
+                  border: [false, false, false, true],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, true],
+                  style: 'subHeader',
+                },
+                {
+                  text: 'Completed',
+                  border: [false, false, false, true],
+                  style: 'subHeader',
+                },
+              ],
+
               //Row 2
-              {
-                text: 'Forward Pump(s)',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Thrusters',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Oil',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Oil',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: 'Pumps',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+
               //Row 3
-              {
-                text: 'Mid Pump(s)',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Horn',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Coolant',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Coolant',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: 'Seacock(s)',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
               //Row 4
-              {
-                text: 'Aft Pump(s)',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Nav Lights',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Trans Fluid',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Hoses',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: 'Strainer(s)',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
               //Row 5
-              {
-                text: 'Lights',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Anchor Light',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Hoses',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Belts',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: 'Return Filters',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
               //Row 6
-              {
-                text: 'Shower Sump',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'VHF',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Belts',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Batteries',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
               //Row 7
-              {
-                text: 'Blowers',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Spot Light',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Batteries',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Seacocks',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
               //Row 8
-              {
-                text: 'Cleanliness',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Strainers',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Seacocks',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Strainers',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
               //Row 9
-              {
-                text: 'Converters',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Water',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
-            ],
-            [
+
+              [
+                {
+                  text: 'Alternator',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                //Insert Hours here for Generator
+                {
+                  text: '# Hours',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: genHours,
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
               //Row 10
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-              {
-                text: '',
-                border: [false, false, false, false],
-              },
-              {
-                text: 'Water Tanks',
-                border: [false, false, false, false],
-                style: 'row',
-              },
-              {
-                text: '√',
-                border: [false, false, false, false],
-                style: 'subHeader',
-              },
-  
+
+              [
+                {
+                  text: 'Leak',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                //Insert Hours here for Generator
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              //Row 11
+
+              [
+                {
+                  text: 'Test Run',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                //Insert Hours here for Generator
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              //Row 12
+
+              [
+                //Insert Hours here for Generator
+                {
+                  text: '# Hours',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: portHours,
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: starHours,
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
             ],
-  
-  
-  
-          ],
+          },
         },
-      },
-      '\n\n\n',
-      {
-        
-        table: {
-            
+        '\n',
+        {
+          table: {
+            widths: ['*', '*', '*', '*', '*'],
+            body: [
+              [
+                {
+                  text: 'Bilge',
+                  colSpan: 2,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'header',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'header',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Miscellaneous',
+                  colSpan: 2,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'header',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'header',
+                },
+              ],
+              [
+                //Row 1
+                {
+                  text: '',
+                  border: [false, false, false, true],
+                },
+                {
+                  text: 'Completed',
+                  border: [false, false, false, true],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: '',
+                  border: [false, false, false, true],
+                },
+                {
+                  text: 'Completed',
+                  border: [false, false, false, true],
+                  style: 'subHeader',
+                },
+              ],
+
+              [
+                //Row 2
+                {
+                  text: 'Forward Pump(s)',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Thrusters',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 3
+                {
+                  text: 'Mid Pump(s)',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Horn',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 4
+                {
+                  text: 'Aft Pump(s)',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Nav Lights',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 5
+                {
+                  text: 'Lights',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Anchor Light',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 6
+                {
+                  text: 'Shower Sump',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'VHF',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 7
+                {
+                  text: 'Blowers',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Spot Light',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 8
+                {
+                  text: 'Cleanliness',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Strainers',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 9
+                {
+                  text: 'Converters',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Water',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+              [
+                //Row 10
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+                {
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
+                  text: 'Water Tanks',
+                  border: [false, false, false, false],
+                  style: 'row',
+                },
+                {
+                  text: '√',
+                  border: [false, false, false, false],
+                  style: 'subHeader',
+                },
+              ],
+            ],
+          },
+        },
+        '\n',
+        {
+          table: {
+            widths: ['*'],
+            body: [
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  text: 'Report Comments',
+                  style: 'header',
+                  colSpan: 1,
+                  border: [false, false, false, false],
+                },
+              ],
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  text: this.engineComments,
+                  colSpan: 1,
+                  border: [false, false, false, false],
+                },
+              ],
+            ],
+          },
+        },
+        '\n\n\n',
+        {
+          table: {
             widths: ['*', '*', '*'],
             body: [
-                	[{
-							//Engines Table
-							//Column 1
-							//text: 'Port',
-              image: this.enginePort[0].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-					
-              width: 150,
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  image: this.enginePort[0].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
-						{
-							//Engines Table
-							//Column 1
-							//text: 'Starboard',
-              image: this.engineStar[0].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-						
-              width: 150,
+                  width: 150,
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  image: this.engineStar[0].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
-						{
-							//Engines Table
-							//Column 1
-							//text: 'Generator',
-              image: this.genPics[0].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-				
-              width: 150,
+                  width: 150,
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  image: this.genPics[0].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
-
-
-						],
-                ],
+                  width: 150,
+                },
+              ],
+            ],
+          },
         },
-      },
-      '\n',
-      {
-        
-        table: {
-            
+        '\n',
+        {
+          table: {
             widths: ['*', '*', '*'],
             body: [
-                	[{
-							//Engines Table
-							//Column 1
-						  //text: 'Bilge',
-              image: this.bilgePics[0].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-					
-              width: 150,
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Bilge',
+                  image: this.bilgePics[0].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
+                  width: 150,
+                },
 
-						{
-							//Engines Table
-							//Column 1
-							//text: 'MISC 1',
-              image: this.miscPics[0].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-				
-              width: 150,
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'MISC 1',
+                  image: this.miscPics[0].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
-						{
-							//Engines Table
-							//Column 1
-					  	//text: 'Misc 2',
-              image: this.miscPics[1].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-		
-              width: 150,
-             
+                  width: 150,
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Misc 2',
+                  image: this.miscPics[1].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
-
-						],
-                ],
+                  width: 150,
+                },
+              ],
+            ],
+          },
         },
-      },
-      '\n',
-      {
-        
-        table: {
-            
-          widths: ['*', '*'],
+        '\n',
+        {
+          table: {
+            widths: ['*', '*'],
 
             body: [
-                	[{
-							//Engines Table
-							//Column 1
-						  //text: 'Strainer Dirty',
-              image: this.strainerDirty[0].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-							
-              width: 150,
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Strainer Dirty',
+                  image: this.strainerDirty[0].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
-						{
-							//Engines Table
-							//Column 1
-						  //text: 'Strainer Clean',
-              image: this.strainerClean[0].data,
-							colSpan: 1,
-							alignment: 'center',
-							border: [false, false, false, false],
-							
-              width: 150,
+                  width: 150,
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Strainer Clean',
+                  image: this.strainerClean[0].data,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
 
-						},
+                  width: 150,
+                },
+              ],
+            ],
+          },
+        },
+      ],
 
-
-						],
-                ],
+      styles: {
+        header: {
+          fontSize: 12,
+          bold: true,
+          color: '#fff',
+          fillColor: '#009ca6',
+          border: [false, false, false, false],
+        },
+        subHeader: {
+          fontSize: 11,
+          alignment: 'right',
+        },
+        row: {
+          fontSize: 12,
+          alignment: 'left',
         },
       },
-	],
-
-    
-    styles: {
-      header: {
-        fontSize: 12,
-        bold: true,
-        color: '#fff',
-        fillColor: '#009ca6',
-        border: [false, false, false, false],
-  
-      },
-      subHeader: {
-        fontSize: 11,
-        alignment: 'right',
-      },
-      row: {
-        fontSize: 12,
-        alignment: 'left',
-      }
-    }
-  
-  };
+    };
     this.pdfObj = pdfMake.createPdf(docDefinition);
     
     console.log(docDefinition);
