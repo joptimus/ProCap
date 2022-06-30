@@ -18,6 +18,7 @@ import { Capacitor } from '@capacitor/core';
 import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
     }
   }), 
   provideFirestore(() => getFirestore()), provideStorage(() => getStorage())],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener, EmailComposer],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

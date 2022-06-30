@@ -106,6 +106,8 @@
     <ion-button class="color" expand="block">Submit</ion-button>
 
   </div>
-
+  <ion-button expand="full" (click)="checkAccount()">Check account</ion-button>
+  <ion-button expand="full" (click)="captureImage()">Capture image</ion-button>
+  <ion-button expand="full" *ngIf="hasAccount" (click)="openEmail()">Open Email</ion-button>
 
 </ion-content>

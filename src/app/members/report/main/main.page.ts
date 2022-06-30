@@ -9,7 +9,8 @@ import { PhotosService } from 'src/app/services/photos.service';
 import { resourceLimits } from 'worker_threads';
 import { Directory, Filesystem, Encoding } from '@capacitor/filesystem';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+import { EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
 import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { HttpClient } from '@angular/common/http';
@@ -57,6 +58,10 @@ export class MainPage implements OnInit {
   logoData = null;
   comingSoon = null;
 
+  hasAccount = false;
+  currentImage = null;
+  pdfData = null;
+
   constructor(
     // private dom: DomSanitizer,
     private authService: AuthenticationService,
@@ -68,6 +73,7 @@ export class MainPage implements OnInit {
     private loadingCtrl: LoadingController,
     private fileOpener: FileOpener,
     private http: HttpClient,
+    private emailComposer: EmailComposer,
     private data: DataService
   ) {
     this.photoService.getUserProfile().subscribe((data) => {
@@ -76,6 +82,22 @@ export class MainPage implements OnInit {
     this.genRandom();
     this.reportId();
   }
+
+  async checkAccount() {
+    this.hasAccount = await this.emailComposer.hasAccount();
+  }
+  async openEmail() {
+    const email: EmailComposerOptions = {
+      to: 'jlewan27@gmail.com',
+      cc: 'jlewan27@gmail.com',
+      attachments: [`${this.pdfData}`, 'application/pdf'],
+      subject: 'My Cool Image',
+      body: 'Hey Simon, what do you thing about this image?',
+    };
+
+    await this.emailComposer.open(email);
+  }
+
   genRandom() {
     this.reportNumber = Math.floor(Math.random() * 10000000);
   }
@@ -299,6 +321,7 @@ export class MainPage implements OnInit {
             // encoding: Encoding.UTF8
           });
           this.fileOpener.open(`${result.uri}`, 'application/pdf');
+          this.pdfData = result.uri;
   
         } catch (e) {
           console.error('Unable to write file', e);
