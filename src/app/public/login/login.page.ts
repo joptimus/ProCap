@@ -59,9 +59,11 @@ export class LoginPage implements OnInit {
     const user = await this.authService.login(this.credentials.value);
 
     await loading.dismiss();
-
+console.log("I MADE IT PASSED THE DISMISS");
+console.log("user log", user);
     if (user) {
-      this.route.navigateByUrl('/members/landing', {replaceUrl: true });
+      console.log("user success");
+      this.route.navigateByUrl('/landing', {replaceUrl: true });
     } else {
       this.showAlert('Login Failed', 'Please try again');
     }
