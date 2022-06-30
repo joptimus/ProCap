@@ -120,6 +120,10 @@ export class MainPage implements OnInit {
     this.loadComingSoon();
   }
 
+  redirectHome() {
+    this.route.navigate(['members','landing']);
+  }
+
   loadLocalAssetToBase64() {
     this.http.get('./assets/img/proCapLogo.png', { responseType: 'blob' })
       .subscribe(res => {
@@ -165,6 +169,8 @@ export class MainPage implements OnInit {
     await this.createPdf();
     await loading.dismiss();
     this.deleteAllPictures();
+    this.redirectHome();
+    this.engineComments = [""];
   }
   
   deleteAllPictures() {

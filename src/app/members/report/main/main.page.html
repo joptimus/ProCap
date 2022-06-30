@@ -57,22 +57,28 @@
   </ion-card>
 
   <ion-card>
+<div class="parentReportImages">
+  <ion-card-header class="imageCard">
+    <div class="labelHead">
+      <ion-label>
+        <ion-icon slot="start" name="camera"></ion-icon>
+        Report Images
+      </ion-label>
 
-      <ion-card-header class="imageCard">
-    
+    </div>
 
-          <ion-label>
-            <ion-icon slot="start" name="camera"></ion-icon>
-            Report Images
-          </ion-label>
+    <div class="refresh">
+
+      <ion-button class="button" fill="clear" color="light" (click)="refreshPics()">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+
+    </div>
 
 
-          <ion-button class="button" fill="clear" color="light" (click)="refreshPics()">
-            <ion-icon name="refresh"></ion-icon>
-          </ion-button>
 
-    
-      </ion-card-header>
+  </ion-card-header>
+</div>
 
     <div class="preview">
       <ion-list>
@@ -107,7 +113,6 @@
 
   </div>
   <ion-button expand="full" (click)="checkAccount()">Check account</ion-button>
-  <ion-button expand="full" (click)="captureImage()">Capture image</ion-button>
   <ion-button expand="full" *ngIf="hasAccount" (click)="openEmail()">Open Email</ion-button>
 
 </ion-content>
