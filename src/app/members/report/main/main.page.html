@@ -108,10 +108,10 @@
     </ion-col>
   </div>
 
-  <div (click)="logStuff()" id="bottom" class="color" color="#009ca6">
-    <ion-button class="color" expand="block">Submit</ion-button>
 
-  </div>
+    <ion-button id="bottom" class="color" color="#009ca6"  expand="block" [disabled]="submitBtnDisable" (click)="logStuff()">Submit</ion-button>
+
+
   <ion-button expand="full" (click)="checkAccount()">Check account</ion-button>
   <ion-button expand="full" (click)="openEmail()">Open Email</ion-button>
 

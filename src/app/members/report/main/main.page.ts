@@ -57,6 +57,7 @@ export class MainPage implements OnInit {
   pdfObj = null;
   logoData = null;
   comingSoon = null;
+  submitBtnDisable = true;
 
   hasAccount = false;
   currentImage = null;
@@ -118,10 +119,7 @@ export class MainPage implements OnInit {
     this.loadFiles();
     this.loadLocalAssetToBase64();
     this.loadComingSoon();
-  }
-
-  redirectHome() {
-    this.route.navigate(['members','landing']);
+    this.disableCheck();
   }
 
   loadLocalAssetToBase64() {
@@ -180,6 +178,7 @@ export class MainPage implements OnInit {
     });
   }
 
+  // Navigation buttons 
   engine() {
     this.route.navigate(['members', 'engines']);
   }
@@ -195,6 +194,14 @@ export class MainPage implements OnInit {
   misc() {
     this.route.navigate(['members', 'misc']);
   }
+  redirectHome() {
+    this.route.navigate(['members','landing']);
+  }
+  goToMain() {
+    this.route.navigate(['members', 'main']);
+  }
+  // End of Navigation Buttons
+
 
   async loadFiles() {
     this.images = [];
@@ -243,6 +250,7 @@ export class MainPage implements OnInit {
       });
       //Load file based on what the file starts with
       //  this.images = this.images.filter(file => file.name.startsWith(this.tabSelected));
+      this.disableCheck();
     }
   }
 
@@ -309,10 +317,32 @@ export class MainPage implements OnInit {
 
   refreshPics() {
     this.loadFiles();
+    this.disableCheck();
+    
   }
-  goToMain() {
-    this.route.navigate(['members', 'main']);
+
+
+  disableCheck() {
+    this.bilgePics = this.images.filter((file) => file.name.startsWith('BILGE'));
+    this.enginePort = this.images.filter((file) => file.name.startsWith('Port'));
+    this.engineStar = this.images.filter((file) => file.name.startsWith('Starboard'));
+    this.engineMain = this.images.filter((file) => file.name.startsWith('Main'));
+    this.genPics = this.images.filter((file) => file.name.startsWith('Gen'));
+    this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
+    this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
+    this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
+    
+    if (this.bilgePics.length == 1 && this.enginePort.length == 1  && this.engineStar.length == 1  && this.genPics.length == 1  && this.strainerClean.length == 1  && this.strainerDirty.length == 1  &&  this.miscPics.length == 2 ) {
+                  this.submitBtnDisable = false;
+                } else {
+                  this.submitBtnDisable = true;
+                }
+                console.log('disable check value : ', this.submitBtnDisable);
   }
+
+//
+
+
   downloadPdf() {
     if (this.platform.is('cordova')) {
       this.pdfObj.getBase64(async (data) => {
