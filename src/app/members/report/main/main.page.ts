@@ -124,7 +124,7 @@ export class MainPage implements OnInit {
     this.loadLocalAssetToBase64();
     this.loadComingSoon();
     this.disableCheck();
-    console.log(this.bilgePics)
+    console.log(this.clientLastName);
   }
 
   loadLocalAssetToBase64() {
@@ -607,7 +607,7 @@ export class MainPage implements OnInit {
     if (this.platform.is('cordova')) {
       this.pdfObj.getBase64(async (data) => {
         try {
-          let path = `pdf/${this.reportFinal + ' ' +this.clientLastName}.pdf`;
+          let path = `pdf/${this.reportFinal + ' ' + this.data.clientLast}.pdf`;
   
           const result = await Filesystem.writeFile({
             path,

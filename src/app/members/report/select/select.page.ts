@@ -19,7 +19,7 @@ export class SelectPage implements OnInit {
   vesselSelected: boolean = false;
   baronSelected: boolean = false;
   selectedOption = true;
-  custVessel = [];
+  clientFullName = [];
   dateText = [];
   clientId = [];
   clientLast = [];
@@ -37,36 +37,32 @@ export class SelectPage implements OnInit {
 
   ngOnInit() {
     this.client = this.data.clients;
-    this.custVessel = this.data.customer;
+    this.clientFullName = this.data.customer;
     this.clientLast = this.data.clientLast;
     console.log('Address?', this.client);
-  }
-
-  selected(event) {
-    console.log('selected event : ', event);
   }
 
   next() {
     this.route.navigate(['members', 'main']);
   }
-  disable(event) {
+  selected(event) {
     // this.selectedOption = false;
     this.clientLast = event.detail.value.lName;
     console.log('client L name : ', this.clientLast);
 
     console.log('this is selectedOption : ', this.selectedOption);
     console.log('logging this.clients ',this.clients);
-    this.custVessel = event.detail.value;
+    this.clientFullName = event.detail.value.fullName;
     console.log('event :', event.detail);
-    this.data.customer = event.detail.value;
+    this.data.customer = event.detail.value.fullName;
     this.getClientById(event);
-    console.log('cust vessel :', this.custVessel);
+    console.log('clientFullName :', this.clientFullName);
     console.log('event :', event);
     console.log('dataservice :', this.data.customer);
 
   }
   updateValues() {
-    this.data.customer = this.custVessel;
+    this.data.customer = this.clientFullName;
   }
 
   async getClientById(client: Client) {
