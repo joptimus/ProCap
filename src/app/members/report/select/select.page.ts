@@ -22,6 +22,7 @@ export class SelectPage implements OnInit {
   custVessel = [];
   dateText = [];
   clientId = [];
+  clientLast = [];
 
   constructor(
     private route: Router,
@@ -37,7 +38,12 @@ export class SelectPage implements OnInit {
   ngOnInit() {
     this.client = this.data.clients;
     this.custVessel = this.data.customer;
-    console.log('Address?', this.clients);
+    this.clientLast = this.data.clientLast;
+    console.log('Address?', this.client);
+  }
+
+  selected(event) {
+    console.log('selected event : ', event);
   }
 
   next() {
@@ -45,11 +51,11 @@ export class SelectPage implements OnInit {
   }
   disable(event) {
     // this.selectedOption = false;
-    this.clientService.getClientById(event).subscribe((res) => {
-      console.log('2tiems', res, event);
-    });
+    this.clientLast = event.detail.value.lName;
+    console.log('client L name : ', this.clientLast);
 
-    console.log('csSer', this.clientService.getClientById(event));
+    console.log('this is selectedOption : ', this.selectedOption);
+    console.log('logging this.clients ',this.clients);
     this.custVessel = event.detail.value;
     console.log('event :', event.detail);
     this.data.customer = event.detail.value;
@@ -57,6 +63,7 @@ export class SelectPage implements OnInit {
     console.log('cust vessel :', this.custVessel);
     console.log('event :', event);
     console.log('dataservice :', this.data.customer);
+
   }
   updateValues() {
     this.data.customer = this.custVessel;

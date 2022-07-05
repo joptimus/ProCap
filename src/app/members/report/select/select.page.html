@@ -17,9 +17,8 @@
     </ion-item>
     <ion-item>
       <ion-label>Customer Name</ion-label>
-      <ion-select [(ngModel)]="selectedOption"  interface="action-sheet"
-        placeholder="Select One" (ionChange)="disable($event)" >
-      <ion-select-option  *ngFor="let client of clients" [value]="client.fullName">{{ client.fullName }}</ion-select-option>
+      <ion-select [(ngModel)]="selectedOption"  interface="action-sheet" placeholder="Select One" (ionChange)="disable($event)" >
+      <ion-select-option *ngFor="let client of clients" [value]="client">{{ client.fullName }}</ion-select-option>
 
       </ion-select>
     </ion-item>

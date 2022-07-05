@@ -59,6 +59,7 @@ export class MainPage implements OnInit {
   comingSoon = null;
   submitBtnDisable = true;
   pics = null;
+  clientLastName = [];
 
   hasAccount = false;
   currentImage = null;
@@ -117,6 +118,7 @@ export class MainPage implements OnInit {
     this.customer = this.data.customer;
     this.vessel = this.data.vessel;
     this.image = this.data.photos;
+    this.clientLastName = this.data.clientLast;
     console.log('vessel = ' + this.vessel);
     this.loadFiles();
     this.loadLocalAssetToBase64();
@@ -605,7 +607,7 @@ export class MainPage implements OnInit {
     if (this.platform.is('cordova')) {
       this.pdfObj.getBase64(async (data) => {
         try {
-          let path = `pdf/${this.reportFinal}.pdf`;
+          let path = `pdf/${this.reportFinal + ' ' +this.clientLastName}.pdf`;
   
           const result = await Filesystem.writeFile({
             path,
@@ -616,8 +618,6 @@ export class MainPage implements OnInit {
           });
           this.fileOpener.open(`${result.uri}`, 'application/pdf');
           this.pdfData = result.uri;
-          console.log('The file path is : ',path);
-          console.log('The file data is : ',data);
   
         } catch (e) {
           console.error('Unable to write file', e);
@@ -626,6 +626,7 @@ export class MainPage implements OnInit {
     } else {
       // On a browser simply use download!
       this.pdfObj.download();
+      
     }
   }
 
