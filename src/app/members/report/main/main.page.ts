@@ -95,8 +95,8 @@ export class MainPage implements OnInit {
       to: 'jlewan27@gmail.com',
       cc: 'jlewan27@gmail.com',
       attachments: [`${this.pdfData}`, 'application/pdf'],
-      subject: 'My Cool Image',
-      body: 'Hey Simon, what do you thing about this image?',
+      subject: this.reportFinal,
+      body: 'Hey Bob, what do you think about this?',
     };
 
     await this.emailComposer.open(email);
@@ -607,7 +607,7 @@ export class MainPage implements OnInit {
     if (this.platform.is('cordova')) {
       this.pdfObj.getBase64(async (data) => {
         try {
-          let path = `pdf/${this.reportFinal + ' ' + this.data.clientLast}.pdf`;
+          let path = `pdf/${this.reportFinal}.pdf`;
   
           const result = await Filesystem.writeFile({
             path,
