@@ -93,7 +93,7 @@ export class MainPage implements OnInit {
     const email: EmailComposerOptions = {
       to: 'jlewan27@gmail.com',
       cc: 'jlewan27@gmail.com',
-     // attachments: [`${this.pdfData}`, 'application/pdf'],
+      attachments: [`${this.pdfData}`, 'application/pdf'],
       subject: 'My Cool Image',
       body: 'Hey Simon, what do you thing about this image?',
     };
@@ -616,6 +616,8 @@ export class MainPage implements OnInit {
           });
           this.fileOpener.open(`${result.uri}`, 'application/pdf');
           this.pdfData = result.uri;
+          console.log('The file path is : ',path);
+          console.log('The file data is : ',data);
   
         } catch (e) {
           console.error('Unable to write file', e);
