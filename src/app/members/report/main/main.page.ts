@@ -617,6 +617,7 @@ export class MainPage implements OnInit {
             // encoding: Encoding.UTF8
           });
           this.pdfData = result.uri;
+          this.checkAccount();
 
           if (this.hasAccount == true) {
             this.openEmail();
