@@ -164,13 +164,8 @@ export class MainPage implements OnInit {
     // console.log(this.data.clients);
     // console.log(this.data.photos);
     // console.log(this.reportFinal);
-    const loading = await this.loadingController.create();
-    await loading.present();
-    await this.createPdf();
-    await loading.dismiss();
-    this.deleteAllPictures();
-    this.redirectHome();
-    this.engineComments = [""];
+    this.engineHoursCheck();
+   
   }
   
   deleteAllPictures() {
@@ -204,6 +199,8 @@ export class MainPage implements OnInit {
   }
   // End of Navigation Buttons
 
+
+  // Images Start ///////////////////////////////////////////////////////////////////////////
   async selectPortImage() {
     const image = await Camera.getPhoto({
       quality: 50,
@@ -504,8 +501,11 @@ export class MainPage implements OnInit {
       directory: Directory.Data,
       path: file.path,
     });
-    this.loadFiles();
+    this.refreshPics();
   }
+
+  // Images End /////////////////////////////////////////////////////////////////////
+
 
   refreshPics() {
     this.loadFiles();
@@ -532,8 +532,73 @@ export class MainPage implements OnInit {
                 console.log('disable check value : ', this.submitBtnDisable);
   }
 
-//
+  async engineHoursCheck() {
 
+    if( this.data.engineHoursPort[0].hours == 0) {
+      this.showPortAlert();
+    } else if (this.data.engineHoursStarboard[0].hours ==0)  { 
+      this.showStarAlert();
+    } else if (this.data.genHours[0].hours == 0) {
+      this.showGenAlert();
+    } else {
+      const loading = await this.loadingController.create();
+      await loading.present();
+      await this.createPdf();
+      await loading.dismiss();
+      this.deleteAllPictures();
+      this.redirectHome();
+      this.engineComments = [""];
+    }
+
+  }
+
+  async showPortAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: 'Port Engine Missing Data',
+      message: 'There are no hours entered for the Port Engine.  Please enter hours then resubmit',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => { this.route.navigate(['members', 'engines'])
+        }
+    }]
+    });
+
+    await alert.present();
+  }
+
+  async showStarAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: 'Starboard Engine Missing Data',
+      message: 'There are no hours entered for the Starboard Engine.  Please enter hours then resubmit',
+      buttons:  [
+        {
+          text: 'OK',
+          handler: () => { this.route.navigate(['members', 'engines'])
+        }
+    }]
+    });
+
+    await alert.present();
+  }
+
+  async showGenAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: 'Generator Engine Missing Data',
+      message: 'There are no hours entered for the Generator Engine.  Please enter hours then resubmit',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => { this.route.navigate(['members', 'generator'])
+        }
+    }]
+    });
+
+    await alert.present();
+  }
 
   downloadPdf() {
     if (this.platform.is('cordova')) {

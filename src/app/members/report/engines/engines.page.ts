@@ -36,6 +36,8 @@ export class EnginesPage implements OnInit {
   engineHoursPort;
   engineHoursStarboard;
   engineHoursMain;
+  portHours = [];
+  starHours = [];
   type: string = 'Port';
   myInput: any;
   tabSelected: string;
@@ -60,6 +62,8 @@ export class EnginesPage implements OnInit {
     this.engineHoursMain = this.data.engineHoursMain;
     this.engineHoursPort = this.data.engineHoursPort;
     this.engineHoursStarboard = this.data.engineHoursStarboard;
+    this.portHours = this.data.engineHoursPort;
+    this.starHours = this.data.engineHoursStarboard;
 
     this.loadFiles();
     console.log(this.engineHoursStarboard[0]);
@@ -214,17 +218,22 @@ export class EnginesPage implements OnInit {
   }
 
   updateEngineHoursStarboard(event) {
-    this.engineHoursStarboard = event.target.value;
-    this.data.engineHoursStarboard[0].hours = this.engineHoursStarboard;
-    console.log('dataService engineHoursStarboard value = ', this.data.engineHoursStarboard[0].hours);
+    this.starHours[0].hours = event.target.value;
+    this.data.engineHoursStarboard= this.starHours;
+    console.log('dataService starHours value = ', this.starHours[0].hours);
   }
 
   updateEngineHoursPort(event) {
-    this.engineHoursPort = event.target.value;
-    this.data.engineHoursPort[0].hours = this.engineHoursPort;
-    console.log('dataService engineHoursPort value = ', this.data.engineHoursPort[0].hours);
+    this.portHours[0].hours = event.target.value;
+    this.data.engineHoursPort = this.portHours;
+    console.log('dataService engineHoursPort value = ', this.portHours[0].hours);
+    console.log('event target value : ', event.target.value);
   }
-
+  // updateGenHours(event) {
+  //   this.genHours[0].hours = event.target.value;
+  //   this.data.genHours = this.genHours;
+  //   console.log('dataService genHours = ', this.data.genHours[0].hours);
+  // }
 
   log() {
     console.log('log again', this.enginePort);

@@ -81,3 +81,10 @@ order: 2;
   flex-direction: row;
   justify-content: space-between;
 }
+
+.arrowButton {
+  display: flex;
+  vertical-align: middle;
+  align-self: center;
+  padding: 0;
+}

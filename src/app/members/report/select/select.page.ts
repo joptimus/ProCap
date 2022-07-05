@@ -64,8 +64,6 @@ export class SelectPage implements OnInit {
 
   async getClientById(client: Client) {
     (res) => {
-      console.log('i am here', client);
-      console.log('i am here', res);
     };
   }
 
@@ -73,6 +71,7 @@ export class SelectPage implements OnInit {
     console.log('is vesselSelected : ', value);
     const bools = value.target.value;
     this.data.vessel = value.target.value;
+    console.log('data.vessel : ', value.target.value);
     if (bools == 'What the F?') {
       this.vesselSelected = true;
       this.skidSelected = false;
