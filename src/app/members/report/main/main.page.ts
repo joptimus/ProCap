@@ -1939,7 +1939,7 @@ export class MainPage implements OnInit {
     };
     this.pdfObj = pdfMake.createPdf(docDefinition);
     
-    console.log(docDefinition);
+    //console.log(docDefinition);
     this.downloadPdf();
   }
 }
