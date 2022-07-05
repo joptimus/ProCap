@@ -58,6 +58,7 @@ export class MainPage implements OnInit {
   logoData = null;
   comingSoon = null;
   submitBtnDisable = true;
+  pics = null;
 
   hasAccount = false;
   currentImage = null;
@@ -120,6 +121,7 @@ export class MainPage implements OnInit {
     this.loadLocalAssetToBase64();
     this.loadComingSoon();
     this.disableCheck();
+    console.log(this.bilgePics)
   }
 
   loadLocalAssetToBase64() {
@@ -202,6 +204,196 @@ export class MainPage implements OnInit {
   }
   // End of Navigation Buttons
 
+  async selectPortImage() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos
+    });
+    console.log(image);
+    if (image) {
+      this.savePortImage(image);
+    }
+  }
+
+  async savePortImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+    console.log(base64Data);
+
+    const fileName = 'Port' + new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data
+    });
+    console.log('saved: ', savedFile);
+    this.loadFiles();
+  }
+
+  async selectStarImage() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos
+    });
+    console.log(image);
+    if (image) {
+      this.saveStarImage(image);
+    }
+  }
+
+  async saveStarImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+    console.log(base64Data);
+
+    const fileName = 'Starboard' + new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data
+    });
+    console.log('saved: ', savedFile);
+    this.loadFiles();
+  }
+
+  async selectGenImage() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos
+    });
+    console.log(image);
+    if (image) {
+      this.saveGenImage(image);
+    }
+  }
+
+  async saveGenImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+    console.log(base64Data);
+
+    const fileName = 'Gen' + new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data
+    });
+    console.log('saved: ', savedFile);
+    this.loadFiles();
+  }
+
+
+  async selectDirtyImage() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos,
+    });
+    console.log(image);
+    if (image) {
+      this.saveDirtyImage(image);
+    }
+  }
+
+  async saveDirtyImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+    console.log(base64Data);
+
+    const fileName = 'HVAC-Dirty' + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data,
+    });
+    console.log('saved: ', savedFile);
+    this.loadFiles();
+  }
+
+  async selectCleanImage() {
+    const image = await Camera.getPhoto({
+      quality: 10,
+      width: 175,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos,
+    });
+    console.log(image);
+    if (image) {
+      this.saveCleanImage(image);
+    }
+  }
+
+  async saveCleanImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+    console.log(base64Data);
+
+    const fileName = 'HVAC-Clean' + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data,
+    });
+    console.log('saved: ', savedFile);
+    this.loadFiles();
+  }
+
+  async selectBilgeImage() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos,
+    });
+    console.log(image);
+    if (image) {
+      this.saveBilgeImage(image);
+    }
+  }
+
+  async saveBilgeImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+    console.log(base64Data);
+
+    const fileName = 'BILGE' + new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data,
+    });
+    console.log('saved: ', savedFile);
+    this.loadFiles();
+  }
+
+  async selectMiscImage() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Photos,
+    });
+    console.log(image);
+    if (image) {
+      this.saveMiscImage(image);
+    }
+  }
+
+  async saveMiscImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+    console.log(base64Data);
+
+    const fileName = 'MISC' + new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data,
+    });
+    console.log('saved: ', savedFile);
+    this.loadFiles();
+  }
 
   async loadFiles() {
     this.images = [];
