@@ -48,6 +48,7 @@ export class SelectPage implements OnInit {
   selected(event) {
     // this.selectedOption = false;
     this.clientLast = event.detail.value.lName;
+    this.data.clientLast = event.detail.value.lName;
     console.log('client L name : ', this.clientLast);
 
     console.log('this is selectedOption : ', this.selectedOption);
