@@ -10,7 +10,7 @@ import { resourceLimits } from 'worker_threads';
 import { Directory, Filesystem, Encoding } from '@capacitor/filesystem';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
-import { EmailComposerOptions } from '@awesome-cordova-plugins/email-composer';
+import { EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
 import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { HttpClient } from '@angular/common/http';
@@ -93,7 +93,7 @@ export class MainPage implements OnInit {
     const email: EmailComposerOptions = {
       to: 'jlewan27@gmail.com',
       cc: 'jlewan27@gmail.com',
-      attachments: [`${this.pdfData}`, 'application/pdf'],
+     // attachments: [`${this.pdfData}`, 'application/pdf'],
       subject: 'My Cool Image',
       body: 'Hey Simon, what do you thing about this image?',
     };
