@@ -92,10 +92,10 @@ export class MainPage implements OnInit {
   }
   async openEmail() {
     const email: EmailComposerOptions = {
-      to: 'jlewan27@gmail.com',
+      to: 'captbobf@procaptainstaffing.com',
       cc: 'jlewan27@gmail.com',
       attachments: [`${this.pdfData}`, 'application/pdf'],
-      subject: this.reportFinal,
+      subject: 'Report # ' + this.reportFinal,
       body: 'Hey Bob, what do you think about this?',
     };
 
@@ -616,8 +616,13 @@ export class MainPage implements OnInit {
             recursive: true
             // encoding: Encoding.UTF8
           });
-          this.fileOpener.open(`${result.uri}`, 'application/pdf');
           this.pdfData = result.uri;
+
+          if (this.hasAccount == true) {
+            this.openEmail();
+          } else {
+          this.fileOpener.open(`${result.uri}`, 'application/pdf');
+          }
   
         } catch (e) {
           console.error('Unable to write file', e);
