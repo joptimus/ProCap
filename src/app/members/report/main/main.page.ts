@@ -124,6 +124,7 @@ export class MainPage implements OnInit {
     this.loadLocalAssetToBase64();
     this.loadComingSoon();
     this.disableCheck();
+    this.checkAccount();
     console.log(this.clientLastName);
   }
 
@@ -617,7 +618,7 @@ export class MainPage implements OnInit {
             // encoding: Encoding.UTF8
           });
           this.pdfData = result.uri;
-          this.checkAccount();
+          
 
           if (this.hasAccount == true) {
             this.openEmail();
