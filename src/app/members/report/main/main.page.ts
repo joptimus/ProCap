@@ -87,6 +87,7 @@ export class MainPage implements OnInit {
 
   async checkAccount() {
     this.hasAccount = await this.emailComposer.hasAccount();
+    console.log('Does this have an account? : ', this.hasAccount);
   }
   async openEmail() {
     const email: EmailComposerOptions = {
@@ -466,7 +467,7 @@ export class MainPage implements OnInit {
       data: base64Data,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    console.log('saved: ', fileName);
     this.loadFiles();
   }
 

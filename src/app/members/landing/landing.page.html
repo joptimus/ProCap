@@ -1,34 +1,30 @@
 <ion-header>
-  <ion-toolbar color="#009ca6">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
+	<ion-toolbar color="#009ca6">
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title>Home</ion-title>
+	</ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-row class="ion-justify-content-start">
-  <ion-card (click)="startReport()">
-    <div class="icon">
-      <ion-icon name="newspaper-outline"></ion-icon>
-    </div>
-    <div id="label">
-      <ion-label>Start a new inspection</ion-label>
-    </div>
-  </ion-card>
-
-  <ion-card (click)="admin()">
-    <div class="icon">
-      <ion-icon name="settings"></ion-icon>
-    </div>
-    <div id="label">
-      <ion-label>Admin</ion-label>
-    </div>
-  </ion-card>
-</ion-row>
-
-<ion-button expand="full" (click)="logout()">Sign out</ion-button>
-
-<div class="appVersion">{{currentApplicationVersion}}</div>
+	<ion-row class="ion-justify-content-start">
+		<ion-card (click)="startReport()">
+			<div class="icon">
+				<ion-icon name="newspaper-outline"></ion-icon>
+			</div>
+			<div id="label">
+				<ion-label>Start a new inspection</ion-label>
+			</div>
+		</ion-card>
+		<ion-card (click)="admin()">
+			<div class="icon">
+				<ion-icon name="settings"></ion-icon>
+			</div>
+			<div id="label">
+				<ion-label>Admin</ion-label>
+			</div>
+		</ion-card>
+	</ion-row>
+	<ion-button expand="full" (click)="logout()">Sign out</ion-button>
+	<div class="appVersion">{{currentApplicationVersion}}</div>
 </ion-content>

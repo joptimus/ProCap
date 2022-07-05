@@ -1,56 +1,43 @@
 <ion-header>
-  <ion-toolbar color='#009ca6'>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>AC System</ion-title>
-</ion-toolbar>
+	<ion-toolbar color='#009ca6'>
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title>AC System</ion-title>
+	</ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-card>
-  <ion-list>
-    <ion-item *ngFor="let hvac of hvacData" lines="none">
-      <ion-label>{{ hvac.label}}</ion-label>
-      <ion-checkbox slot="end" [(ngModel)]="hvac.isChecked" (ionChange)="log()"></ion-checkbox>
-    </ion-item>
-  </ion-list>
-</ion-card>
-
-<ion-card>
-
-  <ion-toolbar color="white">
-    <ion-button fill="clear" [disabled]="dirtyPicDisable" expand="full" color="light" size="default" (click)="selectDirtyImage()">
-      <ion-icon slot="start" name="add-outline"></ion-icon>
-      Upload Dirty Image
-    </ion-button>
-    <ion-button fill="clear" [disabled]="cleanPicDisable" expand="full" color="light" (click)="selectCleanImage()">
-      <ion-icon slot="start" name="add-outline"></ion-icon>
-      Upload Clean Image
-    </ion-button>
-  </ion-toolbar>
-  <ion-card-header>
-
-    <ion-icon name="images-outline"></ion-icon>
-    PICTURES
-  </ion-card-header>
-<div class="listBorder">
-  <div class="preview">
-    <ion-list>
-      <ion-item *ngFor="let file of images; let i=index">
-        <ion-thumbnail slot="start">
-          <ion-img [src]="file.data"></ion-img>
-        </ion-thumbnail>
-        <ion-label class="ion-text-wrap">
-          {{ file.name }}
-        </ion-label>
-
-        <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
-  </div>
-</ion-card>
+	<ion-card>
+		<ion-list>
+			<ion-item *ngFor="let hvac of hvacData" lines="none">
+				<ion-label>{{ hvac.label}}</ion-label>
+				<ion-checkbox slot="end" [(ngModel)]="hvac.isChecked" (ionChange)="log()"></ion-checkbox>
+			</ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card>
+		<ion-toolbar color="white">
+			<ion-button fill="clear" [disabled]="dirtyPicDisable" expand="full" color="light" size="default" (click)="selectDirtyImage()">
+				<ion-icon slot="start" name="add-outline"></ion-icon> Upload Dirty Image </ion-button>
+			<ion-button fill="clear" [disabled]="cleanPicDisable" expand="full" color="light" (click)="selectCleanImage()">
+				<ion-icon slot="start" name="add-outline"></ion-icon> Upload Clean Image </ion-button>
+		</ion-toolbar>
+		<ion-card-header>
+			<ion-icon name="images-outline"></ion-icon> PICTURES </ion-card-header>
+		<div class="listBorder">
+			<div class="preview">
+				<ion-list>
+					<ion-item *ngFor="let file of images; let i=index">
+						<ion-thumbnail slot="start">
+							<ion-img [src]="file.data"></ion-img>
+						</ion-thumbnail>
+						<ion-label class="ion-text-wrap"> {{ file.name }} </ion-label>
+						<ion-button slot="end" fill="clear" (click)="deleteImage(file)">
+							<ion-icon slot="icon-only" name="trash"></ion-icon>
+						</ion-button>
+					</ion-item>
+				</ion-list>
+			</div>
+		</div>
+	</ion-card>
 </ion-content>

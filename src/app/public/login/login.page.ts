@@ -27,6 +27,7 @@ export class LoginPage implements OnInit {
     get password() {
       return this.credentials.get('password');
     }
+
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,10 +35,11 @@ export class LoginPage implements OnInit {
     });
     console.log("HEY I LOADED");
   }
+
   async register() {
+
     const loading = await this.loadingController.create();
     await loading.present();
-
 
     const user = await this.authService.register(this.credentials.value);
     await loading.dismiss();
@@ -48,19 +50,15 @@ export class LoginPage implements OnInit {
       this.showAlert('Registration Failed', 'Please try again');
     }
   }
-  async login() {
 
-    console.log('this is start of login');
+  async login() {
 
     const loading = await this.loadingController.create();
     await loading.present();
 
-
     const user = await this.authService.login(this.credentials.value);
-
     await loading.dismiss();
-console.log("I MADE IT PASSED THE DISMISS");
-console.log("user log", user);
+
     if (user) {
       console.log("user success");
       this.route.navigateByUrl('/landing', {replaceUrl: true });
@@ -68,6 +66,7 @@ console.log("user log", user);
       this.showAlert('Login Failed', 'Please try again');
     }
   }
+
   async showAlert(header, message) {
     const alert = await this.alertController.create({
       header,
@@ -76,5 +75,4 @@ console.log("user log", user);
     });
     await alert.present();
   }
-
 }

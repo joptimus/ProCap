@@ -15,13 +15,15 @@ export class LandingPage implements OnInit {
   ngOnInit() {
     this.currentApplicationVersion = environment.appVersion;
   }
+
   startReport() {
     this.route.navigate(['members','select']);
   }
+
   admin() {
     this.route.navigate(['options']);
   }
-
+  
   async logout() {
     await this.authService.logout();
     this.route.navigateByUrl('/', { replaceUrl: true });

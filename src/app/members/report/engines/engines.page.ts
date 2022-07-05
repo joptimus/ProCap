@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import {
-  Camera,
-  CameraResultType,
-  CameraSource,
-  Photo,
-} from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { getHours } from 'src/app/model/localFile';
@@ -70,13 +65,7 @@ export class EnginesPage implements OnInit {
     this.loadFilesAgain();
     // this.images = this.photo.getImages();
   }
-  // async selectImage(){
-  //   this.photo.selectImage();
-  //   this.images = this.photo.getImages();
-  // }
-  // async loadFiles(){
-  //   this.photo.loadFiles();
-  // }
+
   loadFilesAgain() {
     console.log('loaded files again');
     this.tabSelected = 'Port';
@@ -229,11 +218,6 @@ export class EnginesPage implements OnInit {
     console.log('dataService engineHoursPort value = ', this.portHours[0].hours);
     console.log('event target value : ', event.target.value);
   }
-  // updateGenHours(event) {
-  //   this.genHours[0].hours = event.target.value;
-  //   this.data.genHours = this.genHours;
-  //   console.log('dataService genHours = ', this.data.genHours[0].hours);
-  // }
 
   log() {
     console.log('log again', this.enginePort);

@@ -213,6 +213,7 @@ export class HvacPage implements OnInit {
     let padding;
     let inBytes;
     let base64StringLength;
+    
     if (base64String.endsWith('==')) {
       padding = 2;
     } else if (base64String.endsWith('=')) {
