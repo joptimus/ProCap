@@ -14,6 +14,7 @@ import { EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ng
 import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { HttpClient } from '@angular/common/http';
+import { DbDataService } from 'src/app/services/db-data.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -60,6 +61,7 @@ export class MainPage implements OnInit {
   submitBtnDisable = true;
   pics = null;
   clientLastName = [];
+  emailResponse = [];
 
   hasAccount = false;
   currentImage = null;
@@ -77,14 +79,23 @@ export class MainPage implements OnInit {
     private fileOpener: FileOpener,
     private http: HttpClient,
     private emailComposer: EmailComposer,
-    private data: DataService
+    private data: DataService,
+    private dbData: DbDataService
   ) {
     this.photoService.getUserProfile().subscribe((data) => {
       this.profile = data;
     });
+    this.dbData.getSettingsValues().subscribe(response => {
+      console.log(response);
+      this.emailResponse = response;
+      console.log('this.emailresponse = ', this.emailResponse);
+      console.log('this.emailresponse = ', this.emailResponse[0].value);
+    });
     this.genRandom();
     this.reportId();
   }
+
+
 
   async checkAccount() {
     this.hasAccount = await this.emailComposer.hasAccount();
@@ -92,11 +103,11 @@ export class MainPage implements OnInit {
   }
   async openEmail() {
     const email: EmailComposerOptions = {
-      to: 'captbobf@procaptainstaffing.com',
+      to: this.emailResponse[0].value,
       cc: 'jlewan27@gmail.com',
       attachments: [`${this.pdfData}`, 'application/pdf'],
       subject: 'Report # ' + this.reportFinal,
-      body: 'Hey Bob, what do you think about this?',
+      body: 'This insepection report has been completed.',
     };
 
     await this.emailComposer.open(email);
@@ -120,6 +131,7 @@ export class MainPage implements OnInit {
     this.image = this.data.photos;
     this.clientLastName = this.data.clientLast;
     console.log('vessel = ' + this.vessel);
+
     this.loadFiles();
     this.loadLocalAssetToBase64();
     this.loadComingSoon();

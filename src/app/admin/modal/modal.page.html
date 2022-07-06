@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="secondary">
+  <ion-toolbar color=#009ca6>
     <ion-title>Details</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,32 +13,52 @@
  
     <ion-item>
       <ion-label position="stacked">Vessel Name</ion-label>
-      <ion-textarea [(ngModel)]="client.vesselName" rows="8"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.vesselName" rows="1"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Street Address</ion-label>
-      <ion-textarea [(ngModel)]="client.address" rows="8"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.address" rows="1"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">City</ion-label>
-      <ion-textarea [(ngModel)]="client.city" rows="8"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.city" rows="1"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Client Email</ion-label>
-      <ion-textarea [(ngModel)]="client.email" rows="8"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.email" rows="1"></ion-textarea>
     </ion-item>
+
+    <ion-button class="btnColor" expand="block" (click)="updateClient()">
+      <ion-icon name="save" slot="start"></ion-icon>
+      Update
+    </ion-button>
+    <ion-button expand="block" color="danger" (click)="deleteClient()">
+      <ion-icon name="trash" slot="start"></ion-icon>
+      Delete
+    </ion-button>
+  </div>
+
+  <div *ngIf="setting">
+    <ion-item>
+      <ion-label position="stacked">Db Name</ion-label>
+      <ion-input [(ngModel)]="setting.name"></ion-input>
+    </ion-item>
+ 
+    <ion-item>
+      <ion-label position="stacked">DB Value</ion-label>
+      <ion-textarea [(ngModel)]="setting.value" rows="8"></ion-textarea>
+    </ion-item>
+
+    <ion-button  class="btnColor" expand="block" (click)="updateSetting()">
+      <ion-icon name="save" slot="start"></ion-icon>
+      Update
+    </ion-button>
+
   </div>
  
-  <ion-button expand="block" color="success" (click)="updateClient()">
-    <ion-icon name="save" slot="start"></ion-icon>
-    Update
-  </ion-button>
-  <ion-button expand="block" color="danger" (click)="deleteClient()">
-    <ion-icon name="trash" slot="start"></ion-icon>
-    Delete
-  </ion-button>
+ 
  
 </ion-content>

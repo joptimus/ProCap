@@ -1,6 +1,6 @@
 {
   "name": "pro-cap",
-  "version": "0.0.2",
+  "version": "1.6.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -8,6 +8,7 @@
     "start": "ng serve",
     "prebuild": "npm --no-git-tag-version version patch",
     "build": "ng build",
+    "postbuild": "npm --no-git-tag-version version patch",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

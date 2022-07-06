@@ -20,7 +20,9 @@ export class OptionsPage implements OnInit {
   goToUsers() {
     this.route.navigate(['users']);
   }
-
+  goToSettings() {
+    this.route.navigate(['settings']);
+  }
 
 
 }

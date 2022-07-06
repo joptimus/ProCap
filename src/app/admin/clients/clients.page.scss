@@ -1,3 +1,19 @@
 ion-toolbar {
     background-color: #009ca6 !important;
 }
+.addButton {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: #009ca6 !important;
+}
+ion-icon {
+    width: 20px;
+    padding-right: 10px;
+}
+ion-list-header {
+    margin-bottom: 20px;
+}
+.btnColor {
+    --color: #fff;
+    --background: #009ca6 !important;
+}

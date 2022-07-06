@@ -32,6 +32,10 @@ ion-icon {
     flex-wrap: nowrap;
 }
 .appVersion {
+
+    position: fixed;
+    bottom: 0;
+    vertical-align: bottom;
     width: 100vw;
     padding: 10px;
     background-color: #009ca6;

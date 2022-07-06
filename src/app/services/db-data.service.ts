@@ -26,6 +26,12 @@ export interface Client {
   email: string;
 }
 
+export interface Settings {
+  id?: string;
+  name: string;
+  value: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -52,6 +58,35 @@ export class DbDataService {
     return deleteDoc(noteDocRef);
   }
 
+  getSettingsValues(): Observable<Settings[]> {
+      const ref = collection(this.firestore,'settings');
+      return collectionData(ref, { idField: 'id' }) as Observable<Settings[]>;
+  }
+
+  getSettingsValuesById(id): Observable<Settings> {
+    const ref = doc(this.firestore,`settings/${id}`);
+    return docData(ref, { idField: 'id' }) as Observable<Settings>;
+}
+
+  addSettingsValue(setting: Settings) {
+    const ref = collection(this.firestore, 'settings');
+    return addDoc(ref, setting);
+
+  }
+
+  deleteSettingsValue(setting: Settings) {
+    const ref = doc(this.firestore, `settings/${setting.id}`);
+    return deleteDoc(ref);
+
+  }
+
+  updateSettingsValue(setting: Settings) {
+    const ref = doc(this.firestore, `settings/${setting.id}`);
+    return updateDoc(ref, {name: setting.name, value: setting.value });
+
+  }
+
+
   updateClient(client: Client) {
     const noteDocRef = doc(this.firestore, `clients/${client.id}`);
     return updateDoc(noteDocRef, {
@@ -67,5 +102,11 @@ export class DbDataService {
       lastInspec: client.lastInspec,
       email: client.email,
     });
+
+
+
+
+
+
   }
 }
