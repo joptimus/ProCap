@@ -67,6 +67,9 @@ export class MainPage implements OnInit {
   currentImage = null;
   pdfData = null;
 
+
+  base64Str: any;
+  kbytes: number;
   constructor(
     // private dom: DomSanitizer,
     private authService: AuthenticationService,
@@ -91,6 +94,28 @@ export class MainPage implements OnInit {
     });
     this.genRandom();
     this.reportId();
+  }
+
+  calculateImageSize(base64String) {
+    let padding;
+    let inBytes;
+    let base64StringLength;
+    
+    if (base64String.endsWith('==')) {
+      padding = 2;
+    } else if (base64String.endsWith('=')) {
+      padding = 1;
+    } else {
+      padding = 0;
+    }
+
+    base64StringLength = base64String.length;
+    console.log(base64StringLength);
+    inBytes = (base64StringLength / 4) * 3 - padding;
+    console.log(inBytes);
+    this.kbytes = inBytes / 1000;
+    console.log(this.kbytes);
+    return this.kbytes;
   }
 
   async checkAccount() {
@@ -242,20 +267,26 @@ export class MainPage implements OnInit {
 
   async selectStarImage() {
     const image = await Camera.getPhoto({
-      quality: 50,
-      allowEditing: false,
+      quality: 10,
+      allowEditing: true,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
+      source: CameraSource.Camera
     });
     console.log(image);
     if (image) {
+      
       this.saveStarImage(image);
     }
+  }
+  async statApplicationDirectory() {
+    const info = await Filesystem.stat({path: '/', directory: Directory.Data});
+    console.log('Stat Info: ', info);
   }
 
   async saveStarImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
     console.log(base64Data);
+    this.calculateImageSize(base64Data);
 
     const fileName = 'Starboard' + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -265,6 +296,7 @@ export class MainPage implements OnInit {
     });
     console.log('saved: ', savedFile);
     this.loadFiles();
+    this.calculateImageSize(base64Data);
   }
 
   async selectGenImage() {

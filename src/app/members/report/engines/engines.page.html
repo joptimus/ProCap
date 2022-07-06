@@ -1,142 +1,106 @@
 <ion-header>
-  <ion-toolbar color="#009ca6">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Engine Inspection</ion-title>
-  </ion-toolbar>
+	<ion-toolbar color="#009ca6">
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title>Engine Inspection</ion-title>
+	</ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <div *ngIf="mainFocus == false">
-  <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="Port" checked [disabled]="disableTabs">
-      <ion-label>Port</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Starboard" [disabled]="disableTabs">
-      <ion-label>Starbord</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Main"  [disabled]="disableMain">
-      <ion-label>Main</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-</div>
-<div *ngIf="mainFocus == true">
-  <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="Port"  [disabled]="disableTabs">
-      <ion-label>Port</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Starboard" [disabled]="disableTabs">
-      <ion-label>Starbord</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Main" checked [disabled]="disableMain">
-      <ion-label>Main</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-</div>
-
-  <div [ngSwitch]="type">
-    <ion-card *ngSwitchCase="'Port'">
-      <ion-card-header> Port Engine Checklist </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item lines="none" *ngFor="let data of enginePort">
-            <ion-label>{{ data.label}}</ion-label>
-            <ion-checkbox
-              slot="end"
-              [(ngModel)]="data.isChecked"
-              (ionChange)="log()"
-            ></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label>Hours</ion-label>
-            <ion-input inputmode="tel" placeholder={{portHours[0].hours}} [(ngModel)]="engineHoursPort"
-            (ionChange)="updateEngineHoursPort($event)" clearOnEdit="true" type="number"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card *ngSwitchCase="'Starboard'">
-      <ion-card-header> Starboard Engine Checklist </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item
-            lines="none"
-            *ngFor="let star of engineStarboard; let i=index"
-          >
-            <ion-label>{{ star.label}}</ion-label>
-            <ion-checkbox
-              slot="end"
-              [(ngModel)]="star.isChecked"
-              (ionChange)="log()"
-            ></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label>Hours</ion-label>
-            <ion-input inputmode="tel" placeholder={{starHours[0].hours}} [(ngModel)]="engineHoursStarboard"
-            (ionChange)="updateEngineHoursStarboard($event)" clearOnEdit="true" type="number"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card *ngSwitchCase="'Main'">
-      <ion-card-header> Main Engine Checklist </ion-card-header>
-      <ion-card-content>
-        <ion-list>
-          <ion-item lines="none" *ngFor="let main of engineMain">
-            <ion-label>{{ main.label }}</ion-label>
-            <ion-checkbox
-              slot="end"
-              [(ngModel)]="main.isChecked"
-              (ionChange)="log()"
-            ></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label>Hours</ion-label>
-
-            <ion-input inputmode="tel" placeholder="Enter Hours" [(ngModel)]="engineHoursMain"
-            (ionChange)="updateEngineHoursMain($event)" clearOnEdit="true" type="number"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-  </div>
- 
-
-  <ion-footer>
-    <ion-card>
-    <ion-toolbar color="#009ca6">
-      <ion-button
-        fill="clear"
-        expand="full"
-        color="light"
-        (click)="selectImage()"
-        [disabled]="disableButton"
-      >
-        <ion-icon slot="start" name="add-outline"></ion-icon>
-        Upload Image
-      </ion-button>
-    </ion-toolbar>
-
-    <h3 *ngIf="images.length == 0" class="ion-padding ion-text-center">
+	<div *ngIf="mainFocus == false">
+		<ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+			<ion-segment-button value="Port" checked [disabled]="disableTabs">
+				<ion-label>Port</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="Starboard" [disabled]="disableTabs">
+				<ion-label>Starbord</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="Main" [disabled]="disableMain">
+				<ion-label>Main</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+	<div *ngIf="mainFocus == true">
+		<ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+			<ion-segment-button value="Port" [disabled]="disableTabs">
+				<ion-label>Port</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="Starboard" [disabled]="disableTabs">
+				<ion-label>Starbord</ion-label>
+			</ion-segment-button>
+			<ion-segment-button value="Main" checked [disabled]="disableMain">
+				<ion-label>Main</ion-label>
+			</ion-segment-button>
+		</ion-segment>
+	</div>
+	<div [ngSwitch]="type">
+		<ion-card *ngSwitchCase="'Port'">
+			<ion-card-header> Port Engine Checklist </ion-card-header>
+			<ion-card-content>
+				<ion-list>
+					<ion-item lines="none" *ngFor="let data of enginePort">
+						<ion-label>{{ data.label}}</ion-label>
+						<ion-checkbox slot="end" [(ngModel)]="data.isChecked" (ionChange)="log()"></ion-checkbox>
+					</ion-item>
+					<ion-item>
+						<ion-label>Hours</ion-label>
+						<ion-input inputmode="tel" placeholder={{portHours[0].hours}} [(ngModel)]="engineHoursPort" (ionChange)="updateEngineHoursPort($event)" clearOnEdit="true" type="number"></ion-input>
+					</ion-item>
+				</ion-list>
+			</ion-card-content>
+		</ion-card>
+		<ion-card *ngSwitchCase="'Starboard'">
+			<ion-card-header> Starboard Engine Checklist </ion-card-header>
+			<ion-card-content>
+				<ion-list>
+					<ion-item lines="none" *ngFor="let star of engineStarboard; let i=index">
+						<ion-label>{{ star.label}}</ion-label>
+						<ion-checkbox slot="end" [(ngModel)]="star.isChecked" (ionChange)="log()"></ion-checkbox>
+					</ion-item>
+					<ion-item>
+						<ion-label>Hours</ion-label>
+						<ion-input inputmode="tel" placeholder={{starHours[0].hours}} [(ngModel)]="engineHoursStarboard" (ionChange)="updateEngineHoursStarboard($event)" clearOnEdit="true" type="number"></ion-input>
+					</ion-item>
+				</ion-list>
+			</ion-card-content>
+		</ion-card>
+		<ion-card *ngSwitchCase="'Main'">
+			<ion-card-header> Main Engine Checklist </ion-card-header>
+			<ion-card-content>
+				<ion-list>
+					<ion-item lines="none" *ngFor="let main of engineMain">
+						<ion-label>{{ main.label }}</ion-label>
+						<ion-checkbox slot="end" [(ngModel)]="main.isChecked" (ionChange)="log()"></ion-checkbox>
+					</ion-item>
+					<ion-item>
+						<ion-label>Hours</ion-label>
+						<ion-input inputmode="tel" placeholder={{engineHoursMain}} [(ngModel)]="engineHoursMain" (ionChange)="updateEngineHoursMain($event)" clearOnEdit="true" type="number"></ion-input>
+					</ion-item>
+				</ion-list>
+			</ion-card-content>
+		</ion-card>
+	</div>
+	<ion-footer>
+		<ion-card>
+			<ion-toolbar color="#009ca6">
+				<ion-button fill="clear" expand="full" color="light" (click)="selectImage()" [disabled]="disableButton">
+					<ion-icon slot="start" name="add-outline"></ion-icon> Upload Image </ion-button>
+			</ion-toolbar>
+			<h3 *ngIf="images.length == 0" class="ion-padding ion-text-center">
       Please Select Image
     </h3>
-
-    <ion-list>
-      <ion-item *ngFor="let file of images; let i=index" lines="none">
-        <ion-thumbnail slot="start">
-          <ion-img [src]="file.data"></ion-img>
-        </ion-thumbnail>
-        <ion-label class="ion-text-wrap"> {{ file.name }} </ion-label>
-
-        <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
-    </ion-card>
-  </ion-footer>
-  <ion-button expand="block" (click)="goToMain()">Finish</ion-button>
+			<ion-list>
+				<ion-item *ngFor="let file of images; let i=index" lines="none">
+					<ion-thumbnail slot="start">
+						<ion-img [src]="file.data"></ion-img>
+					</ion-thumbnail>
+					<ion-label class="ion-text-wrap"> {{ file.name }} </ion-label>
+					<ion-button slot="end" fill="clear" (click)="deleteImage(file)">
+						<ion-icon slot="icon-only" name="trash"></ion-icon>
+					</ion-button>
+				</ion-item>
+			</ion-list>
+		</ion-card>
+	</ion-footer>
+	<ion-button expand="block" (click)="goToMain()">Finish</ion-button>
 </ion-content>
