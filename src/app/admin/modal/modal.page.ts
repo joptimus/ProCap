@@ -32,7 +32,7 @@ export class ModalPage implements OnInit {
   async updateClient() {
     await this.dbService.updateClient(this.client);
     const toast = await this.toastCtrl.create({
-      message: 'Note updated!.',
+      message: 'This client has been updated!',
       duration: 2000
     });
     toast.present();
@@ -42,7 +42,7 @@ export class ModalPage implements OnInit {
   async updateSetting() {
     await this.dbService.updateSettingsValue(this.setting);
     const toast = await this.toastCtrl.create({
-      message: 'Setting updated!.',
+      message: 'DB Setting updated!',
       duration: 2000
     });
     toast.present();

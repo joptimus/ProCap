@@ -13,22 +13,27 @@
  
     <ion-item>
       <ion-label position="stacked">Vessel Name</ion-label>
-      <ion-textarea [(ngModel)]="client.vesselName" rows="1"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.vesselName"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Number of Engines</ion-label>
+      <ion-textarea [(ngModel)]="client.noEngines"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Street Address</ion-label>
-      <ion-textarea [(ngModel)]="client.address" rows="1"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.address"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">City</ion-label>
-      <ion-textarea [(ngModel)]="client.city" rows="1"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.city"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Client Email</ion-label>
-      <ion-textarea [(ngModel)]="client.email" rows="1"></ion-textarea>
+      <ion-textarea [(ngModel)]="client.email"></ion-textarea>
     </ion-item>
 
     <ion-button class="btnColor" expand="block" (click)="updateClient()">

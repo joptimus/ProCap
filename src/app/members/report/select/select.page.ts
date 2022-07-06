@@ -23,6 +23,7 @@ export class SelectPage implements OnInit {
   dateText = [];
   clientId = [];
   clientLast = [];
+  engineCount = [];
 
   constructor(
     private route: Router,
@@ -45,30 +46,27 @@ export class SelectPage implements OnInit {
   next() {
     this.route.navigate(['members', 'main']);
   }
+  
   selected(event) {
     // this.selectedOption = false;
     this.clientLast = event.detail.value.lName;
     this.data.clientLast = event.detail.value.lName;
     console.log('client L name : ', this.clientLast);
 
+    this.engineCount = event.detail.value.noEngines;
+    this.data.engineCount = event.detail.value.noEngines;
+    console.log('number of engines : ', this.engineCount);
+
     console.log('this is selectedOption : ', this.selectedOption);
-    console.log('logging this.clients ',this.clients);
+
     this.clientFullName = event.detail.value.fullName;
-    console.log('event :', event.detail);
     this.data.customer = event.detail.value.fullName;
-    this.getClientById(event);
     console.log('clientFullName :', this.clientFullName);
-    console.log('event :', event);
-    console.log('dataservice :', this.data.customer);
 
   }
+
   updateValues() {
     this.data.customer = this.clientFullName;
-  }
-
-  async getClientById(client: Client) {
-    (res) => {
-    };
   }
 
   selectedVessel(value): void {

@@ -16,14 +16,14 @@ export interface Client {
   fullName: string;
   fName: string;
   lName: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  vesselName: string;
-  vesselPhoto: string;
-  lastInspec?: number;
-  email: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  vesselName?: string;
+  vesselPhoto?: string;
+  noEngines?: string;
+  email?: string;
 }
 
 export interface Settings {
@@ -99,7 +99,7 @@ export class DbDataService {
       zipCode: client.zipCode,
       vesselName: client.vesselName,
       vesselPhoto: client.vesselPhoto,
-      lastInspec: client.lastInspec,
+      noEngines: client.noEngines,
       email: client.email,
     });
 

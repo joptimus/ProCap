@@ -37,6 +37,11 @@ export class EnginesPage implements OnInit {
   myInput: any;
   tabSelected: string;
   disableButton = false;
+  disableMain = false;
+  disableTabs = false;
+  engineCount = [];
+  convertedEngineCount: number;
+  mainFocus = false;
 
   constructor(
     private data: DataService,
@@ -49,21 +54,39 @@ export class EnginesPage implements OnInit {
   {}
 
   async ngOnInit() {
-    this.type = 'Port';
+  
     this.enginePort = this.data.enginePort;
     this.engineStarboard = this.data.engineStarboard;
     this.engineMain = this.data.engineMain;
     // this.engineComments = this.data.engineComments[0].comments;
-    this.engineHoursMain = this.data.engineHoursMain;
-    this.engineHoursPort = this.data.engineHoursPort;
-    this.engineHoursStarboard = this.data.engineHoursStarboard;
+    this.engineHoursMain = this.data.engineHoursMain[0].hours;
+    this.engineHoursPort = this.data.engineHoursPort[0].hours;
+    this.engineHoursStarboard = this.data.engineHoursStarboard[0].hours;
     this.portHours = this.data.engineHoursPort;
     this.starHours = this.data.engineHoursStarboard;
+    this.engineCount = this.data.engineCount;
 
     this.loadFiles();
     console.log(this.engineHoursStarboard[0]);
+    console.log('we ngOnit again');
     this.loadFilesAgain();
+    this.disableTabCheck();
     // this.images = this.photo.getImages();
+  }
+
+  disableTabCheck() {
+    console.log('engine count : ', this.engineCount);
+ 
+    this.convertedEngineCount = Number(this.engineCount);
+    if(this.convertedEngineCount == 1) {
+      this.disableTabs = true;
+      this.mainFocus = true;
+      this.type = 'Main';
+    }
+    if(this.convertedEngineCount == 2) {
+      this.disableMain = true;
+      this.type = 'Port';
+    }
   }
 
   loadFilesAgain() {
@@ -204,6 +227,7 @@ export class EnginesPage implements OnInit {
     this.engineHoursMain = event.target.value;
     this.data.engineHoursMain[0].hours = this.engineHoursMain;
     console.log('dataService engineHoursMain value = ', this.data.engineHoursMain[0].hours);
+    console.log('dataService event = ', event);
   }
 
   updateEngineHoursStarboard(event) {
@@ -227,7 +251,6 @@ export class EnginesPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.tabSelected = ev.detail.value;
-    this.loadFiles();
     console.log('Segment changed', ev.detail);
     console.log(this.tabSelected);
   }

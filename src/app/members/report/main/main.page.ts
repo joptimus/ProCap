@@ -88,14 +88,10 @@ export class MainPage implements OnInit {
     this.dbData.getSettingsValues().subscribe(response => {
       console.log(response);
       this.emailResponse = response;
-      console.log('this.emailresponse = ', this.emailResponse);
-      console.log('this.emailresponse = ', this.emailResponse[0].value);
     });
     this.genRandom();
     this.reportId();
   }
-
-
 
   async checkAccount() {
     this.hasAccount = await this.emailComposer.hasAccount();
@@ -133,14 +129,14 @@ export class MainPage implements OnInit {
     console.log('vessel = ' + this.vessel);
 
     this.loadFiles();
-    this.loadLocalAssetToBase64();
+    this.loadLogo();
     this.loadComingSoon();
     this.disableCheck();
     this.checkAccount();
     console.log(this.clientLastName);
   }
 
-  loadLocalAssetToBase64() {
+  loadLogo() {
     this.http.get('./assets/img/proCapLogo.png', { responseType: 'blob' })
       .subscribe(res => {
         const reader = new FileReader();
@@ -171,7 +167,7 @@ export class MainPage implements OnInit {
     await this.authService.logout();
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
-  async logStuff() {
+  async submitReport() {
     // console.log(this.data.engineMain);
     // console.log(this.data.enginePort);
     // console.log(this.data.bilgeData);
