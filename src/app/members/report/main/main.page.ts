@@ -15,6 +15,7 @@ import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { HttpClient } from '@angular/common/http';
 import { DbDataService } from 'src/app/services/db-data.service';
+import { DataUrl, DOC_ORIENTATION, NgxImageCompressService, UploadResponse } from 'ngx-image-compress';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -36,7 +37,6 @@ interface hours {
   styleUrls: ['./main.page.scss'],
 })
 export class MainPage implements OnInit {
-
   // Initialization of Variables
   images: LocalFile[] = [];
   reportNumber;
@@ -67,9 +67,21 @@ export class MainPage implements OnInit {
   currentImage = null;
   pdfData = null;
 
-
   base64Str: any;
   kbytes: number;
+
+  bytesBefore: number;
+  bytesAfter: number;
+  difference: number; 
+
+  type: string;
+
+  imgResultBeforeCompress: DataUrl = '';
+  imgResultAfterCompress: DataUrl = '';
+  imgResultAfterResize: DataUrl = '';
+  imgResultUpload: DataUrl = '';
+  imgResultAfterResizeMax: DataUrl = '';
+  imgResultMultiple: UploadResponse[] = [];
   constructor(
     // private dom: DomSanitizer,
     private authService: AuthenticationService,
@@ -83,12 +95,13 @@ export class MainPage implements OnInit {
     private http: HttpClient,
     private emailComposer: EmailComposer,
     private data: DataService,
-    private dbData: DbDataService
+    private dbData: DbDataService,
+    private imageCompress: NgxImageCompressService
   ) {
     this.photoService.getUserProfile().subscribe((data) => {
       this.profile = data;
     });
-    this.dbData.getSettingsValues().subscribe(response => {
+    this.dbData.getSettingsValues().subscribe((response) => {
       console.log(response);
       this.emailResponse = response;
     });
@@ -100,7 +113,7 @@ export class MainPage implements OnInit {
     let padding;
     let inBytes;
     let base64StringLength;
-    
+
     if (base64String.endsWith('==')) {
       padding = 2;
     } else if (base64String.endsWith('=')) {
@@ -162,23 +175,25 @@ export class MainPage implements OnInit {
   }
 
   loadLogo() {
-    this.http.get('./assets/img/proCapLogo.png', { responseType: 'blob' })
-      .subscribe(res => {
+    this.http
+      .get('./assets/img/proCapLogo.png', { responseType: 'blob' })
+      .subscribe((res) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           this.logoData = reader.result;
-        }
+        };
         reader.readAsDataURL(res);
       });
   }
 
   loadComingSoon() {
-    this.http.get('./assets/img/coming-soon.png', { responseType: 'blob' })
-      .subscribe(res => {
+    this.http
+      .get('./assets/img/coming-soon.png', { responseType: 'blob' })
+      .subscribe((res) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           this.comingSoon = reader.result;
-        }
+        };
         reader.readAsDataURL(res);
       });
   }
@@ -202,17 +217,15 @@ export class MainPage implements OnInit {
     // console.log(this.data.photos);
     // console.log(this.reportFinal);
     this.engineHoursCheck();
-   
   }
-  
+
   deleteAllPictures() {
-    this.images.forEach(file  => {
+    this.images.forEach((file) => {
       this.deleteImage(file);
-      
     });
   }
 
-  // Navigation buttons 
+  // Navigation buttons
   engine() {
     this.route.navigate(['members', 'engines']);
   }
@@ -229,207 +242,77 @@ export class MainPage implements OnInit {
     this.route.navigate(['members', 'misc']);
   }
   redirectHome() {
-    this.route.navigate(['members','landing']);
+    this.route.navigate(['members', 'landing']);
   }
   goToMain() {
     this.route.navigate(['members', 'main']);
   }
   // End of Navigation Buttons
 
-
   // Images Start ///////////////////////////////////////////////////////////////////////////
-  async selectPortImage() {
+
+  buttonId(event) {
+    console.log(event);
+console.log('target id is: ',event.target.id);
+if(this.type == ""){
+ console.warn('TARGET ID IS EMPTY');
+} else {
+  this.type = event.target.id;
+}
+
+console.log('this.type = ', this.type);
+  }
+
+  compressFile(image) {
+    this.bytesBefore = this.imageCompress.byteCount(image);
+    console.log('Before compression:', this.bytesBefore + ' bytes');
+    console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
+    console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
+    this.imageCompress.compressFile(image, 2, 50, 50).then(
+      (result: DataUrl) => {
+        this.imgResultAfterCompress = result;
+        this.saveImage(this.imgResultAfterCompress);
+        console.warn(
+          `Compressed: ${result.substring(0, 50)}... (${
+            result.length
+          } characters)`
+        );
+        this.bytesAfter = this.imageCompress.byteCount(result);
+        this.difference = this.bytesBefore - this.bytesAfter;
+        console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        console.log('After compression:', this.bytesAfter / 1000 + ' KB');
+        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+
+        console.log('File reduced by (KB):', this.difference / 1000 + ' KB');
+        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB');
+      },
+      (error: any) => console.error(error)
+    );
+  }
+
+  async selectImage(value) {
+    this.buttonId(value);
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
-    });
-    console.log(image);
-    if (image) {
-      this.savePortImage(image);
-    }
-  }
-
-  async savePortImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
-
-    const fileName = 'Port' + new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data
-    });
-    console.log('saved: ', savedFile);
-    this.loadFiles();
-  }
-
-  async selectStarImage() {
-    const image = await Camera.getPhoto({
-      quality: 10,
-      allowEditing: true,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera
-    });
-    console.log(image);
-    if (image) {
-      
-      this.saveStarImage(image);
-    }
-  }
-  async statApplicationDirectory() {
-    const info = await Filesystem.stat({path: '/', directory: Directory.Data});
-    console.log('Stat Info: ', info);
-  }
-
-  async saveStarImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
-    this.calculateImageSize(base64Data);
-
-    const fileName = 'Starboard' + new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data
-    });
-    console.log('saved: ', savedFile);
-    this.loadFiles();
-    this.calculateImageSize(base64Data);
-  }
-
-  async selectGenImage() {
-    const image = await Camera.getPhoto({
-      quality: 50,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos
-    });
-    console.log(image);
-    if (image) {
-      this.saveGenImage(image);
-    }
-  }
-
-  async saveGenImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
-
-    const fileName = 'Gen' + new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data
-    });
-    console.log('saved: ', savedFile);
-    this.loadFiles();
-  }
-
-
-  async selectDirtyImage() {
-    const image = await Camera.getPhoto({
-      quality: 50,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
     });
-    console.log(image);
+   
     if (image) {
-      this.saveDirtyImage(image);
+      this.compressFile(image.dataUrl);
     }
   }
 
-  async saveDirtyImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
+  async saveImage(photoBase64: string) {
+    //const base64Data = await this.readAsBase64(photo);
+    //console.log(base64Data);
+    console.log('compressed Image : ', photoBase64);
 
-    const fileName = 'HVAC-Dirty' + '.jpeg';
+    const fileName = this.type + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
       path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data,
-    });
-    console.log('saved: ', savedFile);
-    this.loadFiles();
-  }
-
-  async selectCleanImage() {
-    const image = await Camera.getPhoto({
-      quality: 10,
-      width: 175,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos,
-    });
-    console.log(image);
-    if (image) {
-      this.saveCleanImage(image);
-    }
-  }
-
-  async saveCleanImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
-
-    const fileName = 'HVAC-Clean' + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data,
-    });
-    console.log('saved: ', savedFile);
-    this.loadFiles();
-  }
-
-  async selectBilgeImage() {
-    const image = await Camera.getPhoto({
-      quality: 50,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos,
-    });
-    console.log(image);
-    if (image) {
-      this.saveBilgeImage(image);
-    }
-  }
-
-  async saveBilgeImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
-
-    const fileName = 'BILGE' + new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data,
-    });
-    console.log('saved: ', savedFile);
-    this.loadFiles();
-  }
-
-  async selectMiscImage() {
-    const image = await Camera.getPhoto({
-      quality: 50,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos,
-    });
-    console.log(image);
-    if (image) {
-      this.saveMiscImage(image);
-    }
-  }
-
-  async saveMiscImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
-
-    const fileName = 'MISC' + new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
+      data: photoBase64,
       directory: Directory.Data,
     });
     console.log('saved: ', savedFile);
@@ -487,59 +370,6 @@ export class MainPage implements OnInit {
     }
   }
 
-  async selectImage() {
-    const image = await Camera.getPhoto({
-      quality: 50,
-      allowEditing: false,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Photos,
-    });
-    console.log(image);
-    if (image) {
-      this.saveImage(image);
-    }
-  }
-
-  async saveImage(photo: Photo) {
-    const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
-
-    const fileName = 'HomePage' + new Date().getTime() + '.jpeg';
-    const savedFile = await Filesystem.writeFile({
-      path: `${IMAGE_DIR}/${fileName}`,
-      data: base64Data,
-      directory: Directory.Data,
-    });
-    console.log('saved: ', fileName);
-    this.loadFiles();
-  }
-
-  private async readAsBase64(photo: Photo) {
-    if (this.platform.is('hybrid')) {
-      const file = await Filesystem.readFile({
-        path: photo.path,
-      });
-
-      return file.data;
-    } else {
-      // Fetch the photo, read as a blob, then convert to base64 format
-      const response = await fetch(photo.webPath);
-      const blob = await response.blob();
-
-      return (await this.convertBlobToBase64(blob)) as string;
-    }
-  }
-  // Helper function
-  convertBlobToBase64 = (blob: Blob) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(blob);
-    });
-
   async deleteImage(file: LocalFile) {
     await Filesystem.deleteFile({
       directory: Directory.Data,
@@ -550,13 +380,10 @@ export class MainPage implements OnInit {
 
   // Images End /////////////////////////////////////////////////////////////////////
 
-
   refreshPics() {
     this.loadFiles();
     this.disableCheck();
-    
   }
-
 
   disableCheck() {
     this.bilgePics = this.images.filter((file) => file.name.startsWith('BILGE'));
@@ -567,20 +394,27 @@ export class MainPage implements OnInit {
     this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
     this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
     this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
-    
-    if (this.bilgePics.length == 1 && this.enginePort.length == 1  && this.engineStar.length == 1  && this.genPics.length == 1  && this.strainerClean.length == 1  && this.strainerDirty.length == 1  &&  this.miscPics.length == 2 ) {
-                  this.submitBtnDisable = false;
-                } else {
-                  this.submitBtnDisable = true;
-                }
-                console.log('disable check value : ', this.submitBtnDisable);
+
+    if (
+      this.bilgePics.length == 1 &&
+      this.enginePort.length == 1 &&
+      this.engineStar.length == 1 &&
+      this.genPics.length == 1 &&
+      this.strainerClean.length == 1 &&
+      this.strainerDirty.length == 1 &&
+      this.miscPics.length == 2
+    ) {
+      this.submitBtnDisable = false;
+    } else {
+      this.submitBtnDisable = true;
+    }
+    console.log('disable check value : ', this.submitBtnDisable);
   }
 
   async engineHoursCheck() {
-
-    if( this.data.engineHoursPort[0].hours == 0) {
+    if (this.data.engineHoursPort[0].hours == 0) {
       this.showPortAlert();
-    } else if (this.data.engineHoursStarboard[0].hours ==0)  { 
+    } else if (this.data.engineHoursStarboard[0].hours == 0) {
       this.showStarAlert();
     } else if (this.data.genHours[0].hours == 0) {
       this.showGenAlert();
@@ -591,22 +425,24 @@ export class MainPage implements OnInit {
       await loading.dismiss();
       this.deleteAllPictures();
       this.redirectHome();
-      this.engineComments = [""];
+      this.engineComments = [''];
     }
-
   }
 
   async showPortAlert() {
     const alert = await this.alertController.create({
       header: 'Alert',
       subHeader: 'Port Engine Missing Data',
-      message: 'There are no hours entered for the Port Engine.  Please enter hours then resubmit',
+      message:
+        'There are no hours entered for the Port Engine.  Please enter hours then resubmit',
       buttons: [
         {
           text: 'OK',
-          handler: () => { this.route.navigate(['members', 'engines'])
-        }
-    }]
+          handler: () => {
+            this.route.navigate(['members', 'engines']);
+          },
+        },
+      ],
     });
 
     await alert.present();
@@ -616,13 +452,16 @@ export class MainPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Alert',
       subHeader: 'Starboard Engine Missing Data',
-      message: 'There are no hours entered for the Starboard Engine.  Please enter hours then resubmit',
-      buttons:  [
+      message:
+        'There are no hours entered for the Starboard Engine.  Please enter hours then resubmit',
+      buttons: [
         {
           text: 'OK',
-          handler: () => { this.route.navigate(['members', 'engines'])
-        }
-    }]
+          handler: () => {
+            this.route.navigate(['members', 'engines']);
+          },
+        },
+      ],
     });
 
     await alert.present();
@@ -632,13 +471,16 @@ export class MainPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Alert',
       subHeader: 'Generator Engine Missing Data',
-      message: 'There are no hours entered for the Generator Engine.  Please enter hours then resubmit',
+      message:
+        'There are no hours entered for the Generator Engine.  Please enter hours then resubmit',
       buttons: [
         {
           text: 'OK',
-          handler: () => { this.route.navigate(['members', 'generator'])
-        }
-    }]
+          handler: () => {
+            this.route.navigate(['members', 'generator']);
+          },
+        },
+      ],
     });
 
     await alert.present();
@@ -649,23 +491,21 @@ export class MainPage implements OnInit {
       this.pdfObj.getBase64(async (data) => {
         try {
           let path = `pdf/${this.reportFinal}.pdf`;
-  
+
           const result = await Filesystem.writeFile({
             path,
             data: data,
             directory: Directory.Documents,
-            recursive: true
+            recursive: true,
             // encoding: Encoding.UTF8
           });
           this.pdfData = result.uri;
-          
 
           if (this.hasAccount == true) {
             this.openEmail();
           } else {
-          this.fileOpener.open(`${result.uri}`, 'application/pdf');
+            this.fileOpener.open(`${result.uri}`, 'application/pdf');
           }
-  
         } catch (e) {
           console.error('Unable to write file', e);
         }
@@ -673,7 +513,6 @@ export class MainPage implements OnInit {
     } else {
       // On a browser simply use download!
       this.pdfObj.download();
-      
     }
   }
 
@@ -683,7 +522,7 @@ export class MainPage implements OnInit {
     const portHours = this.data.engineHoursPort[0].hours;
     const starHours = this.data.engineHoursStarboard[0].hours;
     const genHours = this.data.genHours[0].hours;
-    
+
     var date = new Date();
     let dateText = date.toLocaleDateString();
 
@@ -696,7 +535,7 @@ export class MainPage implements OnInit {
     this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
     this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
     this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
-    
+
     // Debug Logs
     // console.log();
     // console.log(path);
@@ -1985,7 +1824,7 @@ export class MainPage implements OnInit {
       },
     };
     this.pdfObj = pdfMake.createPdf(docDefinition);
-    
+
     //console.log(docDefinition);
     this.downloadPdf();
   }

@@ -40,6 +40,7 @@
     "@ionic/storage-angular": "^3.0.6",
     "cordova-plugin-email-composer": "^0.10.0",
     "cordova-plugin-file-opener2": "^3.0.5",
+    "ngx-image-compress": "^13.1.13",
     "pdfmake": "^0.2.5",
     "rxjs": "~7.5.5",
     "tslib": "^2.4.0",

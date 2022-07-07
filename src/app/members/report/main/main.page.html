@@ -76,6 +76,7 @@
         </div>
       </ion-card-header>
     </div>
+
     <div class="preview">
       <ion-list>
         <div *ngIf="enginePort.length == 1; else placeholder_enginePort;">
@@ -94,22 +95,23 @@
           </ion-item>
         </div>
         <ng-template #placeholder_enginePort>
-          <div class="'fallback">
-            <ion-item (click)="selectPortImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
+          <div id="Port" class="'fallback" (click)="selectImage($event)">
+            <ion-item id="Port">
+              <ion-thumbnail id="Port" slot="start">
+                <ion-img id="Port" [src]="">
                 </ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
+              <ion-label id="Port" class="ion-text-wrap">
                 Engine Port Photo
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectPortImage()">
+              <ion-button id="Port" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
             </ion-item>
           </div>
         </ng-template>
+
         <div *ngIf="engineStar.length == 1; else placeholder_engineStar;">
           <ion-item *ngFor="let star of engineStar; let i=index">
             <ion-thumbnail slot="start">
@@ -126,22 +128,22 @@
           </ion-item>
         </div>
         <ng-template #placeholder_engineStar>
-          <div class="'fallback">
-            <ion-item (click)="selectStarImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
-                </ion-img>
+          <div class="'fallback"  (click)="selectImage($event)">
+            <ion-item id="Starboard">
+              <ion-thumbnail id="Starboard" slot="start">
+                <ion-img id="Starboard" [src]=""></ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
+              <ion-label id="Starboard" class="ion-text-wrap">
                 Engine Starboard Photo
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectStarImage()">
+              <ion-button id="Starboard" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
             </ion-item>
           </div>
         </ng-template>
+
         <div *ngIf="genPics.length == 1; else placeholder_gen;">
           <ion-item *ngFor="let pic of genPics; let i=index">
             <ion-thumbnail slot="start">
@@ -158,22 +160,23 @@
           </ion-item>
         </div>
         <ng-template #placeholder_gen>
-          <div class="'fallback">
-            <ion-item (click)="selectGenImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
+          <div class="'fallback" (click)="selectImage($event)">
+            <ion-item id="Gen">
+              <ion-thumbnail id="Gen" slot="start">
+                <ion-img id="Gen"[src]="">
                 </ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
+              <ion-label id="Gen" class="ion-text-wrap">
                 Generator Photo
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectGenImage()">
+              <ion-button id="Gen" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
             </ion-item>
           </div>
         </ng-template>
+
         <div *ngIf="strainerDirty.length == 1; else placeholder_dirty;">
           <ion-item *ngFor="let dirty of strainerDirty; let i=index">
             <ion-thumbnail slot="start">
@@ -190,22 +193,23 @@
           </ion-item>
         </div>
         <ng-template #placeholder_dirty>
-          <div class="'fallback">
-            <ion-item (click)="selectDirtyImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
+          <div class="'fallback" (click)="selectImage($event)">
+            <ion-item id="HVAC-Dirty">
+              <ion-thumbnail id="HVAC-Dirty" slot="start">
+                <ion-img id="HVAC-Dirty" [src]="">
                 </ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
+              <ion-label id="HVAC-Dirty" class="ion-text-wrap">
                 Dirty Strainer Photo
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectDirtyImage()">
+              <ion-button id="HVAC-Dirty" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
             </ion-item>
           </div>
         </ng-template>
+
         <div *ngIf="strainerClean.length == 1; else placeholder_clean;">
           <ion-item *ngFor="let clean of strainerClean; let i=index">
             <ion-thumbnail slot="start">
@@ -222,22 +226,23 @@
           </ion-item>
         </div>
         <ng-template #placeholder_clean>
-          <div class="'fallback">
-            <ion-item (click)="selectCleanImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
+          <div class="'fallback" (click)="selectImage($event)">
+            <ion-item id="HVAC-Clean">
+              <ion-thumbnail id="HVAC-Clean" slot="start">
+                <ion-img id="HVAC-Clean" [src]="">
                 </ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
+              <ion-label id="HVAC-Clean" class="ion-text-wrap">
                 Clean Strainer Photo
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectCleanImage()">
+              <ion-button id="HVAC-Clean" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
             </ion-item>
           </div>
         </ng-template>
+
         <div *ngIf="bilgePics.length == 1; else placeholder_bilge;">
           <ion-item *ngFor="let bil of bilgePics; let i=index">
             <ion-thumbnail slot="start">
@@ -254,22 +259,23 @@
           </ion-item>
         </div>
         <ng-template #placeholder_bilge>
-          <div class="'fallback">
-            <ion-item (click)="selectBilgeImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
+          <div class="'fallback" (click)="selectImage($event)">
+            <ion-item id="BILGE">
+              <ion-thumbnail id="BILGE" slot="start">
+                <ion-img id="BILGE" [src]="">
                 </ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
+              <ion-label id="BILGE" class="ion-text-wrap">
                 Bilge Photo
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectBilgeImage()">
+              <ion-button id="BILGE" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
             </ion-item>
           </div>
         </ng-template>
+
         <div *ngIf="miscPics.length == 1; else second;">
           <ion-item *ngFor="let file of miscPics; let i=index">
             <ion-thumbnail slot="start">
@@ -290,22 +296,23 @@
           </div>
         </ng-template>
         <ng-template #placeholder_misc1>
-          <div class="'fallback">
-            <ion-item (click)="selectMiscImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
+          <div class="'fallback" (click)="selectImage($event)">
+            <ion-item id="MISC">
+              <ion-thumbnail id="MISC" slot="start">
+                <ion-img id="MISC" [src]="">
                 </ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
+              <ion-label id="MISC" class="ion-text-wrap">
                 Miscellaneous Photo 1
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectMiscImage()">
+              <ion-button id="MISC" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
             </ion-item>
           </div>
         </ng-template>
+
         <div *ngIf="miscPics.length == 2; else placeholder_misc2;">
           <ion-item *ngFor="let file of miscPics; let i=index">
             <ion-thumbnail slot="start">
@@ -322,16 +329,16 @@
           </ion-item>
         </div>
         <ng-template #placeholder_misc2>
-          <div class="'fallback">
-            <ion-item (click)="selectMiscImage()">
-              <ion-thumbnail slot="start">
-                <ion-img [src]="">
+          <div class="'fallback" (click)="selectImage($event)">
+            <ion-item id="MISC">
+              <ion-thumbnail id="MISC" slot="start">
+                <ion-img id="MISC" [src]="">
                 </ion-img>
               </ion-thumbnail>
-              <ion-label class="ion-text-wrap">
-                Miscellaneous Photo 2
+              <ion-label id="MISC" class="ion-text-wrap">
+                Miscellaneous Photo 1
               </ion-label>
-              <ion-button class="arrowButton" slot="end" fill="clear" (click)="selectMiscImage()">
+              <ion-button id="MISC" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
                 <ion-icon slot="icon-only" name="arrow-forward">
                 </ion-icon>
               </ion-button>
