@@ -28,11 +28,9 @@
     </ion-card-content>
   </ion-card>
   <ion-card>
-    <ion-toolbar color="#009ca6">
-      <ion-button fill="clear" expand="full" color="light" (click)="uploadGenImage()" [disabled]="genUploadDisable">
-        <ion-icon slot="start" name="add-outline">
-        </ion-icon> Add Photo
-      </ion-button>
+    <ion-toolbar class="buttonTool" color="#009ca6">
+      <ion-button class="upload" fill="clear" color="light">
+        <ion-icon slot="start" name="images-outline"></ion-icon> Generator Photos </ion-button>
     </ion-toolbar>
     <ion-card-header>
       <ion-icon name="images-outline">
@@ -40,7 +38,7 @@
     </ion-card-header>
     <div class="preview">
       <ion-list>
-        <ion-item class="padding" *ngFor="let file of images; let i=index" lines="none">
+        <ion-item class="padding margin" *ngFor="let file of images; let i=index" lines="none">
           <ion-thumbnail slot="start">
             <ion-img [src]="file.data">
             </ion-img>

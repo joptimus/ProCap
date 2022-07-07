@@ -65,12 +65,12 @@ export class EnginesPage implements OnInit {
     this.portHours = this.data.engineHoursPort;
     this.starHours = this.data.engineHoursStarboard;
     this.engineCount = this.data.engineCount;
+    
 
     this.loadFiles();
     console.log(this.engineHoursStarboard[0]);
-    console.log('we ngOnit again');
-    this.loadFilesAgain();
     this.disableTabCheck();
+    this.tabSelected = this.type;
     // this.images = this.photo.getImages();
   }
 
@@ -91,8 +91,8 @@ export class EnginesPage implements OnInit {
 
   loadFilesAgain() {
     console.log('loaded files again');
-    this.tabSelected = 'Port';
-    // this.loadFiles();
+   // this.tabSelected = 'Port';
+    this.loadFiles();
   }
 
   async loadFiles() {
@@ -251,7 +251,9 @@ export class EnginesPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.tabSelected = ev.detail.value;
+    this.loadFilesAgain();
     console.log('Segment changed', ev.detail);
     console.log(this.tabSelected);
+    console.log(ev.detail.value);
   }
 }

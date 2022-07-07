@@ -16,18 +16,16 @@
 		</ion-list>
 	</ion-card>
 	<ion-card>
-		<ion-toolbar color="white">
-			<ion-button fill="clear" [disabled]="dirtyPicDisable" expand="full" color="light" size="default" (click)="selectDirtyImage()">
-				<ion-icon slot="start" name="add-outline"></ion-icon> Upload Dirty Image </ion-button>
-			<ion-button fill="clear" [disabled]="cleanPicDisable" expand="full" color="light" (click)="selectCleanImage()">
-				<ion-icon slot="start" name="add-outline"></ion-icon> Upload Clean Image </ion-button>
-		</ion-toolbar>
+    <ion-toolbar class="buttonTool" color="#009ca6">
+      <ion-button class="upload" fill="clear" color="light">
+        <ion-icon slot="start" name="images-outline"></ion-icon> HVAC Photos </ion-button>
+    </ion-toolbar>
 		<ion-card-header>
 			<ion-icon name="images-outline"></ion-icon> PICTURES </ion-card-header>
 		<div class="listBorder">
 			<div class="preview">
 				<ion-list>
-					<ion-item *ngFor="let file of images; let i=index">
+					<ion-item class="margin" *ngFor="let file of images; let i=index">
 						<ion-thumbnail slot="start">
 							<ion-img [src]="file.data"></ion-img>
 						</ion-thumbnail>
