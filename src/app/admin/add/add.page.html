@@ -9,34 +9,34 @@
 <ion-content>
 	<form [formGroup]="credentials">
 		<ion-card>
-      <ion-card-title>Enter information</ion-card-title>
-      <div class="padding">
-			<ion-list>
-				<ion-item>
-					<ion-label position="floating">Client Name</ion-label>
-					<ion-input formControlName="fullName" autocapitalize="words" type="text"></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label position="floating">Ship Name</ion-label>
-					<ion-input formControlName="vessel"></ion-input>
-				</ion-item>
-				<ion-item>
-					<ion-label position="floating">Ship Photo</ion-label>
-					<ion-input formControlName="photo"></ion-input>
-				</ion-item>
-        <ion-item>
-					<ion-label position="floating">Number of Engines</ion-label>
-					<ion-select interface="action-sheet" placeholder="Select" formControlName="noEngines">
-            <ion-select-option value="1">1</ion-select-option>
-            <ion-select-option value="2">2</ion-select-option>
-          </ion-select>
-				</ion-item>
-				<ion-item>
-					<ion-label position="floating" type="email">Email</ion-label>
-					<ion-input formControlName="email"></ion-input>
-				</ion-item>
-			</ion-list>
-    </div>
+			<ion-card-title>Enter information</ion-card-title>
+			<div class="padding">
+				<ion-list>
+					<ion-item>
+						<ion-label position="floating">Client Name</ion-label>
+						<ion-input formControlName="fullName" autocapitalize="words" type="text"></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating">Ship Name</ion-label>
+						<ion-input formControlName="vessel"></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating">Ship Photo</ion-label>
+						<ion-input formControlName="photo"></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating">Number of Engines</ion-label>
+						<ion-select interface="action-sheet" placeholder="Select" formControlName="noEngines">
+							<ion-select-option value="1">1</ion-select-option>
+							<ion-select-option value="2">2</ion-select-option>
+						</ion-select>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating" type="email">Email</ion-label>
+						<ion-input formControlName="email"></ion-input>
+					</ion-item>
+				</ion-list>
+			</div>
 		</ion-card>
 		<ion-button class="btnColor" expand="block" (click)="addClient()">Submit</ion-button>
 	</form>
