@@ -27,7 +27,7 @@ export class AppComponent {
     this.currentApplicationVersion = environment.appVersion;
     console.log(this.currentApplicationVersion);
   }
-  gpToAdmin() {
+  goToAdmin() {
     this.route.navigate(['options']);
   }
   goToClients() {

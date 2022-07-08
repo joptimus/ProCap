@@ -1,9 +1,12 @@
 ion-toolbar {
-    background-color: #fff !important;
+    --background: #fff !important;
     height: 100%;
     padding: none;
     display: flex;
     justify-content: center;
+}
+.ion-header {
+    background-color: #fff !important;
 }
 ion-card {
     padding: 0;
@@ -58,8 +61,8 @@ img {
 ion-card-header {
     padding-top: 10px;
     margin: 0;
-    padding-right: 20px;
-    padding-left: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 ion-card-title {
     font-size: 20px;
@@ -75,4 +78,7 @@ ion-card-title {
     margin-left: calc(50% - 65px);
     margin-right: auto;
     justify-content: center;
+}
+ion-menu-button {
+    --color: #009ca6;
 }
