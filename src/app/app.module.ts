@@ -19,6 +19,7 @@ import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+import { TitleCasePipe } from '@angular/common';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
     }
   }), 
   provideFirestore(() => getFirestore()), provideStorage(() => getStorage())],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener, EmailComposer],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener, EmailComposer, TitleCasePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,7 +1,29 @@
 ion-toolbar {
     background-color: #009ca6 !important;
+    color: #fff;
+    font-size: 18px !important;
+    --font-weight: 400 !important;
+}
+ion-title {
+    font-size: 18px !important;
+    font-weight: 400 !important;
 }
 .btnColor {
     --color: #fff;
     --background: #009ca6 !important;
+}
+
+ion-card-title {
+
+    --color: #fff;
+    background-color: #009ca6 !important;
+    padding: 20px;
+    font-size: 20px;
+
+}
+
+.padding {
+    padding-bottom: 40px;
+    padding-right: 20px;
+
 }

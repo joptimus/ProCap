@@ -1,7 +1,9 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { DbDataService, Client } from 'src/app/services/db-data.service';
+
 
 @Component({
   selector: 'app-add',
@@ -15,7 +17,8 @@ export class AddPage implements OnInit {
     private clientService: DbDataService,
     private fb: FormBuilder,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private titleCase: TitleCasePipe
   ) {}
 
   ngOnInit() {
@@ -23,12 +26,9 @@ export class AddPage implements OnInit {
       fullName: [''],
       fName: [''],
       lName: [''],
-      street: [''],
-      city: [''],
-      state: [''],
-      zip: [''],
       vessel: [''],
       photo: [''],
+      noEngines: [''],
       email: [''],
     });
   }
@@ -43,18 +43,22 @@ export class AddPage implements OnInit {
   async addClient() {
     const loading = await this.loadingController.create();
     await loading.present();
+    let transform = this.titleCase.transform(this.credentials.get('fullName').value);
+    let names = transform.split(" ");
+    let firstName = names[0];
+    let lastName = names[1];
+
+
+    console.log(transform);
+    console.log('Split Full name : ', names, ' firstName : ', firstName, ' lastName : ', lastName);
 
     this.clientService.addClient({
-      fullName: this.credentials.get('fullName').value,
-      fName: this.credentials.get('fName').value,
-      lName: this.credentials.get('lName').value,
-      address: this.credentials.get('street').value,
-      city: this.credentials.get('city').value,
-      state: this.credentials.get('state').value,
-      zipCode: this.credentials.get('zip').value,
+      fullName: transform,
+      fName: firstName,
+      lName: lastName,
       vesselName: this.credentials.get('vessel').value,
       vesselPhoto: this.credentials.get('photo').value,
-
+      noEngines: this.credentials.get('noEngines').value,
       email: this.credentials.get('email').value,
     });
     await loading.dismiss();

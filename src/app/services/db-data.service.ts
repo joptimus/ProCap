@@ -16,10 +16,6 @@ export interface Client {
   fullName: string;
   fName: string;
   lName: string;
-  address?: string;
-  city?: string;
-  state?: string;
-  zipCode?: string;
   vesselName?: string;
   vesselPhoto?: string;
   noEngines?: string;
@@ -93,10 +89,6 @@ export class DbDataService {
       fullName: client.fullName,
       fName: client.fName,
       lName: client.lName,
-      address: client.address,
-      city: client.city,
-      state: client.state,
-      zipCode: client.zipCode,
       vesselName: client.vesselName,
       vesselPhoto: client.vesselPhoto,
       noEngines: client.noEngines,
