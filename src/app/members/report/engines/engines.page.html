@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
 	<div *ngIf="mainFocus == false">
-		<ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+		<ion-segment mode="md" [(ngModel)]="type" (ionChange)="segmentChanged($event)">
 			<ion-segment-button value="Port" checked [disabled]="disableTabs">
 				<ion-label>Port</ion-label>
 			</ion-segment-button>
@@ -101,5 +101,5 @@
 			</ion-list>
 		</ion-card>
 	</ion-footer>
-	<ion-button expand="block" (click)="goToMain()">Finish</ion-button>
+	<ion-button expand="block" (click)="goToMain()">Next</ion-button>
 </ion-content>

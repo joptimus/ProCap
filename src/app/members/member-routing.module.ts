@@ -3,10 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
-    loadChildren : () => import('./dashboard/dashboard.module').then( m => m.DashboardPageModule)
-  },
-  {
     path: 'landing',
     loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule)
   },

@@ -1,5 +1,70 @@
 <ion-app>
-  <ion-router-outlet>
+  <ion-menu menuId="menu" content-id="landing">
+    <ion-header>
+      <ion-toolbar color='#009ca6'>
+        <ion-title mode="md">Pro Captain Staffing</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+    <ion-list>
+      <ion-menu-toggle>
+        <ion-item (click)="startNewReport()">
+          <ion-icon name="create" slot="start"></ion-icon>
+          <ion-label>Start New Report</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item (click)="goToClients()">
+        <ion-icon name="people" slot="start"></ion-icon>
+        <ion-label>View Client List</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item (click)="goToAddClients()">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-label>Add Client</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <ion-menu-toggle>
+      <ion-item (click)="goToAddNewUser()">
+        <ion-icon name="finger-print" slot="start"></ion-icon>
+        <ion-label>Add New User</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item (click)="goToAdmin()">
+        <ion-icon name="settings" slot="start"></ion-icon>
+        <ion-label>Admin</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item (click)="goToDbSettings()">
+        <ion-icon name="logo-capacitor" slot="start"></ion-icon>
+        <ion-label>Set Database Values</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item>
+        <ion-icon name="logo-apple" slot="start"></ion-icon>
+        <ion-label>App Version {{ currentApplicationVersion }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+    <ion-item (click)="logout()" class="btn">
+      <ion-icon name="logo-edge" slot="start"></ion-icon>
+      <ion-label>Sign Out</ion-label>
+      <ion-icon name="chevron-forward" slot="end"></ion-icon>
+    </ion-item>
+  </ion-menu-toggle>
+    </ion-list>
+
+    </ion-content>
+    </ion-menu>
+
+
+  <ion-router-outlet id="landing">
   
   </ion-router-outlet>
 </ion-app>

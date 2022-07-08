@@ -1,3 +1,31 @@
 ion-toolbar {
-    color: #009ca6;
+    background-color: #009ca6 !important;
+}
+.appVersion {
+
+    position: fixed;
+    bottom: 0;
+    vertical-align: bottom;
+    width: 100vw;
+    padding: 10px;
+    background-color: #009ca6;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+}
+ion-title {
+    --color: #fff;
+}
+.btn {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    color: #fff;
+    width: 110%;
+    --background: #009ca6;
+    --color: #fff;
+}
+ion-list {
+    height: 100%;
+    overflow: none;
 }

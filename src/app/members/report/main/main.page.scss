@@ -23,10 +23,14 @@ ion-badge {
 }
 ion-toolbar {
   background-color: #009ca6 !important;
+  height: 100%;
+  padding: 0;
 }
 .ion-activated {
+  background-color: #fff;
   background: #fff;
   --color-activated: none;
+  border-bottom-color:#fff;
 }
 ion-avatar {
   width: 128px;
@@ -41,7 +45,17 @@ ion-avatar {
 ion-list {
   width: 100%;
 }
-
+.labelHead {
+  display: flex;
+  padding-left:10px;
+  padding-bottom:14px;
+  height: 100%;
+}
+ion-icon {
+  width: 23px;
+  height: 23px;
+  vertical-align: center;
+}
 .fallback {
   width: 128px;
   height: 128px;
@@ -62,10 +76,15 @@ ion-list {
   border: 1px solid;
 }
 .imageCard {
+  display: flex;
+  flex-direction: row;
   font-size: 18px;
   background-color: #009ca6;
   color: #fff;
+  padding: 14px;
+  height: 48px;
 }
+
 .button {
   flex-direction: row;
 align-self: flex-end;
