@@ -38,7 +38,7 @@ export class GeneratorPage implements OnInit {
     this.loadFiles();
     this.generatorData = this.data.generatorData;
     this.genHours = this.data.genHours;
-    console.log('ngOnInit generatorData = ', this.generatorData, ' genHours = ', this.genHours)
+    console.log('ngOnInit generatorData = ', this.generatorData, ' genHours = ', this.genHours,'geratorhours ',this.generatorHours)
   }
 
   log(){

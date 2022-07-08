@@ -59,7 +59,7 @@
 					</ion-item>
 					<ion-item>
 						<ion-label>Hours</ion-label>
-						<ion-input inputmode="tel" placeholder={{starHours[0].hours}} [(ngModel)]="engineHoursStarboard" (ionChange)="updateEngineHoursStarboard($event)" clearOnEdit="true" type="number"></ion-input>
+						<ion-input placeholder={{starHours[0].hours}} [(ngModel)]="engineHoursStarboard" (ionChange)="updateEngineHoursStarboard($event)" inputmode="tel"  type="number"></ion-input>
 					</ion-item>
 				</ion-list>
 			</ion-card-content>
@@ -74,7 +74,7 @@
 					</ion-item>
 					<ion-item>
 						<ion-label>Hours</ion-label>
-						<ion-input inputmode="tel" placeholder={{engineHoursMain}} [(ngModel)]="engineHoursMain" (ionChange)="updateEngineHoursMain($event)" clearOnEdit="true" type="number"></ion-input>
+						<ion-input  placeholder={{mainHours[0].hours}} [(ngModel)]="engineHoursMain" (ionChange)="updateEngineHoursMain($event)" inputmode="tel" type="number"></ion-input>
 					</ion-item>
 				</ion-list>
 			</ion-card-content>
