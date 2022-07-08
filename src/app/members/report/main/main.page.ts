@@ -1,8 +1,18 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { AlertController, AngularDelegate, LoadingController, Platform } from '@ionic/angular';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from '@capacitor/camera';
+import {
+  AlertController,
+  AngularDelegate,
+  LoadingController,
+  Platform,
+} from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { PhotosService } from 'src/app/services/photos.service';
@@ -18,8 +28,6 @@ import { DbDataService } from 'src/app/services/db-data.service';
 import { DataUrl, DOC_ORIENTATION, NgxImageCompressService, UploadResponse } from 'ngx-image-compress';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-
 
 const IMAGE_DIR = 'stored-images';
 
@@ -72,10 +80,11 @@ export class MainPage implements OnInit {
 
   bytesBefore: number;
   bytesAfter: number;
-  difference: number; 
+  difference: number;
   percentage: number;
 
   type: string;
+  resetValue = [''];
 
   imgResultBeforeCompress: DataUrl = '';
   imgResultAfterCompress: DataUrl = '';
@@ -139,7 +148,7 @@ export class MainPage implements OnInit {
   async openEmail() {
     const email: EmailComposerOptions = {
       to: this.emailResponse[0].value,
-      cc: 'jlewan27@gmail.com',
+      cc: '',
       attachments: [`${this.pdfData}`, 'application/pdf'],
       subject: 'Report # ' + this.reportFinal,
       body: 'This insepection report has been completed.',
@@ -254,14 +263,13 @@ export class MainPage implements OnInit {
 
   buttonId(event) {
     console.log(event);
-console.log('target id is: ',event.target.id);
-if(this.type == ""){
- console.warn('TARGET ID IS EMPTY');
-} else {
-  this.type = event.target.id;
-}
-
-console.log('this.type = ', this.type);
+    console.log('target id is: ', event.target.id);
+    if (this.type == '') {
+      console.warn('TARGET ID IS EMPTY');
+    } else {
+      this.type = event.target.id;
+    }
+    console.log('this.type = ', this.type);
   }
 
   compressFile(image) {
@@ -273,21 +281,25 @@ console.log('this.type = ', this.type);
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
         this.saveImage(this.imgResultAfterCompress);
-        // console.warn(
-        //   `Compressed: ${result.substring(0, 50)}... (${
-        //     result.length
-        //   } characters)`
-        // );
         this.bytesAfter = this.imageCompress.byteCount(result);
         this.difference = this.bytesBefore - this.bytesAfter;
-        this.percentage = (this.bytesBefore - this.bytesAfter) / this.bytesBefore * 100;
+        this.percentage =
+          ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
         let percent = this.percentage.toFixed(2);
-        console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        console.log(
+          'Size in bytes after compression is now:',
+          this.bytesAfter + ' bytes'
+        );
         console.log('After compression:', this.bytesAfter / 1000 + ' KB');
         console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
 
         console.log('File reduced by (KB):', this.difference / 1000 + ' KB');
-        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,'%' );
+        console.log(
+          'File reduced by (MB):',
+          this.difference / 1000000 + ' MB or ',
+          percent,
+          '%'
+        );
       },
       (error: any) => console.error(error)
     );
@@ -301,7 +313,7 @@ console.log('this.type = ', this.type);
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
     });
-   
+
     if (image) {
       this.compressFile(image.dataUrl);
     }
@@ -310,7 +322,7 @@ console.log('this.type = ', this.type);
   async saveImage(photoBase64: string) {
     //const base64Data = await this.readAsBase64(photo);
     //console.log(base64Data);
-   // console.log('compressed Image : ', photoBase64);
+    // console.log('compressed Image : ', photoBase64);
 
     const fileName = this.type + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -389,13 +401,25 @@ console.log('this.type = ', this.type);
   }
 
   disableCheck() {
-    this.bilgePics = this.images.filter((file) => file.name.startsWith('BILGE'));
-    this.enginePort = this.images.filter((file) => file.name.startsWith('Port'));
-    this.engineStar = this.images.filter((file) => file.name.startsWith('Starboard'));
-    this.engineMain = this.images.filter((file) => file.name.startsWith('Main'));
+    this.bilgePics = this.images.filter((file) =>
+      file.name.startsWith('BILGE')
+    );
+    this.enginePort = this.images.filter((file) =>
+      file.name.startsWith('Port')
+    );
+    this.engineStar = this.images.filter((file) =>
+      file.name.startsWith('Starboard')
+    );
+    this.engineMain = this.images.filter((file) =>
+      file.name.startsWith('Main')
+    );
     this.genPics = this.images.filter((file) => file.name.startsWith('Gen'));
-    this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
-    this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
+    this.strainerDirty = this.images.filter((file) =>
+      file.name.startsWith('HVAC-Dirty')
+    );
+    this.strainerClean = this.images.filter((file) =>
+      file.name.startsWith('HVAC-Clean')
+    );
     this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
 
     if (
@@ -430,6 +454,12 @@ console.log('this.type = ', this.type);
       this.redirectHome();
       this.engineComments = [''];
     }
+  }
+
+  resetAllValues() {
+    console.log('data value customer before', this.data.customer[0].value);
+    this.data.customer[0].value = '';
+    console.log('data value customer after', this.data.customer[0].value);
   }
 
   async showPortAlert() {
@@ -521,6 +551,7 @@ console.log('this.type = ', this.type);
 
   createPdf() {
     const reportId = this.reportFinal;
+
     const data = this.data.engineMain;
     const portHours = this.data.engineHoursPort[0].hours;
     const starHours = this.data.engineHoursStarboard[0].hours;
@@ -530,13 +561,25 @@ console.log('this.type = ', this.type);
     let dateText = date.toLocaleDateString();
 
     // Filter Images to display in different sections of report
-    this.bilgePics = this.images.filter((file) => file.name.startsWith('BILGE'));
-    this.enginePort = this.images.filter((file) => file.name.startsWith('Port'));
-    this.engineStar = this.images.filter((file) => file.name.startsWith('Starboard'));
-    this.engineMain = this.images.filter((file) => file.name.startsWith('Main'));
+    this.bilgePics = this.images.filter((file) =>
+      file.name.startsWith('BILGE')
+    );
+    this.enginePort = this.images.filter((file) =>
+      file.name.startsWith('Port')
+    );
+    this.engineStar = this.images.filter((file) =>
+      file.name.startsWith('Starboard')
+    );
+    this.engineMain = this.images.filter((file) =>
+      file.name.startsWith('Main')
+    );
     this.genPics = this.images.filter((file) => file.name.startsWith('Gen'));
-    this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
-    this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
+    this.strainerDirty = this.images.filter((file) =>
+      file.name.startsWith('HVAC-Dirty')
+    );
+    this.strainerClean = this.images.filter((file) =>
+      file.name.startsWith('HVAC-Clean')
+    );
     this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
 
     // Debug Logs
@@ -1832,4 +1875,3 @@ console.log('this.type = ', this.type);
     this.downloadPdf();
   }
 }
-
