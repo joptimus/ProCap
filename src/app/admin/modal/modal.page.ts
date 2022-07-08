@@ -35,7 +35,9 @@ export class ModalPage implements OnInit {
       message: 'This client has been updated!',
       duration: 2000
     });
+    this.modalCtrl.dismiss();
     toast.present();
+    
  
   }
 
