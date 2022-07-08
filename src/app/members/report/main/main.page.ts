@@ -73,6 +73,7 @@ export class MainPage implements OnInit {
   bytesBefore: number;
   bytesAfter: number;
   difference: number; 
+  percentage: number;
 
   type: string;
 
@@ -272,19 +273,21 @@ console.log('this.type = ', this.type);
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
         this.saveImage(this.imgResultAfterCompress);
-        console.warn(
-          `Compressed: ${result.substring(0, 50)}... (${
-            result.length
-          } characters)`
-        );
+        // console.warn(
+        //   `Compressed: ${result.substring(0, 50)}... (${
+        //     result.length
+        //   } characters)`
+        // );
         this.bytesAfter = this.imageCompress.byteCount(result);
         this.difference = this.bytesBefore - this.bytesAfter;
+        this.percentage = (this.bytesBefore - this.bytesAfter) / this.bytesBefore * 100;
+        let percent = this.percentage.toFixed(2);
         console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
         console.log('After compression:', this.bytesAfter / 1000 + ' KB');
         console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
 
         console.log('File reduced by (KB):', this.difference / 1000 + ' KB');
-        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB');
+        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,'%' );
       },
       (error: any) => console.error(error)
     );
@@ -307,7 +310,7 @@ console.log('this.type = ', this.type);
   async saveImage(photoBase64: string) {
     //const base64Data = await this.readAsBase64(photo);
     //console.log(base64Data);
-    console.log('compressed Image : ', photoBase64);
+   // console.log('compressed Image : ', photoBase64);
 
     const fileName = this.type + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
