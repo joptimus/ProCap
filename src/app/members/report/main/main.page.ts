@@ -1,18 +1,8 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  Camera,
-  CameraResultType,
-  CameraSource,
-  Photo,
-} from '@capacitor/camera';
-import {
-  AlertController,
-  AngularDelegate,
-  LoadingController,
-  Platform,
-} from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { AlertController, AngularDelegate, LoadingController, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { PhotosService } from 'src/app/services/photos.service';
@@ -85,6 +75,7 @@ export class MainPage implements OnInit {
 
   type: string;
   resetValue = [''];
+  resetNull;
 
   imgResultBeforeCompress: DataUrl = '';
   imgResultAfterCompress: DataUrl = '';
@@ -457,9 +448,14 @@ export class MainPage implements OnInit {
   }
 
   resetAllValues() {
-    console.log('data value customer before', this.data.customer[0].value);
-    this.data.customer[0].value = '';
-    console.log('data value customer after', this.data.customer[0].value);
+    
+    
+    console.log('data value customer before', this.clientLastName);
+    console.log('data value vessel before', this.vessel);
+    this.clientLastName = this.resetNull;
+    this.vessel = this.resetNull;
+    console.log('data value customer after', this.clientLastName);
+    console.log('data value after before', this.vessel);
   }
 
   async showPortAlert() {

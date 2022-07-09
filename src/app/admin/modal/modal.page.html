@@ -16,10 +16,22 @@
       <ion-textarea [(ngModel)]="client.vesselName"></ion-textarea>
     </ion-item>
 
-    <ion-item>
+    <div *ngIf="client?.vesselPhoto; else placeholder_vessel">
+    <ion-item >
       <ion-label position="stacked">Vessel Photo</ion-label>
-      <ion-textarea [(ngModel)]="client.vesselPhoto"></ion-textarea>
+      <ion-img (click)="selectImage()" [(ngModel)]="client.vesselPhoto" name="client.vesselPhoto" [src]="client.vesselPhoto"></ion-img>
     </ion-item>
+  </div>
+
+  <ng-template #placeholder_vessel>
+    <div >
+      <ion-item >
+        <ion-label position="stacked">Vessel Photo</ion-label>
+        <ion-input (click)="selectImage()" placeholder="Click to Upload Image" name="client.vesselPhoto" [(ngModel)]="client.vesselPhoto"></ion-input>
+      </ion-item>
+    </div>
+
+  </ng-template>
 
     <ion-item>
       <ion-label position="stacked">Number of Engines</ion-label>
