@@ -39,24 +39,61 @@ export class MainPage implements OnInit {
   images: LocalFile[] = [];
   reportNumber;
   reportFinal;
+
+  // Final Pics Variables for Report
+  reportPortOil;
+  reportPortHour;
+  reportStarOil;
+  reportStarHour;
+  reportMainOil;
+  reportMainHour;
+  reportGenOil;
+  reportGenHours;
+  reportGalleyFaucet;
+  reportHeadFaucet;
+  reportHeadToliet;
+  reportStrainerDirty;
+  reportStrainerClean;
+  reportBilge;
+  reportMiscOne;
+  reportMiscTwo;
+  reportMiscThree;
+
+  textThrusters;
+  textWaterFilled;
+
   image: any;
   image2: SafeResourceUrl;
   profile = null;
   customer: any;
   vessel: any;
   bilgePics = [];
-  enginePort = [];
-  engineStar = [];
+  portOilPic = [];
+  portHourPic = [];
+  starOilPic = [];
+  starHoursPic = [];
   engineMain = [];
-  genPics = [];
-  miscPics = [];
+  mainHourPic = [];
+  mainOilPic = [];
+  genOil = [];
+  genHoursPic = [];
+  miscPicOne = [];
+  miscPicTwo = [];
+  miscPicThree = [];
   strainerDirty = [];
   strainerClean = [];
+  galleyFaucet = [];
+  headFaucet = [];
+  headToliet = [];
   engineComments;
   pdfObj = null;
+
+  // Local Asset Pics
   logoData = null;
   comingSoon = null;
-  submitBtnDisable = true;
+  placeholderData = null;
+
+  submitBtnDisable = false;
   pics = null;
   clientLastName = [];
   emailResponse = [];
@@ -76,6 +113,9 @@ export class MainPage implements OnInit {
   type: string;
   resetValue = [''];
   resetNull;
+  currentMonth: any;
+  pdfBlob: any;
+  pdfDocGenerator: any;
 
   imgResultBeforeCompress: DataUrl = '';
   imgResultAfterCompress: DataUrl = '';
@@ -106,8 +146,47 @@ export class MainPage implements OnInit {
       console.log(response);
       this.emailResponse = response;
     });
-    this.genRandom();
-    this.reportId();
+    this.generateReportId();
+  }
+
+  ngOnInit() {
+    this.engineComments = this.data.engineComments[0].comments;
+    this.customer = this.data.customer;
+    this.vessel = this.data.vessel;
+    this.image = this.data.photos;
+    this.clientLastName = this.data.clientLast;
+    console.log('vessel = ' + this.vessel);
+
+    this.loadFiles();
+    this.loadPlaceHolder();
+    this.loadLogo();
+    this.loadComingSoon();
+    //this.disableCheck();
+    this.checkAccount();
+    console.log(this.clientLastName);
+  }
+
+  getCurrentMonth() {
+    var d = new Date();
+    var curr_month = d.getMonth();
+    console.log(curr_month);
+    var months = new Array(
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    );
+
+    var today = months[curr_month];
+    console.log('month is : ', today);
   }
 
   calculateImageSize(base64String) {
@@ -148,10 +227,47 @@ export class MainPage implements OnInit {
     await this.emailComposer.open(email);
   }
 
-  genRandom() {
-    this.reportNumber = Math.floor(Math.random() * 10000000);
+  async uploadFile(pdf) {
+    console.log('Upload File Started');
+    // Calculate Month for File Path
+    var d = new Date();
+    var curr_month = d.getMonth();
+    console.log(curr_month);
+    var months = new Array(
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    );
+
+    var today = months[curr_month];
+    console.log('did we get the base64 in function?: ', pdf);
+    this.dbData.addPdfToStorage({
+      fileName: pdf,
+      reportId: this.reportFinal,
+      clientName: this.clientLastName,
+      boatId: this.vessel,
+      month: today,
+    });
+    console.log('this.pdfblob', pdf);
+    console.log('Upload File was a success');
+    return true;
   }
-  reportId() {
+  catch(e) {
+    console.log('Upload file errored out: ', e);
+    return null;
+  }
+
+  generateReportId() {
+    this.reportNumber = Math.floor(Math.random() * 10000000);
     var string1 = new String('PCS');
     var string2 = new String(this.reportNumber);
     var string3 = string1.concat(string2.toString());
@@ -159,20 +275,16 @@ export class MainPage implements OnInit {
     console.log(string1, string2, string3);
   }
 
-  ngOnInit() {
-    this.engineComments = this.data.engineComments[0].comments;
-    this.customer = this.data.customer;
-    this.vessel = this.data.vessel;
-    this.image = this.data.photos;
-    this.clientLastName = this.data.clientLast;
-    console.log('vessel = ' + this.vessel);
-
-    this.loadFiles();
-    this.loadLogo();
-    this.loadComingSoon();
-    this.disableCheck();
-    this.checkAccount();
-    console.log(this.clientLastName);
+  loadPlaceHolder() {
+    this.http
+      .get('./assets/img/placeholder.jpg', { responseType: 'blob' })
+      .subscribe((res) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.placeholderData = reader.result;
+        };
+        reader.readAsDataURL(res);
+      });
   }
 
   loadLogo() {
@@ -198,6 +310,7 @@ export class MainPage implements OnInit {
         reader.readAsDataURL(res);
       });
   }
+
   updateRemarks(event) {
     this.engineComments = event.target.value;
     this.data.engineComments[0].comments = this.engineComments;
@@ -239,7 +352,7 @@ export class MainPage implements OnInit {
   bilge() {
     this.route.navigate(['members', 'bilge']);
   }
-  misc() {
+  safety() {
     this.route.navigate(['members', 'misc']);
   }
   redirectHome() {
@@ -372,7 +485,7 @@ export class MainPage implements OnInit {
       });
       //Load file based on what the file starts with
       //  this.images = this.images.filter(file => file.name.startsWith(this.tabSelected));
-      this.disableCheck();
+      //this.disableCheck();
     }
   }
 
@@ -388,39 +501,66 @@ export class MainPage implements OnInit {
 
   refreshPics() {
     this.loadFiles();
-    this.disableCheck();
+   // this.disableCheck();
   }
 
   disableCheck() {
     this.bilgePics = this.images.filter((file) =>
       file.name.startsWith('BILGE')
     );
-    this.enginePort = this.images.filter((file) =>
+    this.portOilPic = this.images.filter((file) =>
       file.name.startsWith('Port')
     );
-    this.engineStar = this.images.filter((file) =>
+    this.portHourPic = this.images.filter((file) =>
+      file.name.startsWith('PortHours')
+    );
+    this.starOilPic = this.images.filter((file) =>
       file.name.startsWith('Starboard')
+    );
+    this.starHoursPic = this.images.filter((file) =>
+      file.name.startsWith('StarHours')
     );
     this.engineMain = this.images.filter((file) =>
       file.name.startsWith('Main')
     );
-    this.genPics = this.images.filter((file) => file.name.startsWith('Gen'));
+    this.genOil = this.images.filter((file) => file.name.startsWith('GenOil'));
+    this.genHoursPic = this.images.filter((file) =>
+      file.name.startsWith('GenHours')
+    );
+    this.galleyFaucet = this.images.filter((file) =>
+      file.name.startsWith('GalFaucet')
+    );
+    this.headFaucet = this.images.filter((file) =>
+      file.name.startsWith('HeadFaucet')
+    );
+    this.headToliet = this.images.filter((file) =>
+      file.name.startsWith('HeadToliet')
+    );
     this.strainerDirty = this.images.filter((file) =>
       file.name.startsWith('HVAC-Dirty')
     );
     this.strainerClean = this.images.filter((file) =>
       file.name.startsWith('HVAC-Clean')
     );
-    this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
+    this.miscPicOne = this.images.filter((file) =>
+      file.name.startsWith('MiscOne')
+    );
+    this.miscPicTwo = this.images.filter((file) =>
+      file.name.startsWith('MiscTwo')
+    );
+    this.miscPicThree = this.images.filter((file) =>
+      file.name.startsWith('MiscThree')
+    );
 
     if (
-      this.bilgePics.length == 1 &&
-      this.enginePort.length == 1 &&
-      this.engineStar.length == 1 &&
-      this.genPics.length == 1 &&
+      //this.bilgePics.length == 1 &&
+      this.portOilPic.length == 1 &&
+      this.starOilPic.length == 1 &&
+      this.genOil.length == 1 &&
       this.strainerClean.length == 1 &&
       this.strainerDirty.length == 1 &&
-      this.miscPics.length == 2
+      this.miscPicOne.length == 1 &&
+      this.miscPicTwo.length == 1
     ) {
       this.submitBtnDisable = false;
     } else {
@@ -448,8 +588,9 @@ export class MainPage implements OnInit {
   }
 
   resetAllValues() {
-    
-    
+    this.getCurrentMonth();
+    console.log('this.current', this.currentMonth);
+    console.log(this.getCurrentMonth());
     console.log('data value customer before', this.clientLastName);
     console.log('data value vessel before', this.vessel);
     this.clientLastName = this.resetNull;
@@ -542,10 +683,70 @@ export class MainPage implements OnInit {
     } else {
       // On a browser simply use download!
       this.pdfObj.download();
+      // this.uploadFile();
     }
   }
 
+  validatePicturesForReport() {
+    // Filter Images to display in different sections of report
+    this.bilgePics = this.images.filter((file) => file.name.startsWith('BILGE'));
+    this.portOilPic = this.images.filter((file) => file.name.startsWith('Port'));
+    this.portHourPic = this.images.filter((file) => file.name.startsWith('PortHours'));
+    this.starOilPic = this.images.filter((file) => file.name.startsWith('Starboard'));
+    this.starHoursPic = this.images.filter((file) => file.name.startsWith('StarHours'));
+    this.engineMain = this.images.filter((file) => file.name.startsWith('Main'));
+    this.genOil = this.images.filter((file) => file.name.startsWith('GenOil'));
+    this.genHoursPic = this.images.filter((file) => file.name.startsWith('GenHours'));
+    this.galleyFaucet = this.images.filter((file) => file.name.startsWith('GalFaucet'));
+    this.headFaucet = this.images.filter((file) => file.name.startsWith('HeadFaucet'));
+    this.headToliet = this.images.filter((file) => file.name.startsWith('HeadToliet'));
+    this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
+    this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
+    this.miscPicOne = this.images.filter((file) => file.name.startsWith('MiscOne'));
+    this.miscPicTwo = this.images.filter((file) => file.name.startsWith('MiscTwo'));
+    this.miscPicThree = this.images.filter((file) => file.name.startsWith('MiscThree'));
+
+    if (this.bilgePics.length == 0) { this.reportBilge = this.logoData; } else { this.reportBilge = this.bilgePics[0].data; }
+    if (this.portHourPic.length == 0) { this.reportPortHour = this.logoData; } else { this.reportPortHour = this.portHourPic[0].data; }
+    if (this.portOilPic.length == 0) { this.reportPortOil = this.logoData; } else { this.reportPortOil = this.portOilPic[0].data; }    
+    if (this.starOilPic.length == 0) { this.reportStarOil = this.logoData; } else { this.reportStarOil = this.starOilPic[0].data; }    
+    if (this.starHoursPic.length == 0) { this.reportStarHour = this.logoData; } else { this.reportStarHour = this.starHoursPic[0].data; }    
+    if (this.mainHourPic.length == 0) { this.reportMainHour = this.logoData; } else { this.reportMainHour = this.mainHourPic[0].data; }   
+    if (this.mainOilPic.length == 0) { this.reportMainOil = this.logoData; } else { this.reportMainOil = this.mainOilPic[0].data; }     
+    if (this.genOil.length == 0) { this.reportGenOil = this.logoData; } else { this.reportGenOil = this.genOil[0].data; }    
+    if (this.genHoursPic.length == 0) { this.reportGenHours = this.logoData; } else { this.reportGenHours = this.genHoursPic[0].data; }    
+    if (this.galleyFaucet.length == 0) { this.reportGalleyFaucet = this.logoData; } else { this.reportGalleyFaucet = this.galleyFaucet[0].data; }    
+    if (this.headFaucet.length == 0) { this.reportHeadFaucet = this.logoData; } else { this.reportHeadFaucet = this.headFaucet[0].data; }    
+    if (this.headToliet.length == 0) { this.reportHeadToliet = this.logoData; } else { this.reportHeadToliet = this.headToliet[0].data; }    
+    if (this.strainerDirty.length == 0) { this.reportStrainerDirty = this.logoData; } else { this.reportStrainerDirty = this.strainerDirty[0].data; }    
+    if (this.strainerClean.length == 0) { this.reportStrainerClean = this.logoData; } else { this.reportStrainerClean = this.strainerClean[0].data; } 
+    if (this.miscPicOne.length == 0) { this.reportMiscOne = this.logoData; } else { this.reportMiscOne = this.miscPicOne[0].data; }    
+    if (this.miscPicTwo.length == 0) { this.reportMiscTwo = this.logoData; } else { this.reportMiscTwo = this.miscPicTwo[0].data; }    
+    if (this.miscPicThree.length == 0) { this.reportMiscThree = this.logoData; } else { this.reportMiscThree = this.miscPicThree[0].data; }       
+
+  }
+
+  validateTextFields(){
+
+    const data = this.data.miscData;
+
+    // Find the Index number of the array to check
+    let thrusters = data.findIndex(x => x.label === 'Thrusters');
+    let water = data.findIndex(x => x.label === 'Water Tank Filled');
+    console.log('index - thrusters',thrusters);
+    console.log('index - water', water);
+
+    if (this.data.miscData[thrusters].checked == true) { this.textThrusters = 'N/A';} else { this.textThrusters = '√'; };
+    if (this.data.miscData[water].checked == true) { this.textWaterFilled = 'N/A';} else { this.textWaterFilled = '√'; };
+    console.log('textThrusters = ', this.textThrusters);
+    console.log('textWaterFilled = ', this.textWaterFilled);
+
+ 
+
+  }
   createPdf() {
+    this.validatePicturesForReport();
+
     const reportId = this.reportFinal;
 
     const data = this.data.engineMain;
@@ -555,28 +756,6 @@ export class MainPage implements OnInit {
 
     var date = new Date();
     let dateText = date.toLocaleDateString();
-
-    // Filter Images to display in different sections of report
-    this.bilgePics = this.images.filter((file) =>
-      file.name.startsWith('BILGE')
-    );
-    this.enginePort = this.images.filter((file) =>
-      file.name.startsWith('Port')
-    );
-    this.engineStar = this.images.filter((file) =>
-      file.name.startsWith('Starboard')
-    );
-    this.engineMain = this.images.filter((file) =>
-      file.name.startsWith('Main')
-    );
-    this.genPics = this.images.filter((file) => file.name.startsWith('Gen'));
-    this.strainerDirty = this.images.filter((file) =>
-      file.name.startsWith('HVAC-Dirty')
-    );
-    this.strainerClean = this.images.filter((file) =>
-      file.name.startsWith('HVAC-Clean')
-    );
-    this.miscPics = this.images.filter((file) => file.name.startsWith('MISC'));
 
     // Debug Logs
     // console.log();
@@ -603,7 +782,7 @@ export class MainPage implements OnInit {
                 fontSize: 20,
                 bold: true,
                 alignment: 'right',
-                margin: [0, 0, 0, 15],
+                margin: [0, 0, 0, 10],
               },
               {
                 stack: [
@@ -614,7 +793,7 @@ export class MainPage implements OnInit {
                         color: '#aaaaab',
                         bold: true,
                         width: '*',
-                        fontSize: 12,
+                        fontSize: 10,
                         alignment: 'right',
                       },
 
@@ -622,7 +801,7 @@ export class MainPage implements OnInit {
                         text: reportId,
                         bold: true,
                         color: '#333333',
-                        fontSize: 12,
+                        fontSize: 10,
                         alignment: 'right',
                         width: 100,
                       },
@@ -635,15 +814,15 @@ export class MainPage implements OnInit {
                         color: '#aaaaab',
                         bold: true,
                         width: '*',
-                        fontSize: 12,
+                        fontSize: 10,
                         alignment: 'right',
                       },
 
                       {
-                        text: 'Capt. Bob Files',
+                        text: 'Capt. R Beckermann',
                         bold: true,
                         color: '#333333',
-                        fontSize: 12,
+                        fontSize: 10,
                         alignment: 'right',
                         width: 100,
                       },
@@ -656,14 +835,14 @@ export class MainPage implements OnInit {
                         color: '#aaaaab',
                         bold: true,
                         width: '*',
-                        fontSize: 12,
+                        fontSize: 10,
                         alignment: 'right',
                       },
                       {
                         text: dateText,
                         bold: true,
                         color: '#333333',
-                        fontSize: 12,
+                        fontSize: 10,
                         alignment: 'right',
                         width: 100,
                       },
@@ -675,14 +854,14 @@ export class MainPage implements OnInit {
                         text: 'Status',
                         color: '#aaaaab',
                         bold: true,
-                        fontSize: 12,
+                        fontSize: 10,
                         alignment: 'right',
                         width: '*',
                       },
                       {
                         text: 'COMPLETE',
                         bold: true,
-                        fontSize: 14,
+                        fontSize: 10,
                         alignment: 'right',
                         color: 'green',
                         width: 100,
@@ -891,6 +1070,7 @@ export class MainPage implements OnInit {
                 {
                   text: 'Oil',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: '√',
@@ -939,6 +1119,7 @@ export class MainPage implements OnInit {
                 {
                   text: 'Coolant',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: '√',
@@ -986,6 +1167,7 @@ export class MainPage implements OnInit {
                 {
                   text: 'Hoses',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: '√',
@@ -1033,6 +1215,7 @@ export class MainPage implements OnInit {
                 {
                   text: 'Belts',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: '√',
@@ -1076,10 +1259,12 @@ export class MainPage implements OnInit {
                 {
                   text: '',
                   border: [false, false, false, false],
+                  
                 },
                 {
                   text: 'Batteries',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: '√',
@@ -1127,6 +1312,7 @@ export class MainPage implements OnInit {
                 {
                   text: 'Seacocks',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: '√',
@@ -1174,6 +1360,7 @@ export class MainPage implements OnInit {
                 {
                   text: 'Strainers',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: '√',
@@ -1222,6 +1409,7 @@ export class MainPage implements OnInit {
                 {
                   text: '# Hours',
                   border: [false, false, false, false],
+                  style: 'row',
                 },
                 {
                   text: genHours,
@@ -1414,7 +1602,7 @@ export class MainPage implements OnInit {
                   border: [false, false, false, false],
                 },
                 {
-                  text: 'Miscellaneous',
+                  text: 'Safety',
                   colSpan: 2,
                   alignment: 'center',
                   border: [false, false, false, false],
@@ -1474,7 +1662,7 @@ export class MainPage implements OnInit {
                   style: 'row',
                 },
                 {
-                  text: '√',
+                  text: this.textThrusters,
                   border: [false, false, false, false],
                   style: 'subHeader',
                 },
@@ -1658,47 +1846,47 @@ export class MainPage implements OnInit {
                   border: [false, false, false, false],
                 },
                 {
-                  text: 'Water',
+                  text: 'Water Tanks Filled',
                   border: [false, false, false, false],
                   style: 'row',
                 },
                 {
-                  text: '√',
+                  text: this.textWaterFilled,
                   border: [false, false, false, false],
                   style: 'subHeader',
                 },
               ],
-              [
-                //Row 10
-                {
-                  text: '',
-                  border: [false, false, false, false],
-                  style: 'row',
-                },
-                {
-                  text: '',
-                  border: [false, false, false, false],
-                  style: 'subHeader',
-                },
-                {
-                  text: '',
-                  border: [false, false, false, false],
-                },
-                {
-                  text: 'Water Tanks',
-                  border: [false, false, false, false],
-                  style: 'row',
-                },
-                {
-                  text: '√',
-                  border: [false, false, false, false],
-                  style: 'subHeader',
-                },
-              ],
+              // [
+              //   //Row 10
+              //   {
+              //     text: '',
+              //     border: [false, false, false, false],
+              //     style: 'row',
+              //   },
+              //   {
+              //     text: '',
+              //     border: [false, false, false, false],
+              //     style: 'subHeader',
+              //   },
+              //   {
+              //     text: '',
+              //     border: [false, false, false, false],
+              //   },
+              //   {
+              //     text: 'Water Tanks',
+              //     border: [false, false, false, false],
+              //     style: 'row',
+              //   },
+              //   {
+              //     text: '√',
+              //     border: [false, false, false, false],
+              //     style: 'subHeader',
+              //   },
+              // ],
             ],
           },
         },
-        '\n',
+        '\n\n\n\n',
         {
           table: {
             widths: ['*'],
@@ -1728,41 +1916,82 @@ export class MainPage implements OnInit {
         '\n\n\n',
         {
           table: {
-            widths: ['*', '*', '*'],
+            widths: ['*', 160, '*'],
             body: [
               [
                 {
                   //Engines Table
                   //Column 1
                   //text: 'Port',
-                  image: this.enginePort[0].data,
+                  image: this.reportPortOil,
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-
                   width: 150,
+
+                 
                 },
                 {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
-                  image: this.engineStar[0].data,
+                  image: this.reportPortHour,
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-
                   width: 150,
+
+                 
                 },
                 {
                   //Engines Table
                   //Column 1
                   //text: 'Generator',
-                  image: this.genPics[0].data,
+                  image: this.reportStarOil,
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-
                   width: 150,
+
+                 
+                },
+              ],
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  text: 'Port Engine Oil',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+
+               
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  text: 'Port Engine Hours',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+
+                  
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  text: 'Starboard Engine Oil',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+
+                  
                 },
               ],
             ],
@@ -1771,42 +2000,81 @@ export class MainPage implements OnInit {
         '\n',
         {
           table: {
-            widths: ['*', '*', '*'],
+            widths: ['*', 160, '*'],
             body: [
               [
                 {
                   //Engines Table
                   //Column 1
-                  //text: 'Bilge',
-                  image: this.bilgePics[0].data,
+                  //text: 'Port',
+                  image: this.reportStarHour,
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-
                   width: 150,
-                },
 
-                {
-                  //Engines Table
-                  //Column 1
-                  //text: 'MISC 1',
-                  image: this.miscPics[0].data,
-                  colSpan: 1,
-                  alignment: 'center',
-                  border: [false, false, false, false],
-
-                  width: 150,
+                 
                 },
                 {
                   //Engines Table
                   //Column 1
-                  //text: 'Misc 2',
-                  image: this.miscPics[1].data,
+                  //text: 'Starboard',
+                  image: this.reportGenOil,
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-
                   width: 150,
+
+                 
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  image: this.reportGenHours,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+              ],
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  text: 'Starboard Engine Hours',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+
+               
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  text: 'Generator Engine Oil',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+
+                  
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  text: 'Generator Engine Hours',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+                  
                 },
               ],
             ],
@@ -1815,31 +2083,235 @@ export class MainPage implements OnInit {
         '\n',
         {
           table: {
-            widths: ['*', '*'],
-
+            widths: ['*', 160, '*'],
             body: [
               [
                 {
                   //Engines Table
                   //Column 1
-                  //text: 'Strainer Dirty',
-                  image: this.strainerDirty[0].data,
+                  //text: 'Port',
+                  image: this.reportStrainerDirty,
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-
                   width: 150,
+
+                 
                 },
                 {
                   //Engines Table
                   //Column 1
-                  //text: 'Strainer Clean',
-                  image: this.strainerClean[0].data,
+                  //text: 'Starboard',
+                  image: this.reportStrainerClean,
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-
                   width: 150,
+
+                 
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  image: this.reportBilge,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+              ],
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  text: 'Dirty AC Strainer',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',               
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  text: 'Cleaned AC Strainer',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',                  
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  text: 'Bilge Photo',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+                  
+                },
+              ],
+            ],
+          },
+        },
+        '\n',
+        {
+          table: {
+            widths: ['*', 160, '*'],
+            body: [
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  image: this.reportGalleyFaucet,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  image: this.reportHeadFaucet,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  image: this.reportHeadToliet,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+              ],
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  text: 'Galley Faucet',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',               
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  text: 'Head Faucet',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',                  
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  text: 'Head Toliet',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',                  
+                },
+              ],
+            ],
+          },
+        },
+        '\n',
+        '\n',
+        {
+          table: {
+            widths: ['*', 160, '*'],
+            body: [
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  image: this.reportMiscOne,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  image: this.reportMiscTwo,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  image: this.reportMiscThree,
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  width: 150,
+
+                 
+                },
+              ],
+              [
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Port',
+                  text: 'Miscellaneous',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',               
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Starboard',
+                  text: 'Miscellaneous',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',                  
+                },
+                {
+                  //Engines Table
+                  //Column 1
+                  //text: 'Generator',
+                  text: 'Miscellaneous',
+                  colSpan: 1,
+                  alignment: 'center',
+                  border: [false, false, false, false],
+                  style: 'picTitle',
+                  
                 },
               ],
             ],
@@ -1856,18 +2328,35 @@ export class MainPage implements OnInit {
           border: [false, false, false, false],
         },
         subHeader: {
-          fontSize: 11,
+          fontSize: 10,
           alignment: 'right',
         },
         row: {
-          fontSize: 12,
+          fontSize: 10,
           alignment: 'left',
+        },
+        picTitle: {
+          fontSize: 12,
+          color: '#fff',
+          fillColor: '#009ca6',
+          alignment: 'center',
         },
       },
     };
     this.pdfObj = pdfMake.createPdf(docDefinition);
 
     //console.log(docDefinition);
+    //let pdf64data: string;
+    let pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    let pdfBlob = pdfDocGenerator.getBase64((base64data) => {
+      alert(base64data);
+      pdfBlob = base64data;
+      //  pdf64data = 'data:application/pdf;base64,' + base64data;
+      this.uploadFile(pdfBlob);
+      this.pdfBlob = base64data;
+      //  console.log('pdfblob ', pdf64data);
+    });
+
     this.downloadPdf();
   }
 }

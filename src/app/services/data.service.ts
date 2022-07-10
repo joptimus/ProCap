@@ -100,15 +100,14 @@ export class DataService {
   ];
 
   public miscData = [
-    { id: '', label: 'Thrusters', isChecked: false },
+    { id: '', label: 'Thrusters', isChecked: false, notAvail: true, checked: false },
     { id: '', label: 'Horn', isChecked: false },
     { id: '', label: 'Nav Lights', isChecked: false },
     { id: '', label: 'Anchor Light', isChecked: false },
     { id: '', label: 'VHF', isChecked: false },
     { id: '', label: 'Spot Light', isChecked: false },
     { id: '', label: 'Strainers', isChecked: false },
-    { id: '', label: 'Water', isChecked: false },
-    { id: '', label: 'Water Tank', isChecked: false },
+    { id: '', label: 'Water Tank Filled', isChecked: false, notAvail: true, checked: false },
     
   ];
 

@@ -11,7 +11,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 
 import { Capacitor } from '@capacitor/core';
@@ -25,7 +25,7 @@ import { TitleCasePipe } from '@angular/common';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, AppRoutingModule, IonicStorageModule.forRoot(), provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => {
+  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, AppRoutingModule, IonicStorageModule.forRoot(),  provideStorage(() => getStorage()), provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => {
     if (Capacitor.isNativePlatform()) {
       return initializeAuth(getApp(), {
         persistence: indexedDBLocalPersistence,

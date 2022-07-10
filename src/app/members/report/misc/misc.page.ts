@@ -156,6 +156,6 @@ export class MiscPage implements OnInit {
 
   log(){
     this.data.miscData = this.miscData;
-    console.log('Updated miscData')
+    console.log('Updated miscData', this.miscData)
   }
 }

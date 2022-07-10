@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  doc,
-  docData,
-  addDoc,
-  deleteDoc,
-  updateDoc,
-} from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc, setDoc } from '@angular/fire/firestore';
+import { getDownloadURL, ref, Storage, uploadBytes, uploadString } from '@angular/fire/storage';
+import { Auth } from '@angular/fire/auth';
+import { Photo } from '@capacitor/camera';
 import { Observable } from 'rxjs';
 
 export interface Client {
@@ -28,11 +22,20 @@ export interface Settings {
   value: string;
 }
 
+export interface Pdf {
+  id?: string;
+  fileName: string;
+  reportId: string;
+  clientName: any;
+  boatId: string;
+  month: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class DbDataService {
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private storage: Storage, private auth: Auth) {}
 
   getClients(): Observable<Client[]> {
     const notesRef = collection(this.firestore, 'clients');
@@ -55,31 +58,51 @@ export class DbDataService {
   }
 
   getSettingsValues(): Observable<Settings[]> {
-      const ref = collection(this.firestore,'settings');
-      return collectionData(ref, { idField: 'id' }) as Observable<Settings[]>;
+    const ref = collection(this.firestore, 'settings');
+    return collectionData(ref, { idField: 'id' }) as Observable<Settings[]>;
   }
 
   getSettingsValuesById(id): Observable<Settings> {
-    const ref = doc(this.firestore,`settings/${id}`);
+    const ref = doc(this.firestore, `settings/${id}`);
     return docData(ref, { idField: 'id' }) as Observable<Settings>;
-}
+  }
 
   addSettingsValue(setting: Settings) {
     const ref = collection(this.firestore, 'settings');
     return addDoc(ref, setting);
-
   }
 
   deleteSettingsValue(setting: Settings) {
     const ref = doc(this.firestore, `settings/${setting.id}`);
     return deleteDoc(ref);
-
   }
 
   updateSettingsValue(setting: Settings) {
     const ref = doc(this.firestore, `settings/${setting.id}`);
-    return updateDoc(ref, {name: setting.name, value: setting.value });
+    return updateDoc(ref, { name: setting.name, value: setting.value });
+  }
 
+   addPdfToStorage(pdf: Pdf) {
+
+    console.log('dbService pdf Start');
+    const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.fileName}`;
+    const storageRef = ref(this.storage, path);
+
+    try {
+       uploadString(storageRef, pdf.fileName, 'base64').then((snapshot) => {
+        console.log('Uploaded a base64 string!');
+      });
+      
+      const fileUrl =  getDownloadURL(storageRef);
+
+      const userDocRef = doc(this.firestore, `pdfs/${pdf.boatId}`);
+      setDoc(userDocRef, { fileUrl });
+   
+      return true;
+    } catch (error) {
+      console.log('pdf Upload error: ', error);
+      return null;
+    }
   }
 
 
@@ -94,11 +117,5 @@ export class DbDataService {
       noEngines: client.noEngines,
       email: client.email,
     });
-
-
-
-
-
-
   }
 }
