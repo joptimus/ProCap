@@ -40,7 +40,7 @@ export class MainPage implements OnInit {
   reportNumber;
   reportFinal;
 
-  // Final Pics Variables for Report
+  // #region Final Pics Variables for Report
   reportPortOil;
   reportPortHour;
   reportStarOil;
@@ -64,11 +64,15 @@ export class MainPage implements OnInit {
 
   clientBoatImg;
 
+  // #endregion End of Report Variables
+
   image: any;
   image2: SafeResourceUrl;
   profile = null;
   customer: any;
   vessel: any;
+
+  //#region Pic Arrays
   bilgePics = [];
   portOilPic = [];
   portHourPic = [];
@@ -89,6 +93,7 @@ export class MainPage implements OnInit {
   headToliet = [];
   engineComments;
   pdfObj = null;
+  //#endregion
 
   // Local Asset Pics
   logoData = null;
@@ -104,14 +109,6 @@ export class MainPage implements OnInit {
   currentImage = null;
   pdfData = null;
 
-  base64Str: any;
-  kbytes: number;
-
-  bytesBefore: number;
-  bytesAfter: number;
-  difference: number;
-  percentage: number;
-
   type: string;
   resetValue = [''];
   resetNull;
@@ -119,12 +116,21 @@ export class MainPage implements OnInit {
   pdfBlob: any;
   pdfDocGenerator: any;
 
+  //#region Variables for calculating Image Size
+  base64Str: any;
+  kbytes: number;
+  bytesBefore: number;
+  bytesAfter: number;
+  difference: number;
+  percentage: number;
   imgResultBeforeCompress: DataUrl = '';
   imgResultAfterCompress: DataUrl = '';
   imgResultAfterResize: DataUrl = '';
   imgResultUpload: DataUrl = '';
   imgResultAfterResizeMax: DataUrl = '';
   imgResultMultiple: UploadResponse[] = [];
+  // #endregion
+
   constructor(
     // private dom: DomSanitizer,
     private authService: AuthenticationService,
@@ -163,7 +169,7 @@ export class MainPage implements OnInit {
     this.loadPlaceHolder();
     this.loadLogo();
     this.loadComingSoon();
-    //this.disableCheck();
+    this.disableCheck();
     this.checkAccount();
     console.log(this.clientLastName);
   }
@@ -189,28 +195,6 @@ export class MainPage implements OnInit {
 
     var today = months[curr_month];
     console.log('month is : ', today);
-  }
-
-  calculateImageSize(base64String) {
-    let padding;
-    let inBytes;
-    let base64StringLength;
-
-    if (base64String.endsWith('==')) {
-      padding = 2;
-    } else if (base64String.endsWith('=')) {
-      padding = 1;
-    } else {
-      padding = 0;
-    }
-
-    base64StringLength = base64String.length;
-    console.log(base64StringLength);
-    inBytes = (base64StringLength / 4) * 3 - padding;
-    console.log(inBytes);
-    this.kbytes = inBytes / 1000;
-    console.log(this.kbytes);
-    return this.kbytes;
   }
 
   async checkAccount() {
@@ -341,8 +325,8 @@ export class MainPage implements OnInit {
     });
   }
 
-  // Navigation buttons
-  engine() {
+  // #region Navigation buttons
+  engine(): void {
     this.route.navigate(['members', 'engines']);
   }
   generator() {
@@ -363,9 +347,9 @@ export class MainPage implements OnInit {
   goToMain() {
     this.route.navigate(['members', 'main']);
   }
-  // End of Navigation Buttons
+  // #endregion
 
-  // Images Start ///////////////////////////////////////////////////////////////////////////
+  // #region Images Code
 
   buttonId(event) {
     console.log(event);
@@ -457,6 +441,7 @@ export class MainPage implements OnInit {
           this.loadFileData(result.files);
         },
         async (err) => {
+          console.log('error in load images: ', err);
           // Folder does not yet exists!
           await Filesystem.mkdir({
             path: IMAGE_DIR,
@@ -487,7 +472,7 @@ export class MainPage implements OnInit {
       });
       //Load file based on what the file starts with
       //  this.images = this.images.filter(file => file.name.startsWith(this.tabSelected));
-      //this.disableCheck();
+      this.disableCheck();
     }
   }
 
@@ -499,11 +484,11 @@ export class MainPage implements OnInit {
     this.refreshPics();
   }
 
-  // Images End /////////////////////////////////////////////////////////////////////
+  // #endregion
 
   refreshPics() {
     this.loadFiles();
-   // this.disableCheck();
+    this.disableCheck();
   }
 
   disableCheck() {
@@ -554,20 +539,20 @@ export class MainPage implements OnInit {
       file.name.startsWith('MiscThree')
     );
 
-    if (
-      //this.bilgePics.length == 1 &&
-      this.portOilPic.length == 1 &&
-      this.starOilPic.length == 1 &&
-      this.genOil.length == 1 &&
-      this.strainerClean.length == 1 &&
-      this.strainerDirty.length == 1 &&
-      this.miscPicOne.length == 1 &&
-      this.miscPicTwo.length == 1
-    ) {
-      this.submitBtnDisable = false;
-    } else {
-      this.submitBtnDisable = true;
-    }
+    // if (
+    //   this.bilgePics.length == 1 &&
+    //   this.portOilPic.length == 1 &&
+    //   this.starOilPic.length == 1 &&
+    //   this.genOil.length == 1 &&
+    //   this.strainerClean.length == 1 &&
+    //   this.strainerDirty.length == 1 &&
+    //   this.miscPicOne.length == 1 &&
+    //   this.miscPicTwo.length == 1
+    // ) {
+    //   this.submitBtnDisable = false;
+    // } else {
+    //   this.submitBtnDisable = true;
+    // }
     console.log('disable check value : ', this.submitBtnDisable);
   }
 
@@ -691,67 +676,171 @@ export class MainPage implements OnInit {
 
   validatePicturesForReport() {
     // Filter Images to display in different sections of report
-    this.bilgePics = this.images.filter((file) => file.name.startsWith('BILGE'));
-    this.portOilPic = this.images.filter((file) => file.name.startsWith('Port'));
-    this.portHourPic = this.images.filter((file) => file.name.startsWith('PortHours'));
-    this.starOilPic = this.images.filter((file) => file.name.startsWith('Starboard'));
-    this.starHoursPic = this.images.filter((file) => file.name.startsWith('StarHours'));
-    this.engineMain = this.images.filter((file) => file.name.startsWith('Main'));
+    this.bilgePics = this.images.filter((file) =>
+      file.name.startsWith('BILGE')
+    );
+    this.portOilPic = this.images.filter((file) =>
+      file.name.startsWith('Port')
+    );
+    this.portHourPic = this.images.filter((file) =>
+      file.name.startsWith('PortHours')
+    );
+    this.starOilPic = this.images.filter((file) =>
+      file.name.startsWith('Starboard')
+    );
+    this.starHoursPic = this.images.filter((file) =>
+      file.name.startsWith('StarHours')
+    );
+    this.engineMain = this.images.filter((file) =>
+      file.name.startsWith('Main')
+    );
     this.genOil = this.images.filter((file) => file.name.startsWith('GenOil'));
-    this.genHoursPic = this.images.filter((file) => file.name.startsWith('GenHours'));
-    this.galleyFaucet = this.images.filter((file) => file.name.startsWith('GalFaucet'));
-    this.headFaucet = this.images.filter((file) => file.name.startsWith('HeadFaucet'));
-    this.headToliet = this.images.filter((file) => file.name.startsWith('HeadToliet'));
-    this.strainerDirty = this.images.filter((file) => file.name.startsWith('HVAC-Dirty'));
-    this.strainerClean = this.images.filter((file) => file.name.startsWith('HVAC-Clean'));
-    this.miscPicOne = this.images.filter((file) => file.name.startsWith('MiscOne'));
-    this.miscPicTwo = this.images.filter((file) => file.name.startsWith('MiscTwo'));
-    this.miscPicThree = this.images.filter((file) => file.name.startsWith('MiscThree'));
+    this.genHoursPic = this.images.filter((file) =>
+      file.name.startsWith('GenHours')
+    );
+    this.galleyFaucet = this.images.filter((file) =>
+      file.name.startsWith('GalFaucet')
+    );
+    this.headFaucet = this.images.filter((file) =>
+      file.name.startsWith('HeadFaucet')
+    );
+    this.headToliet = this.images.filter((file) =>
+      file.name.startsWith('HeadToliet')
+    );
+    this.strainerDirty = this.images.filter((file) =>
+      file.name.startsWith('HVAC-Dirty')
+    );
+    this.strainerClean = this.images.filter((file) =>
+      file.name.startsWith('HVAC-Clean')
+    );
+    this.miscPicOne = this.images.filter((file) =>
+      file.name.startsWith('MiscOne')
+    );
+    this.miscPicTwo = this.images.filter((file) =>
+      file.name.startsWith('MiscTwo')
+    );
+    this.miscPicThree = this.images.filter((file) =>
+      file.name.startsWith('MiscThree')
+    );
 
-    if (this.bilgePics.length == 0) { this.reportBilge = this.logoData; } else { this.reportBilge = this.bilgePics[0].data; }
-    if (this.portHourPic.length == 0) { this.reportPortHour = this.logoData; } else { this.reportPortHour = this.portHourPic[0].data; }
-    if (this.portOilPic.length == 0) { this.reportPortOil = this.logoData; } else { this.reportPortOil = this.portOilPic[0].data; }    
-    if (this.starOilPic.length == 0) { this.reportStarOil = this.logoData; } else { this.reportStarOil = this.starOilPic[0].data; }    
-    if (this.starHoursPic.length == 0) { this.reportStarHour = this.logoData; } else { this.reportStarHour = this.starHoursPic[0].data; }    
-    if (this.mainHourPic.length == 0) { this.reportMainHour = this.logoData; } else { this.reportMainHour = this.mainHourPic[0].data; }   
-    if (this.mainOilPic.length == 0) { this.reportMainOil = this.logoData; } else { this.reportMainOil = this.mainOilPic[0].data; }     
-    if (this.genOil.length == 0) { this.reportGenOil = this.logoData; } else { this.reportGenOil = this.genOil[0].data; }    
-    if (this.genHoursPic.length == 0) { this.reportGenHours = this.logoData; } else { this.reportGenHours = this.genHoursPic[0].data; }    
-    if (this.galleyFaucet.length == 0) { this.reportGalleyFaucet = this.logoData; } else { this.reportGalleyFaucet = this.galleyFaucet[0].data; }    
-    if (this.headFaucet.length == 0) { this.reportHeadFaucet = this.logoData; } else { this.reportHeadFaucet = this.headFaucet[0].data; }    
-    if (this.headToliet.length == 0) { this.reportHeadToliet = this.logoData; } else { this.reportHeadToliet = this.headToliet[0].data; }    
-    if (this.strainerDirty.length == 0) { this.reportStrainerDirty = this.logoData; } else { this.reportStrainerDirty = this.strainerDirty[0].data; }    
-    if (this.strainerClean.length == 0) { this.reportStrainerClean = this.logoData; } else { this.reportStrainerClean = this.strainerClean[0].data; } 
-    if (this.miscPicOne.length == 0) { this.reportMiscOne = this.logoData; } else { this.reportMiscOne = this.miscPicOne[0].data; }    
-    if (this.miscPicTwo.length == 0) { this.reportMiscTwo = this.logoData; } else { this.reportMiscTwo = this.miscPicTwo[0].data; }    
-    if (this.miscPicThree.length == 0) { this.reportMiscThree = this.logoData; } else { this.reportMiscThree = this.miscPicThree[0].data; }       
-
+    if (this.bilgePics.length == 0) {
+      this.reportBilge = this.logoData;
+    } else {
+      this.reportBilge = this.bilgePics[0].data;
+    }
+    if (this.portHourPic.length == 0) {
+      this.reportPortHour = this.logoData;
+    } else {
+      this.reportPortHour = this.portHourPic[0].data;
+    }
+    if (this.portOilPic.length == 0) {
+      this.reportPortOil = this.logoData;
+    } else {
+      this.reportPortOil = this.portOilPic[0].data;
+    }
+    if (this.starOilPic.length == 0) {
+      this.reportStarOil = this.logoData;
+    } else {
+      this.reportStarOil = this.starOilPic[0].data;
+    }
+    if (this.starHoursPic.length == 0) {
+      this.reportStarHour = this.logoData;
+    } else {
+      this.reportStarHour = this.starHoursPic[0].data;
+    }
+    if (this.mainHourPic.length == 0) {
+      this.reportMainHour = this.logoData;
+    } else {
+      this.reportMainHour = this.mainHourPic[0].data;
+    }
+    if (this.mainOilPic.length == 0) {
+      this.reportMainOil = this.logoData;
+    } else {
+      this.reportMainOil = this.mainOilPic[0].data;
+    }
+    if (this.genOil.length == 0) {
+      this.reportGenOil = this.logoData;
+    } else {
+      this.reportGenOil = this.genOil[0].data;
+    }
+    if (this.genHoursPic.length == 0) {
+      this.reportGenHours = this.logoData;
+    } else {
+      this.reportGenHours = this.genHoursPic[0].data;
+    }
+    if (this.galleyFaucet.length == 0) {
+      this.reportGalleyFaucet = this.logoData;
+    } else {
+      this.reportGalleyFaucet = this.galleyFaucet[0].data;
+    }
+    if (this.headFaucet.length == 0) {
+      this.reportHeadFaucet = this.logoData;
+    } else {
+      this.reportHeadFaucet = this.headFaucet[0].data;
+    }
+    if (this.headToliet.length == 0) {
+      this.reportHeadToliet = this.logoData;
+    } else {
+      this.reportHeadToliet = this.headToliet[0].data;
+    }
+    if (this.strainerDirty.length == 0) {
+      this.reportStrainerDirty = this.logoData;
+    } else {
+      this.reportStrainerDirty = this.strainerDirty[0].data;
+    }
+    if (this.strainerClean.length == 0) {
+      this.reportStrainerClean = this.logoData;
+    } else {
+      this.reportStrainerClean = this.strainerClean[0].data;
+    }
+    if (this.miscPicOne.length == 0) {
+      this.reportMiscOne = this.logoData;
+    } else {
+      this.reportMiscOne = this.miscPicOne[0].data;
+    }
+    if (this.miscPicTwo.length == 0) {
+      this.reportMiscTwo = this.logoData;
+    } else {
+      this.reportMiscTwo = this.miscPicTwo[0].data;
+    }
+    if (this.miscPicThree.length == 0) {
+      this.reportMiscThree = this.logoData;
+    } else {
+      this.reportMiscThree = this.miscPicThree[0].data;
+    }
   }
 
-  validateTextFields(){
-
+  validateTextFields() {
     const data = this.data.miscData;
 
     // Find the Index number of the array to check
-    let thrusters = data.findIndex(x => x.label === 'Thrusters');
-    let water = data.findIndex(x => x.label === 'Water Tank Filled');
-    console.log('index - thrusters',thrusters);
+    let thrusters = data.findIndex((x) => x.label === 'Thrusters');
+    let water = data.findIndex((x) => x.label === 'Water Tank Filled');
+    console.log('index - thrusters', thrusters);
     console.log('index - water', water);
 
-    if (this.data.miscData[thrusters].checked == true) { this.textThrusters = 'N/A';} else { this.textThrusters = '√'; };
-    if (this.data.miscData[water].checked == true) { this.textWaterFilled = 'N/A';} else { this.textWaterFilled = '√'; };
+    if (this.data.miscData[thrusters].checked == true) {
+      this.textThrusters = 'N/A';
+    } else {
+      this.textThrusters = '√';
+    }
+    if (this.data.miscData[water].checked == true) {
+      this.textWaterFilled = 'N/A';
+    } else {
+      this.textWaterFilled = '√';
+    }
     console.log('textThrusters = ', this.textThrusters);
     console.log('textWaterFilled = ', this.textWaterFilled);
   }
 
   validateBoatImg() {
-     if (this.data.boatImg[0].isNull == false) {
+    if (this.data.boatImg[0].isNull == false) {
       this.clientBoatImg = this.data.boatImg[0].value;
       console.log('clientBoatImg = ', this.clientBoatImg);
-     } else { 
+    } else {
       this.clientBoatImg = this.comingSoon;
-      console.log('Boat Image is null',this.data.boatImg);
-    };
+      console.log('Boat Image is null', this.data.boatImg);
+    }
   }
   createPdf() {
     this.validatePicturesForReport();
@@ -830,7 +919,7 @@ export class MainPage implements OnInit {
                       },
 
                       {
-                        text: 'Capt. R Beckermann',
+                        text: 'Capt. Bob Files',
                         bold: true,
                         color: '#333333',
                         fontSize: 10,
@@ -1271,7 +1360,6 @@ export class MainPage implements OnInit {
                 {
                   text: '',
                   border: [false, false, false, false],
-                  
                 },
                 {
                   text: 'Batteries',
@@ -1940,8 +2028,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -1952,8 +2038,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -1964,8 +2048,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
               ],
               [
@@ -1978,8 +2060,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-
-               
                 },
                 {
                   //Engines Table
@@ -1990,8 +2070,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-
-                  
                 },
                 {
                   //Engines Table
@@ -2002,8 +2080,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-
-                  
                 },
               ],
             ],
@@ -2024,8 +2100,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2036,8 +2110,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2048,8 +2120,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
               ],
               [
@@ -2062,8 +2132,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-
-               
                 },
                 {
                   //Engines Table
@@ -2074,8 +2142,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-
-                  
                 },
                 {
                   //Engines Table
@@ -2086,7 +2152,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-                  
                 },
               ],
             ],
@@ -2107,8 +2172,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2119,8 +2182,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2131,8 +2192,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
               ],
               [
@@ -2144,7 +2203,7 @@ export class MainPage implements OnInit {
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-                  style: 'picTitle',               
+                  style: 'picTitle',
                 },
                 {
                   //Engines Table
@@ -2154,7 +2213,7 @@ export class MainPage implements OnInit {
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-                  style: 'picTitle',                  
+                  style: 'picTitle',
                 },
                 {
                   //Engines Table
@@ -2165,7 +2224,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-                  
                 },
               ],
             ],
@@ -2186,8 +2244,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2198,8 +2254,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2210,8 +2264,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
               ],
               [
@@ -2223,7 +2275,7 @@ export class MainPage implements OnInit {
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-                  style: 'picTitle',               
+                  style: 'picTitle',
                 },
                 {
                   //Engines Table
@@ -2233,7 +2285,7 @@ export class MainPage implements OnInit {
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-                  style: 'picTitle',                  
+                  style: 'picTitle',
                 },
                 {
                   //Engines Table
@@ -2243,7 +2295,7 @@ export class MainPage implements OnInit {
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-                  style: 'picTitle',                  
+                  style: 'picTitle',
                 },
               ],
             ],
@@ -2265,8 +2317,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2277,8 +2327,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
                 {
                   //Engines Table
@@ -2289,8 +2337,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
-
-                 
                 },
               ],
               [
@@ -2302,7 +2348,7 @@ export class MainPage implements OnInit {
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-                  style: 'picTitle',               
+                  style: 'picTitle',
                 },
                 {
                   //Engines Table
@@ -2312,7 +2358,7 @@ export class MainPage implements OnInit {
                   colSpan: 1,
                   alignment: 'center',
                   border: [false, false, false, false],
-                  style: 'picTitle',                  
+                  style: 'picTitle',
                 },
                 {
                   //Engines Table
@@ -2323,7 +2369,6 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
-                  
                 },
               ],
             ],

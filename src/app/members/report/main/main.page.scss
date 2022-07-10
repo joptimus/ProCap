@@ -4,10 +4,20 @@
   margin-bottom: 30px;
   --background-color: #009ca6 !important;
 }
+.labelField {
+  font-size: 16px !important;
+}
 .color {
   --color: #fff;
   --background-color: #009ca6 !important;
   margin-bottom: 60px;
+}
+.heroCard {
+  --color: #fff;
+  --background: #009ca6 !important;
+}
+.clientLabel {
+  font-size: 18px;
 }
 body {
   font-family: "Shanti", sans-serif;
@@ -17,9 +27,8 @@ ion-badge {
   padding: 10px;
 }
 #person {
-  height: 20px;
-  width: 20px;
-  padding-right: 10px;
+  vertical-align: middle;
+  padding-right: 20px;
 }
 ion-toolbar {
   background-color: #009ca6 !important;
@@ -30,7 +39,7 @@ ion-toolbar {
   background-color: #fff;
   background: #fff;
   --color-activated: none;
-  border-bottom-color:#fff;
+  border-bottom-color: #fff;
 }
 ion-avatar {
   width: 128px;
@@ -47,14 +56,17 @@ ion-list {
 }
 .labelHead {
   display: flex;
-  padding-left:10px;
-  padding-bottom:14px;
+  padding-left: 10px;
+  padding-bottom: 14px;
   height: 100%;
 }
 ion-icon {
   width: 23px;
   height: 23px;
   vertical-align: center;
+}
+.checklistLabel {
+  font-size: 18px;
 }
 .fallback {
   width: 128px;
@@ -67,11 +79,42 @@ ion-icon {
   align-items: center;
   font-weight: 500;
 }
-.comments {
-    margin: 10px;
+.commentHeader {
+  --background: #009ca6 !important;
+  --color: #fff;
+  display: flex;
+  font-size: 18px;
+  height: 48px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.chkList {
+  --color: #fff;
+  --background: #009ca6 !important;
+  align-items: center;
+  height: 48px;
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0px !important;
+  padding-bottom: 0px;
+}
+.comLabel {
+  display: flex;
+  align-items: center;
+}
+.textAreaCard {
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.textAreaInput {
+  padding-right: 0px !important;
 }
 .comments textarea {
-    height: 200px;
+  height: 200px;
   margin: 20px;
   border: 1px solid;
 }
@@ -84,12 +127,17 @@ ion-icon {
   padding: 14px;
   height: 48px;
 }
-
+.padding {
+  padding-top: 20px;
+}
+.padding-bottom {
+  padding-bottom: 0px;
+  margin-bottom: 0;
+}
 .button {
   flex-direction: row;
-align-self: flex-end;
-order: 2;
-
+  align-self: flex-end;
+  order: 2;
 }
 .label {
   flex-direction: row;
@@ -108,9 +156,17 @@ order: 2;
   vertical-align: middle;
   align-self: center;
   padding: 0;
+  color: #009ca6;
 }
 
 .btnColor {
   --color: #fff;
   --background: #009ca6 !important;
+}
+ion-textarea {
+  width: 100vw;
+}
+.textAreaItem {
+  margin: 0;
+  padding: 0;
 }
