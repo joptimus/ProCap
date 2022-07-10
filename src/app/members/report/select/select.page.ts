@@ -50,7 +50,7 @@ export class SelectPage implements OnInit {
   }
   
   selected(event) {
-    // this.selectedOption = false;
+
     this.clientLast = event.detail.value.lName;
     this.data.clientLast = event.detail.value.lName;
     console.log('client L name : ', this.clientLast);
@@ -67,13 +67,13 @@ export class SelectPage implements OnInit {
 
     if(event.detail.value.vesselPhoto == '') { 
       this.data.boatImg[0].isNull = true;
-      console.log(this.data.boatImg);
+      console.log('The Boat Img is Null value set to true');
     } else {   
       this.data.boatImg[0].value = event.detail.value.vesselPhoto;
       this.data.boatImg[0].isNull = false;
       console.log('data service boatImg = ', this.data.boatImg);
-      console.log('event detail  = ', event.detail.value.vesselPhoto); }
-
+      console.log('event detail  = ', event.detail.value.vesselPhoto);
+     };
   }
 
   updateValues() {

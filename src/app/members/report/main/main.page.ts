@@ -742,22 +742,21 @@ export class MainPage implements OnInit {
     if (this.data.miscData[water].checked == true) { this.textWaterFilled = 'N/A';} else { this.textWaterFilled = '√'; };
     console.log('textThrusters = ', this.textThrusters);
     console.log('textWaterFilled = ', this.textWaterFilled);
-
- 
-
   }
 
   validateBoatImg() {
      if (this.data.boatImg[0].isNull == false) {
-      console.log('Boat Image not null',this.data.boatImg);
       this.clientBoatImg = this.data.boatImg[0].value;
       console.log('clientBoatImg = ', this.clientBoatImg);
      } else { 
+      this.clientBoatImg = this.comingSoon;
       console.log('Boat Image is null',this.data.boatImg);
-      this.clientBoatImg = this.comingSoon;}
+    };
   }
   createPdf() {
     this.validatePicturesForReport();
+    this.validateBoatImg();
+    this.validateTextFields();
 
     const reportId = this.reportFinal;
 

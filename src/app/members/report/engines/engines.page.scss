@@ -8,6 +8,9 @@ ion-segment {
   padding-bottom: 0px;
   --border-radius: none !important;
 }
+ion-title {
+  --color: #fff;
+}
 ion-segment-button {
   height: 40px;
   border-radius: 0;

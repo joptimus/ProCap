@@ -4,7 +4,7 @@
       <ion-back-button>
       </ion-back-button>
     </ion-buttons>
-    <ion-title>Report #{{reportFinal}}
+    <ion-title class="toolbarTitle">Report #{{reportFinal}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -525,7 +525,7 @@
         </div>
         <ng-template #placeholder_misc2>
           <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="MiscTwo" lines="none">
+            <ion-item id="MiscTwo">
               <ion-thumbnail id="MiscTwo" slot="start">
                 <ion-img id="MiscTwo" [src]="">
                 </ion-img>

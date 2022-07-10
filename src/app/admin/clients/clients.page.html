@@ -1,22 +1,22 @@
 <ion-header>
-	<ion-toolbar color='#009ca6'>
-		<ion-buttons slot="start">
-			<ion-back-button></ion-back-button>
-		</ion-buttons>
-		<ion-title>Clients</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="toolbarTitle">Clients</ion-title>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
 
-	<ion-list>
-		<ion-list-header>Current Client List</ion-list-header>
-		<ion-item *ngFor="let client of clients" (click)="openClient(client)">
-			<ion-label> {{ client.fullName }} </ion-label>
-			<ion-icon name="ellipsis-vertical-circle"></ion-icon>
-		</ion-item>
-	</ion-list>
-	<div class="addButton">
-		<ion-button class="btnColor" expand="block" (click)="goToAddClient()">Add Client</ion-button>
-	</div>
+  <ion-list>
+    <ion-list-header>Current Client List</ion-list-header>
+    <ion-item *ngFor="let client of clients" (click)="openClient(client)">
+      <ion-label> {{ client.fullName }} </ion-label>
+      <ion-icon name="ellipsis-vertical-circle"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <div class="addButton">
+    <ion-button class="btnColor" expand="block" (click)="goToAddClient()">Add Client</ion-button>
+  </div>
 
 </ion-content>
