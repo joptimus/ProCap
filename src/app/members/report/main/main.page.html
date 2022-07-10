@@ -1,614 +1,524 @@
 <ion-header>
-  <ion-toolbar color='#009ca6'>
-    <ion-buttons slot="start">
-      <ion-back-button>
-      </ion-back-button>
-    </ion-buttons>
-    <ion-title class="toolbarTitle">Report #{{reportFinal}}
-    </ion-title>
+  <ion-toolbar color="#009ca6">
+      <ion-buttons slot="start">
+          <ion-back-button> </ion-back-button>
+      </ion-buttons>
+      <ion-title class="toolbarTitle">Report #{{reportFinal}} </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <ion-icon name="boat-outline" slot="start">
-      </ion-icon>
-      <ion-label>{{ vessel }}
-      </ion-label>
-      <!-- <ion-badge (click)="refreshPics()" slot="end">ADMIRALS</ion-badge> -->
-    </ion-item>
-    <ion-card-content>
-      <ion-row>
-        <ion-icon id="person" name="person-circle-outline">
-        </ion-icon>
-        <ion-label>{{ customer }}
-        </ion-label>
-      </ion-row>
-    </ion-card-content>
+  <ion-card class="padding-bottom">
+      <ion-item class="heroCard" lines="none">
+          <ion-icon name="boat-outline" slot="start"></ion-icon>
+          <ion-label class="labelField">{{ vessel }}</ion-label>
+          <!-- <ion-badge (click)="refreshPics()" slot="end">ADMIRALS</ion-badge> -->
+      </ion-item>
+      <ion-card-content class="heroCard">
+          <ion-icon id="person" name="person-circle-outline"></ion-icon>
+          <ion-label class="clientLabel">{{ customer }}</ion-label>
+      </ion-card-content>
   </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-label>Checklist
-      </ion-label>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item lines="none" mode="md" detail (click)="engine()" button="true" class="ion-activated">
-        <ion-icon name="clipboard" slot="start">
-        </ion-icon>
-        <ion-label>Engines
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none" mode="md" detail (click)="generator()" button="true" class="ion-activated">
-        <ion-icon name="aperture" slot="start">
-        </ion-icon>
-        <ion-label>Generator
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none" mode="md" detail (click)="hvac()" button="true" class="ion-activated">
-        <ion-icon name="rainy" slot="start">
-        </ion-icon>
-        <ion-label>AC System
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none" mode="md" detail (click)="bilge()" button="true" class="ion-activated">
-        <ion-icon name="fish" slot="start">
-        </ion-icon>
-        <ion-label>Bilge
-        </ion-label>
-      </ion-item>
-      <ion-item lines="none" mode="md" detail (click)="safety()" button="true" class="ion-activated">
-        <ion-icon name="hammer" slot="start">
-        </ion-icon>
-        <ion-label>Safety
-        </ion-label>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <div class="parentReportImages">
-      <ion-card-header class="imageCard">
-        <div class="labelHead" (click)="refreshPics()">
-          <ion-icon slot="start" name="camera">
-          </ion-icon>
-          <ion-label class="labelHead">
-         
-            Report Images
-          </ion-label>
-        </div>
+  <ion-card >
+      <ion-card-header class="chkList" >
+          <ion-label class="checklistLabel">Checklist</ion-label>
       </ion-card-header>
-    </div>
-
-    <div class="preview">
-      <ion-list>
-        <div *ngIf="portOilPic.length == 1; else placeholder_portOilPic;">
-          <ion-item *ngFor="let port of portOilPic; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="port.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ port.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(port)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
+      <ion-card-content class="padding">
+          <ion-item lines="none" mode="md" detail (click)="engine()" button="true" class="ion-activated">
+              <ion-icon name="clipboard" slot="start"> </ion-icon>
+              <ion-label>Engines </ion-label>
           </ion-item>
-        </div>
-        <ng-template #placeholder_portOilPic>
-          <div id="Port" class="'fallback" (click)="selectImage($event)">
-            <ion-item id="Port">
-              <ion-thumbnail id="Port" slot="start">
-                <ion-img id="Port" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="Port" class="ion-text-wrap">
-                Port Engine Oil
-              </ion-label>
-              <ion-button id="Port" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="portHourPic.length == 1; else placeholder_portHourPic;">
-          <ion-item *ngFor="let port of portHourPic; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="port.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ port.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(port)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
+          <ion-item lines="none" mode="md" detail (click)="generator()" button="true" class="ion-activated">
+              <ion-icon name="aperture" slot="start"> </ion-icon>
+              <ion-label>Generator </ion-label>
           </ion-item>
-        </div>
-        <ng-template #placeholder_portHourPic>
-          <div id="PortHours" class="'fallback" (click)="selectImage($event)">
-            <ion-item id="PortHours">
-              <ion-thumbnail id="PortHours" slot="start">
-                <ion-img id="PortHours" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="PortHours" class="ion-text-wrap">
-                Port Engine Hours
-              </ion-label>
-              <ion-button id="PortHours" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="starOilPic.length == 1; else placeholder_starOilPic;">
-          <ion-item *ngFor="let star of starOilPic; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="star.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ star.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(star)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
+          <ion-item lines="none" mode="md" detail (click)="hvac()" button="true" class="ion-activated">
+              <ion-icon name="rainy" slot="start"> </ion-icon>
+              <ion-label>AC System </ion-label>
           </ion-item>
-        </div>
-        <ng-template #placeholder_starOilPic>
-          <div class="'fallback"  (click)="selectImage($event)">
-            <ion-item id="Starboard">
-              <ion-thumbnail id="Starboard" slot="start">
-                <ion-img id="Starboard" [src]=""></ion-img>
-              </ion-thumbnail>
-              <ion-label id="Starboard" class="ion-text-wrap">
-                Starboard Engine Oil
-              </ion-label>
-              <ion-button id="Starboard" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="starHoursPic.length == 1; else placeholder_starHoursPic;">
-          <ion-item *ngFor="let star of starHoursPic; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="star.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ star.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(star)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
+          <ion-item lines="none" mode="md" detail (click)="bilge()" button="true" class="ion-activated">
+              <ion-icon name="fish" slot="start"> </ion-icon>
+              <ion-label>Bilge </ion-label>
           </ion-item>
-        </div>
-        <ng-template #placeholder_starHoursPic>
-          <div class="'fallback"  (click)="selectImage($event)">
-            <ion-item id="StarHours">
-              <ion-thumbnail id="StarHours" slot="start">
-                <ion-img id="StarHours" [src]=""></ion-img>
-              </ion-thumbnail>
-              <ion-label id="StarHours" class="ion-text-wrap">
-                Starboard Engine Hours
-              </ion-label>
-              <ion-button id="StarHours" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="genOil.length == 1; else placeholder_gen;">
-          <ion-item *ngFor="let pic of genOil; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="pic.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ pic.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(pic)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
+          <ion-item lines="none" mode="md" detail (click)="safety()" button="true" class="ion-activated">
+              <ion-icon name="hammer" slot="start"> </ion-icon>
+              <ion-label>Safety </ion-label>
           </ion-item>
-        </div>
-        <ng-template #placeholder_gen>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="GenOil">
-              <ion-thumbnail id="GenOil" slot="start">
-                <ion-img id="GenOil"[src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="GenOil" class="ion-text-wrap">
-                Generator Engine Oil
-              </ion-label>
-              <ion-button id="GenOil" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="genHoursPic.length == 1; else placeholder_genHoursPic;">
-          <ion-item *ngFor="let pic of genHoursPic; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="pic.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ pic.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(pic)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_genHoursPic>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="GenHours">
-              <ion-thumbnail id="GenHours" slot="start">
-                <ion-img id="GenHours"[src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="GenHours" class="ion-text-wrap">
-                Generator Engine Hours
-              </ion-label>
-              <ion-button id="GenHours" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="strainerDirty.length == 1; else placeholder_dirty;">
-          <ion-item *ngFor="let dirty of strainerDirty; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="dirty.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ dirty.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(dirty)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_dirty>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="HVAC-Dirty">
-              <ion-thumbnail id="HVAC-Dirty" slot="start">
-                <ion-img id="HVAC-Dirty" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="HVAC-Dirty" class="ion-text-wrap">
-                Dirty AC Strainer Photo
-              </ion-label>
-              <ion-button id="HVAC-Dirty" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="strainerClean.length == 1; else placeholder_clean;">
-          <ion-item *ngFor="let clean of strainerClean; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="clean.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ clean.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(clean)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_clean>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="HVAC-Clean">
-              <ion-thumbnail id="HVAC-Clean" slot="start">
-                <ion-img id="HVAC-Clean" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="HVAC-Clean" class="ion-text-wrap">
-                Clean AC Strainer Photo
-              </ion-label>
-              <ion-button id="HVAC-Clean" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="bilgePics.length == 1; else placeholder_bilge;">
-          <ion-item *ngFor="let bil of bilgePics; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="bil.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ bil.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_bilge>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="BILGE">
-              <ion-thumbnail id="BILGE" slot="start">
-                <ion-img id="BILGE" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="BILGE" class="ion-text-wrap">
-                Bilge Photo
-              </ion-label>
-              <ion-button id="BILGE" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="galleyFaucet.length == 1; else placeholder_galleyFaucet;">
-          <ion-item *ngFor="let gal of galleyFaucet; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="gal.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ gal.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_galleyFaucet>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="GalFaucet">
-              <ion-thumbnail id="GalFaucet" slot="start">
-                <ion-img id="GalFaucet" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="GalFaucet" class="ion-text-wrap">
-                Galley Faucet Photo
-              </ion-label>
-              <ion-button id="GalFaucet" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="headFaucet.length == 1; else placeholder_headFaucet;">
-          <ion-item *ngFor="let head of headFaucet; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="head.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ head.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_headFaucet>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="HeadFaucet">
-              <ion-thumbnail id="HeadFaucet" slot="start">
-                <ion-img id="HeadFaucet" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="HeadFaucet" class="ion-text-wrap">
-                Head Faucet Photo
-              </ion-label>
-              <ion-button id="HeadFaucet" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="headToliet.length == 1; else placeholder_headToliet;">
-          <ion-item *ngFor="let head of headToliet; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="head.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ head.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_headToliet>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="HeadToliet">
-              <ion-thumbnail id="HeadToliet" slot="start">
-                <ion-img id="HeadToliet" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="HeadToliet" class="ion-text-wrap">
-                Head Toliet Photo
-              </ion-label>
-              <ion-button id="HeadToliet" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="miscPicOne.length == 1; else placeholder_misc1;">
-          <ion-item *ngFor="let file of miscPicOne; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="file.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ file.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(file)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-
-        <ng-template #placeholder_misc1>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="MiscOne">
-              <ion-thumbnail id="MiscOne" slot="start">
-                <ion-img id="MiscOne" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="MiscOne" class="ion-text-wrap">
-                Miscellaneous Photo 1
-              </ion-label>
-              <ion-button id="MiscOne" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="miscPicTwo.length == 1; else placeholder_misc2;">
-          <ion-item *ngFor="let file of miscPicTwo; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="file.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ file.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(file)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_misc2>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="MiscTwo">
-              <ion-thumbnail id="MiscTwo" slot="start">
-                <ion-img id="MiscTwo" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="MiscTwo" class="ion-text-wrap">
-                Miscellaneous Photo 2
-              </ion-label>
-              <ion-button id="MiscTwo" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-
-        <div *ngIf="miscPicThree.length == 1; else placeholder_misc3;">
-          <ion-item *ngFor="let file of miscPicThree; let i=index">
-            <ion-thumbnail slot="start">
-              <ion-img [src]="file.data">
-              </ion-img>
-            </ion-thumbnail>
-            <ion-label class="ion-text-wrap">
-              {{ file.name }}
-            </ion-label>
-            <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(file)">
-              <ion-icon slot="icon-only" name="trash">
-              </ion-icon>
-            </ion-button>
-          </ion-item>
-        </div>
-        <ng-template #placeholder_misc3>
-          <div class="'fallback" (click)="selectImage($event)">
-            <ion-item id="MiscThree" lines="none">
-              <ion-thumbnail id="MiscThree" slot="start">
-                <ion-img id="MiscThree" [src]="">
-                </ion-img>
-              </ion-thumbnail>
-              <ion-label id="MiscThree" class="ion-text-wrap">
-                Miscellaneous Photo 3
-              </ion-label>
-              <ion-button id="MiscThree" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
-                <ion-icon slot="icon-only" name="chevron-forward">
-                </ion-icon>
-              </ion-button>
-            </ion-item>
-          </div>
-        </ng-template>
-      </ion-list>
-    </div>
-    <!-- <div class="preview">
-<ion-list>
-<ion-item *ngFor="let file of images; let i=index">
-<ion-thumbnail slot="start">
-<ion-img [src]="file.data"></ion-img>
-</ion-thumbnail>
-<ion-label class="ion-text-wrap">
-{{ file.name }}
-</ion-label>
-<ion-button slot="end" fill="clear" (click)="deleteImage(file)">
-<ion-icon slot="icon-only" name="trash"></ion-icon>
-</ion-button>
-</ion-item>
-</ion-list>
-</div> -->
+      </ion-card-content>
   </ion-card>
-  <div class="comments">
-    <ion-col>Comments
-    </ion-col>
-    <ion-col>
-      <ion-item>
-        <ion-textarea placeholder={{engineComments[0].comments}} position="floating" [(ngModel)]="engineComments"
-                      (ionChange)="updateRemarks($event)" autoGrow="true">
-        </ion-textarea>
-      </ion-item>
-    </ion-col>
+  <ion-card>
+      <div class="parentReportImages">
+          <ion-card-header class="imageCard">
+              <div class="labelHead" (click)="refreshPics()">
+                  <ion-icon slot="start" name="camera"> </ion-icon>
+                  <ion-label class="labelHead">
+                      Report Images
+                  </ion-label>
+              </div>
+          </ion-card-header>
+      </div>
+
+      <div class="preview">
+          <ion-list>
+              <div *ngIf="portOilPic.length == 1; else placeholder_portOilPic;">
+                  <ion-item *ngFor="let port of portOilPic; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="port.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ port.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(port)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_portOilPic>
+                  <div id="Port" class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="Port">
+                          <ion-thumbnail id="Port" slot="start">
+                              <ion-img id="Port" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="Port" class="ion-text-wrap">
+                              Port Engine Oil
+                          </ion-label>
+                          <ion-button id="Port" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="portHourPic.length == 1; else placeholder_portHourPic;">
+                  <ion-item *ngFor="let port of portHourPic; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="port.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ port.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(port)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_portHourPic>
+                  <div id="PortHours" class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="PortHours">
+                          <ion-thumbnail id="PortHours" slot="start">
+                              <ion-img id="PortHours" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="PortHours" class="ion-text-wrap">
+                              Port Engine Hours
+                          </ion-label>
+                          <ion-button id="PortHours" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="starOilPic.length == 1; else placeholder_starOilPic;">
+                  <ion-item *ngFor="let star of starOilPic; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="star.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ star.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(star)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_starOilPic>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="Starboard">
+                          <ion-thumbnail id="Starboard" slot="start">
+                              <ion-img id="Starboard" [src]=""></ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="Starboard" class="ion-text-wrap">
+                              Starboard Engine Oil
+                          </ion-label>
+                          <ion-button id="Starboard" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="starHoursPic.length == 1; else placeholder_starHoursPic;">
+                  <ion-item *ngFor="let star of starHoursPic; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="star.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ star.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(star)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_starHoursPic>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="StarHours">
+                          <ion-thumbnail id="StarHours" slot="start">
+                              <ion-img id="StarHours" [src]=""></ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="StarHours" class="ion-text-wrap">
+                              Starboard Engine Hours
+                          </ion-label>
+                          <ion-button id="StarHours" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="genOil.length == 1; else placeholder_gen;">
+                  <ion-item *ngFor="let pic of genOil; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="pic.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ pic.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(pic)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_gen>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="GenOil">
+                          <ion-thumbnail id="GenOil" slot="start">
+                              <ion-img id="GenOil" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="GenOil" class="ion-text-wrap">
+                              Generator Engine Oil
+                          </ion-label>
+                          <ion-button id="GenOil" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="genHoursPic.length == 1; else placeholder_genHoursPic;">
+                  <ion-item *ngFor="let pic of genHoursPic; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="pic.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ pic.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(pic)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_genHoursPic>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="GenHours">
+                          <ion-thumbnail id="GenHours" slot="start">
+                              <ion-img id="GenHours" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="GenHours" class="ion-text-wrap">
+                              Generator Engine Hours
+                          </ion-label>
+                          <ion-button id="GenHours" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="strainerDirty.length == 1; else placeholder_dirty;">
+                  <ion-item *ngFor="let dirty of strainerDirty; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="dirty.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ dirty.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(dirty)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_dirty>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="HVAC-Dirty">
+                          <ion-thumbnail id="HVAC-Dirty" slot="start">
+                              <ion-img id="HVAC-Dirty" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="HVAC-Dirty" class="ion-text-wrap">
+                              Dirty AC Strainer Photo
+                          </ion-label>
+                          <ion-button id="HVAC-Dirty" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="strainerClean.length == 1; else placeholder_clean;">
+                  <ion-item *ngFor="let clean of strainerClean; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="clean.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ clean.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(clean)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_clean>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="HVAC-Clean">
+                          <ion-thumbnail id="HVAC-Clean" slot="start">
+                              <ion-img id="HVAC-Clean" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="HVAC-Clean" class="ion-text-wrap">
+                              Clean AC Strainer Photo
+                          </ion-label>
+                          <ion-button id="HVAC-Clean" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="bilgePics.length == 1; else placeholder_bilge;">
+                  <ion-item *ngFor="let bil of bilgePics; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="bil.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ bil.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_bilge>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="BILGE">
+                          <ion-thumbnail id="BILGE" slot="start">
+                              <ion-img id="BILGE" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="BILGE" class="ion-text-wrap">
+                              Bilge Photo
+                          </ion-label>
+                          <ion-button id="BILGE" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="galleyFaucet.length == 1; else placeholder_galleyFaucet;">
+                  <ion-item *ngFor="let gal of galleyFaucet; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="gal.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ gal.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_galleyFaucet>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="GalFaucet">
+                          <ion-thumbnail id="GalFaucet" slot="start">
+                              <ion-img id="GalFaucet" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="GalFaucet" class="ion-text-wrap">
+                              Galley Faucet Photo
+                          </ion-label>
+                          <ion-button id="GalFaucet" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="headFaucet.length == 1; else placeholder_headFaucet;">
+                  <ion-item *ngFor="let head of headFaucet; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="head.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ head.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_headFaucet>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="HeadFaucet">
+                          <ion-thumbnail id="HeadFaucet" slot="start">
+                              <ion-img id="HeadFaucet" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="HeadFaucet" class="ion-text-wrap">
+                              Head Faucet Photo
+                          </ion-label>
+                          <ion-button id="HeadFaucet" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="headToliet.length == 1; else placeholder_headToliet;">
+                  <ion-item *ngFor="let head of headToliet; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="head.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ head.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(bil)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_headToliet>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="HeadToliet">
+                          <ion-thumbnail id="HeadToliet" slot="start">
+                              <ion-img id="HeadToliet" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="HeadToliet" class="ion-text-wrap">
+                              Head Toliet Photo
+                          </ion-label>
+                          <ion-button id="HeadToliet" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="miscPicOne.length == 1; else placeholder_misc1;">
+                  <ion-item *ngFor="let file of miscPicOne; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="file.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ file.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(file)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+
+              <ng-template #placeholder_misc1>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="MiscOne">
+                          <ion-thumbnail id="MiscOne" slot="start">
+                              <ion-img id="MiscOne" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="MiscOne" class="ion-text-wrap">
+                              Miscellaneous Photo 1
+                          </ion-label>
+                          <ion-button id="MiscOne" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="miscPicTwo.length == 1; else placeholder_misc2;">
+                  <ion-item *ngFor="let file of miscPicTwo; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="file.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ file.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(file)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_misc2>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="MiscTwo">
+                          <ion-thumbnail id="MiscTwo" slot="start">
+                              <ion-img id="MiscTwo" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="MiscTwo" class="ion-text-wrap">
+                              Miscellaneous Photo 2
+                          </ion-label>
+                          <ion-button id="MiscTwo" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+
+              <div *ngIf="miscPicThree.length == 1; else placeholder_misc3;">
+                  <ion-item *ngFor="let file of miscPicThree; let i=index">
+                      <ion-thumbnail slot="start">
+                          <ion-img [src]="file.data"> </ion-img>
+                      </ion-thumbnail>
+                      <ion-label class="ion-text-wrap">
+                          {{ file.name }}
+                      </ion-label>
+                      <ion-button class="arrowButton" slot="end" fill="clear" (click)="deleteImage(file)">
+                          <ion-icon slot="icon-only" name="trash"> </ion-icon>
+                      </ion-button>
+                  </ion-item>
+              </div>
+              <ng-template #placeholder_misc3>
+                  <div class="'fallback" (click)="selectImage($event)">
+                      <ion-item id="MiscThree" lines="none">
+                          <ion-thumbnail id="MiscThree" slot="start">
+                              <ion-img id="MiscThree" [src]=""> </ion-img>
+                          </ion-thumbnail>
+                          <ion-label id="MiscThree" class="ion-text-wrap">
+                              Miscellaneous Photo 3
+                          </ion-label>
+                          <ion-button id="MiscThree" class="arrowButton" slot="end" fill="clear" (click)="selectImage($event)">
+                              <ion-icon slot="icon-only" name="chevron-forward"> </ion-icon>
+                          </ion-button>
+                      </ion-item>
+                  </div>
+              </ng-template>
+          </ion-list>
+      </div>
+  </ion-card>
+  <ion-card >
+      <ion-card-header class="commentHeader">
+        <ion-label class="comLabel">Comments</ion-label>
+      </ion-card-header>
+      <ion-card-content class="textAreaCard">
+              <ion-textarea class="textAreaInput" rows="4" inputmode="text" *ngIf="engineComments[0].comments == ''; else placeholder_comments" autocapitalize="sentences" placeholder="{{engineComments[0].comments}}" [(ngModel)]="engineComments" (ionChange)="updateRemarks($event)" autoGrow="true"> </ion-textarea>
+              <ng-template #placeholder_comments>
+                <ion-textarea class="textAreaInput" rows="4" inputmode="text"  autocapitalize="sentences" placeholder="Please enter report comments" (ionChange)="updateRemarks($event)" autoGrow="true"></ion-textarea>
+              </ng-template>
+      </ion-card-content>
+  </ion-card>
+  <div id="bottom" class="color" color="#009ca6">
+      <ion-button class="btnColor" expand="block" [disabled]="submitBtnDisable" (click)="submitReport()">Submit</ion-button>
   </div>
-  <div id="bottom" class="color" color="#009ca6" >
-    <ion-button class="btnColor" expand="block" [disabled]="submitBtnDisable" (click)="submitReport()">Submit</ion-button>
-  </div>
+  
+  
+  <!-- Buttons for Testing -->
+  
   <!-- <ion-button expand="full" (click)="checkAccount()">Check account</ion-button>
-  <ion-button expand="full" (click)="openEmail()">Open Email</ion-button> -->
+  <ion-button expand="full" (click)="openEmail()">Open Email</ion-button>
   <ion-button expand="full" (click)="resetAllValues()">Resetall values test</ion-button>
   <ion-button expand="full" (click)="deleteAllPictures()">Delete All Images</ion-button>
   <ion-button expand="full" (click)="validateTextFields()">TextField Check</ion-button>
-  <ion-button expand="full" (click)="validateBoatImg()">Boat Img Check</ion-button>
+  <ion-button expand="full" (click)="validateBoatImg()">Boat Img Check</ion-button> -->
 </ion-content>
