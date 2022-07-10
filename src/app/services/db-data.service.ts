@@ -82,28 +82,28 @@ export class DbDataService {
     return updateDoc(ref, { name: setting.name, value: setting.value });
   }
 
-   addPdfToStorage(pdf: Pdf) {
+  //  addPdfToStorage(pdf: Pdf) {
 
-    console.log('dbService pdf Start');
-    const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.fileName}`;
-    const storageRef = ref(this.storage, path);
+  //   console.log('dbService pdf Start');
+  //   const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.fileName}`;
+  //   const storageRef = ref(this.storage, path);
 
-    try {
-       uploadString(storageRef, pdf.fileName, 'base64').then((snapshot) => {
-        console.log('Uploaded a base64 string!');
-      });
+  //   try {
+  //      uploadString(storageRef, pdf.fileName, 'base64').then((snapshot) => {
+  //       console.log('Uploaded a base64 string!');
+  //     });
       
-      const fileUrl =  getDownloadURL(storageRef);
+  //     const fileUrl =  getDownloadURL(storageRef);
 
-      const userDocRef = doc(this.firestore, `pdfs/${pdf.boatId}`);
-      setDoc(userDocRef, { fileUrl });
+  //     const userDocRef = doc(this.firestore, `pdfs/${pdf.boatId}`);
+  //     setDoc(userDocRef, { fileUrl });
    
-      return true;
-    } catch (error) {
-      console.log('pdf Upload error: ', error);
-      return null;
-    }
-  }
+  //     return true;
+  //   } catch (error) {
+  //     console.log('pdf Upload error: ', error);
+  //     return null;
+  //   }
+  // }
 
 
   updateClient(client: Client) {

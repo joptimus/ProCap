@@ -24,6 +24,7 @@ export class SelectPage implements OnInit {
   clientId = [];
   clientLast = [];
   engineCount = [];
+  boatImg = [];
 
   constructor(
     private route: Router,
@@ -40,6 +41,7 @@ export class SelectPage implements OnInit {
     this.client = this.data.clients;
     this.clientFullName = this.data.customer;
     this.clientLast = this.data.clientLast;
+
     console.log('Address?', this.client);
   }
 
@@ -62,6 +64,15 @@ export class SelectPage implements OnInit {
     this.clientFullName = event.detail.value.fullName;
     this.data.customer = event.detail.value.fullName;
     console.log('clientFullName :', this.clientFullName);
+
+    if(event.detail.value.vesselPhoto == '') { 
+      this.data.boatImg[0].isNull = true;
+      console.log(this.data.boatImg);
+    } else {   
+      this.data.boatImg[0].value = event.detail.value.vesselPhoto;
+      this.data.boatImg[0].isNull = false;
+      console.log('data service boatImg = ', this.data.boatImg);
+      console.log('event detail  = ', event.detail.value.vesselPhoto); }
 
   }
 

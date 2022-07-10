@@ -123,6 +123,10 @@ export class DataService {
     { value: '' },
   ];
 
+  public boatImg = [
+    { value: '', isNull: true },
+  ];
+
   public engineCount = [
     { value: '' },
   ];

@@ -62,6 +62,8 @@ export class MainPage implements OnInit {
   textThrusters;
   textWaterFilled;
 
+  clientBoatImg;
+
   image: any;
   image2: SafeResourceUrl;
   profile = null;
@@ -250,13 +252,13 @@ export class MainPage implements OnInit {
 
     var today = months[curr_month];
     console.log('did we get the base64 in function?: ', pdf);
-    this.dbData.addPdfToStorage({
-      fileName: pdf,
-      reportId: this.reportFinal,
-      clientName: this.clientLastName,
-      boatId: this.vessel,
-      month: today,
-    });
+    // this.dbData.addPdfToStorage({
+    //   fileName: pdf,
+    //   reportId: this.reportFinal,
+    //   clientName: this.clientLastName,
+    //   boatId: this.vessel,
+    //   month: today,
+    // });
     console.log('this.pdfblob', pdf);
     console.log('Upload File was a success');
     return true;
@@ -744,6 +746,16 @@ export class MainPage implements OnInit {
  
 
   }
+
+  validateBoatImg() {
+     if (this.data.boatImg[0].isNull == false) {
+      console.log('Boat Image not null',this.data.boatImg);
+      this.clientBoatImg = this.data.boatImg[0].value;
+      console.log('clientBoatImg = ', this.clientBoatImg);
+     } else { 
+      console.log('Boat Image is null',this.data.boatImg);
+      this.clientBoatImg = this.comingSoon;}
+  }
   createPdf() {
     this.validatePicturesForReport();
 
@@ -895,8 +907,9 @@ export class MainPage implements OnInit {
         {
           columns: [
             {
-              image: this.comingSoon,
+              image: this.clientBoatImg,
               width: 200,
+              height: 100,
             },
             {
               text: this.customer + '\n  \n  \n',
@@ -2349,7 +2362,7 @@ export class MainPage implements OnInit {
     //let pdf64data: string;
     let pdfDocGenerator = pdfMake.createPdf(docDefinition);
     let pdfBlob = pdfDocGenerator.getBase64((base64data) => {
-      alert(base64data);
+      //alert(base64data);
       pdfBlob = base64data;
       //  pdf64data = 'data:application/pdf;base64,' + base64data;
       this.uploadFile(pdfBlob);
