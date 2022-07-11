@@ -39,8 +39,8 @@ export class ClientsPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ModalPage,
       componentProps: { id: client.id },
-      breakpoints: [0, 0.5, 0.8],
-      initialBreakpoint: 0.8
+      breakpoints: [0, 0.7, 1],
+      initialBreakpoint: 1
     });
  
     await modal.present();

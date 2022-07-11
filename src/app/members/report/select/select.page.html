@@ -16,13 +16,35 @@
         <ion-card-title>Please select a customer</ion-card-title>
       </ion-card-header>
     </ion-item>
-    <ion-item>
+
+    <ion-item *ngIf="boatSelected; else client">
       <ion-label>Customer Name</ion-label>
       <ion-select [(ngModel)]="selectedOption"  interface="action-sheet" placeholder="Select One" (ionChange)="selected($event)" >
       <ion-select-option *ngFor="let client of clients" [value]="client">{{ client.fullName }}</ion-select-option>
 
       </ion-select>
     </ion-item>
+
+    <ion-item *ngIf="clientSelected; else boat">
+      <ion-label>Vessel</ion-label>
+      <ion-select interface="action-sheet" placeholder="{{selectedOption.vesselName}}"
+      (ionChange)="selectedVessel($event)" [value]="selected.VesselName">
+      <ion-select-option [value]="selected.vesselName">{{ selectedOption.vesselName }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+<ng-template #client>
+  <ion-item>
+    <ion-label>Customer Name</ion-label>
+    <ion-select [(ngModel)]="selectedOption"  interface="action-sheet" placeholder="Select One" (ionChange)="selected($event)" >
+    <ion-select-option *ngFor="let client of clients" [value]="client">{{ client.fullName }}</ion-select-option>
+
+    </ion-select>
+  </ion-item>
+</ng-template>
+
+
+    <ng-template #boat>
     <ion-item>
       <ion-label>Vessel</ion-label>
       <ion-select interface="action-sheet" placeholder="Select One"
@@ -34,6 +56,9 @@
         <ion-select-option value="Skid Marks">Skid Marks</ion-select-option> -->
       </ion-select>
     </ion-item>
+    </ng-template>
+
+    
 
     <ion-item lines="none">
       <ion-label>Report Date</ion-label>

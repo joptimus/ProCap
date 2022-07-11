@@ -10,3 +10,7 @@ ion-title {
   font-size: 20px;
   font-weight: 500;
 }
+ion-content {
+  min-height: 90vh;
+  overflow-y: scroll !important;
+}

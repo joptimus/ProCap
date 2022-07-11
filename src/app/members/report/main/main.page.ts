@@ -236,13 +236,13 @@ export class MainPage implements OnInit {
 
     var today = months[curr_month];
     console.log('did we get the base64 in function?: ', pdf);
-    // this.dbData.addPdfToStorage({
-    //   fileName: pdf,
-    //   reportId: this.reportFinal,
-    //   clientName: this.clientLastName,
-    //   boatId: this.vessel,
-    //   month: today,
-    // });
+    this.dbData.addPdfToStorage({
+      fileName: pdf,
+      reportId: this.reportFinal,
+      clientName: this.clientLastName,
+      boatId: this.vessel,
+      month: today,
+    });
     console.log('this.pdfblob', pdf);
     console.log('Upload File was a success');
     return true;
@@ -842,6 +842,8 @@ export class MainPage implements OnInit {
       console.log('Boat Image is null', this.data.boatImg);
     }
   }
+
+  // #region ------- All code for Generating the PDF Template --------
   createPdf() {
     this.validatePicturesForReport();
     this.validateBoatImg();
@@ -2410,10 +2412,12 @@ export class MainPage implements OnInit {
       pdfBlob = base64data;
       //  pdf64data = 'data:application/pdf;base64,' + base64data;
       this.uploadFile(pdfBlob);
-      this.pdfBlob = base64data;
-      //  console.log('pdfblob ', pdf64data);
+      this.pdfBlob = `data:application/pdf;base64,` + base64data;
+        console.log('pdfblob ', this.pdfBlob);
     });
 
     this.downloadPdf();
   }
 }
+
+// #endregion

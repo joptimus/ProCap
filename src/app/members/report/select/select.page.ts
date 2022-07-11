@@ -18,7 +18,9 @@ export class SelectPage implements OnInit {
   skidSelected: boolean = false;
   vesselSelected: boolean = false;
   baronSelected: boolean = false;
-  selectedOption = true;
+  selectedOption = false;
+  clientSelected = false;
+  boatSelected = false;
   clientFullName = [];
   dateText = [];
   clientId = [];
@@ -48,8 +50,20 @@ export class SelectPage implements OnInit {
   next() {
     this.route.navigate(['members', 'main']);
   }
+
+  boatSelect(event) {
+    this.boatSelected = true;
+    console.log('boatSelect event: ',event);
+  }
   
   selected(event) {
+
+    console.log(event);
+
+    this.clientSelected = true;
+    this.boatSelected = false;
+    this.data.vessel = event.detail.value.vesselName;
+    console.log('data.vessel : ', this.data.vessel);
 
     this.clientLast = event.detail.value.lName;
     this.data.clientLast = event.detail.value.lName;
