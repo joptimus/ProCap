@@ -496,7 +496,7 @@ export class MainPage implements OnInit {
       file.name.startsWith('BILGE')
     );
     this.portOilPic = this.images.filter((file) =>
-      file.name.startsWith('Port')
+      file.name.startsWith('PortOil')
     );
     this.portHourPic = this.images.filter((file) =>
       file.name.startsWith('PortHours')
@@ -680,7 +680,7 @@ export class MainPage implements OnInit {
       file.name.startsWith('BILGE')
     );
     this.portOilPic = this.images.filter((file) =>
-      file.name.startsWith('Port')
+      file.name.startsWith('PortOil')
     );
     this.portHourPic = this.images.filter((file) =>
       file.name.startsWith('PortHours')
