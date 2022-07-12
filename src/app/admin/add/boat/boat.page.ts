@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./boat.page.scss'],
 })
 export class BoatPage implements OnInit {
-
   @ViewChild('cropper') cropper: ImageCropperComponent;
   croppedImage: any = '';
   myImage = null;
@@ -38,15 +37,11 @@ export class BoatPage implements OnInit {
     private loadingCtrl: LoadingController,
     private dataService: DataService,
     private route: Router
-
-
-  ) { }
+  ) {}
 
   ngOnInit() {
-
     this.selectImage();
   }
-
 
   async selectImage() {
     //this.buttonId(value);
@@ -57,17 +52,14 @@ export class BoatPage implements OnInit {
       source: CameraSource.Photos,
     });
 
-     const loading = await this.loadingCtrl.create();
-     await loading.present();
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
 
-    
-     this.croppedImage = null;
+    this.croppedImage = null;
     if (image) {
       this.compressFile(image.dataUrl);
     }
   }
-
-
 
   compressFile(image) {
     this.bytesBefore = this.imageCompress.byteCount(image);
@@ -108,25 +100,20 @@ export class BoatPage implements OnInit {
     console.log('Image failed to Load');
   }
 
- async cropImage() {
+  async cropImage() {
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
 
-  const loading = await this.loadingCtrl.create();
-  await loading.present();
-  
-   this.croppedImage = this.cropper.crop().base64;
-   console.log(this.croppedImage);
-   this.dataService.tempBoatUpload[0].data = this.myImage;
-   console.log('DATA SERVICE',this.dataService.tempBoatUpload[0].data);
-   this.myImage = null;
-   this.navigateBack();
-
-
+    this.croppedImage = this.cropper.crop().base64;
+    //console.log(this.croppedImage);
+    this.dataService.tempBoatUpload[0].data = this.myImage;
+    //console.log('DATA SERVICE',this.dataService.tempBoatUpload[0].data);
+    this.myImage = null;
+    this.navigateBack();
   }
 
   navigateBack() {
     this.route.navigate(['add']);
     this.loadingCtrl.dismiss();
-
   }
-
 }
