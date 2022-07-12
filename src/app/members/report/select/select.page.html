@@ -27,8 +27,7 @@
 
     <ion-item *ngIf="clientSelected; else boat">
       <ion-label>Vessel</ion-label>
-      <ion-select interface="action-sheet" placeholder="{{selectedOption.vesselName}}"
-      (ionChange)="selectedVessel($event)" [value]="selected.VesselName">
+      <ion-select interface="action-sheet" (ionChange)="selectedVessel($event)" [value]="selected.VesselName">
       <ion-select-option [value]="selected.vesselName">{{ selectedOption.vesselName }}</ion-select-option>
       </ion-select>
     </ion-item>
