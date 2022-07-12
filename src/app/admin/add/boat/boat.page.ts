@@ -68,7 +68,7 @@ export class BoatPage implements OnInit {
     console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
     this.imageCompress.compressFile(image, 2, 50, 50).then(
       (result: DataUrl) => {
-        this.imgResultAfterCompress = result;
+       // this.imgResultAfterCompress = result;
         this.myImage = result;
         //this.saveImage(this.imgResultAfterCompress);
         this.bytesAfter = this.imageCompress.byteCount(result);
@@ -106,7 +106,7 @@ export class BoatPage implements OnInit {
 
     this.croppedImage = this.cropper.crop().base64;
     //console.log(this.croppedImage);
-    this.dataService.tempBoatUpload[0].data = this.myImage;
+    this.dataService.tempBoatUpload[0].data = this.croppedImage;
     //console.log('DATA SERVICE',this.dataService.tempBoatUpload[0].data);
     this.myImage = null;
     this.navigateBack();
