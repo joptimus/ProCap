@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="toolbarTitle">Upload Boat Image</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="photo">
+
+    <image-cropper
+    #cropper
+        [imageBase64]="myImage"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="16 / 9"
+       
+        [hideResizeSquares]="isMobile" 
+        format="png"
+        (imageLoaded)="imageLoaded()"
+        (loadImageFailed)="loadImageFailed()"
+    >
+    </image-cropper>
+    
+    <img class="photo" [src]="croppedImage" *ngIf="croppedImage"/>
+
+
+
+  </div>
+
+  <ion-button (click)="selectImage()" expand="full" *ngIf="!myImage">Upload Boat Photo</ion-button>
+
+
+
+
+<!-- <image-cropper 
+  [imageChangedEvent]="imageChangedEvent" 
+  [maintainAspectRatio]="true" 
+  [aspectRatio]="16 / 9"
+  [alignImage]="center" 
+  [resizeToWidth]="200" 
+  format="png" 
+  [hideResizeSquares]="isMobile" 
+  [transform]="transform"
+  [autoCrop]="false" 
+  (imageCropped)="imageCropped($event)" 
+  (loadImageFailed)="loadImageFailed()"
+  (imageLoaded)="imageLoaded()">
+</image-cropper> -->
+
+<ion-row *ngIf="myImage"></ion-row>
+
+
+
+<ion-button *ngIf="imgResultAfterCompress" (click)="cropImage()">Crop Image</ion-button>
+
+</ion-content>

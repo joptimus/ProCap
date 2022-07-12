@@ -16,7 +16,21 @@
       <ion-textarea [(ngModel)]="client.vesselName"></ion-textarea>
     </ion-item>
 
-    <div *ngIf="client?.vesselPhoto; else placeholder_vessel">
+    <ion-item *ngIf="!photoData">
+      <ion-label position="fixed">Ship Photo</ion-label>
+      <ion-button slot="end" class="top" (click)="selectImage()">Upload Ship Photo
+        <ion-icon slot="end" name="chevron-forward"> </ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-item *ngIf="photoData">
+      <ion-label position="floating" lines="none">Ship Photo
+       
+      </ion-label>
+      <img *ngIf="photoData" [src]="client.vesselPhoto"/>
+
+    </ion-item>
+
+    <!-- <div *ngIf="client?.vesselPhoto; else placeholder_vessel">
     <ion-item >
       <ion-label position="stacked">Vessel Photo</ion-label>
       <ion-img (click)="selectImage()" [(ngModel)]="client.vesselPhoto" name="client.vesselPhoto" [src]="client.vesselPhoto"></ion-img>
@@ -31,7 +45,7 @@
       </ion-item>
     </div>
 
-  </ng-template>
+  </ng-template> -->
 
     <ion-item>
       <ion-label position="stacked">Number of Engines</ion-label>

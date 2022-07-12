@@ -1,0 +1,27 @@
+ion-menu-button {
+  --color: #009ca6;
+}
+ion-icon {
+  --color: #009ca6 !important;
+}
+ion-toolbar {
+  background-color: #009ca6 !important;
+  color: #fff;
+  font-size: 18px !important;
+  --font-weight: 400 !important;
+}
+ion-title {
+  font-size: 18px !important;
+  font-weight: 400 !important;
+}
+.btnColor {
+  --color: #fff;
+  --background: #009ca6 !important;
+}
+.photo {
+  margin-top: 20px;
+  display: flex;
+  min-height: 10vh;
+  width: 100%;
+  border-color: #009ca6;
+}

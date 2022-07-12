@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddPageRoutingModule } from './add-routing.module';
+import { BoatPageRoutingModule } from './boat-routing.module';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { AddPage } from './add.page';
+import { BoatPage } from './boat.page';
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
     IonicModule,
-    AddPageRoutingModule,
+    BoatPageRoutingModule,
     ImageCropperModule
   ],
-  declarations: [AddPage]
+  declarations: [BoatPage]
 })
-export class AddPageModule {}
+export class BoatPageModule {}

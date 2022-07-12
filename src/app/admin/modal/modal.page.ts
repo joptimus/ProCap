@@ -20,6 +20,7 @@ export class ModalPage implements OnInit {
   bytesAfter: number;
   difference: number;
   percentage: number;
+  photoData = null;
  
   constructor(
     private dbService: DbDataService,
@@ -32,10 +33,13 @@ export class ModalPage implements OnInit {
   ngOnInit() {
     this.dbService.getClientById(this.id).subscribe(res => {
       this.client = res;
+
+      this.photoData = this.client.vesselPhoto;
       console.log('this.client', this.client);
     });
     this.dbService.getSettingsValuesById(this.id).subscribe(res => {
       this.setting = res;
+
 
       console.log('this.setting', this.setting);
     });
@@ -97,6 +101,7 @@ compressFile(image) {
     (result: DataUrl) => {
       this.imgResultAfterCompress = result;
       this.client.vesselPhoto = result;
+      this.photoData = result;
       //this.saveImage(this.imgResultAfterCompress);
       this.bytesAfter = this.imageCompress.byteCount(result);
       this.difference = this.bytesBefore - this.bytesAfter;

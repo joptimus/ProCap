@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: AddPage
+  },  {
+    path: 'boat',
+    loadChildren: () => import('./boat/boat.module').then( m => m.BoatPageModule)
   }
+
 ];
 
 @NgModule({

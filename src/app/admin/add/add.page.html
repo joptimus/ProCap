@@ -20,11 +20,21 @@
             <ion-label position="floating">Ship Name</ion-label>
             <ion-input formControlName="vessel"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="!photoData">
             <ion-label position="fixed">Ship Photo</ion-label>
-            <ion-input (click)="selectImage()" formControlName="photo"></ion-input>
-            <ion-icon slot="end" name="chevron-forward"> </ion-icon>
+            <ion-button slot="end" class="top" (click)="goToBoatImg()">Upload Ship Photo
+              <ion-icon slot="end" name="chevron-forward"> </ion-icon>
+            </ion-button>
           </ion-item>
+          <ion-item *ngIf="photoData">
+            <ion-label position="floating" lines="none">Ship Photo
+             
+            </ion-label>
+            <img *ngIf="photoData" [src]="photoData"/>
+
+          </ion-item>
+
+
           <ion-item>
             <ion-label position="floating">Number of Engines</ion-label>
             <ion-select interface="action-sheet" placeholder="Select" formControlName="noEngines">

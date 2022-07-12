@@ -21,6 +21,15 @@ ion-card-title {
     font-size: 20px;
 
 }
+img {
+    padding-top:30px;
+}
+
+.top {
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 .padding {
     padding-bottom: 40px;
@@ -32,4 +41,7 @@ ion-menu-button {
 }
 ion-icon {
     --color: #009ca6 !important;
+}
+image-cropper {
+    --cropper-outline-color: var(--background);
 }

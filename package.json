@@ -1,6 +1,6 @@
 {
   "name": "pro-cap",
-  "version": "1.8.2",
+  "version": "1.9.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -41,6 +41,7 @@
     "cordova-plugin-email-composer": "^0.10.0",
     "cordova-plugin-file-opener2": "^3.0.5",
     "ngx-image-compress": "^13.1.13",
+    "ngx-image-cropper": "^6.2.1",
     "pdfmake": "^0.2.5",
     "rxjs": "~7.5.5",
     "tslib": "^2.4.0",
