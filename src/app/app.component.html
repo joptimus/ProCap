@@ -10,44 +10,45 @@
     <ion-list>
       <ion-menu-toggle>
         <ion-item (click)="startNewReport()">
-          <ion-icon name="create" slot="start"></ion-icon>
+          <ion-icon class="iconColor" name="create" slot="start"></ion-icon>
           <ion-label>Start New Report</ion-label>
         </ion-item>
       </ion-menu-toggle>
-    <ion-menu-toggle>
-      <ion-item (click)="goToClients()">
-        <ion-icon name="people" slot="start"></ion-icon>
-        <ion-label>View Client List</ion-label>
-      </ion-item>
-    </ion-menu-toggle>
+
     <ion-menu-toggle>
       <ion-item (click)="goToAddClients()">
-        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-icon class="iconColor" name="add-outline" slot="start"></ion-icon>
         <ion-label>Add Client</ion-label>
       </ion-item>
     </ion-menu-toggle>
 
     <ion-menu-toggle>
       <ion-item (click)="goToAddNewUser()">
-        <ion-icon name="finger-print" slot="start"></ion-icon>
+        <ion-icon class="iconColor" name="finger-print" slot="start"></ion-icon>
         <ion-label>Add New User</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle>
+      <ion-item (click)="goToClients()">
+        <ion-icon class="iconColor" name="people" slot="start"></ion-icon>
+        <ion-label>View Client List</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
       <ion-item (click)="goToAdmin()">
-        <ion-icon name="settings" slot="start"></ion-icon>
+        <ion-icon class="iconColor" name="settings" slot="start"></ion-icon>
         <ion-label>Admin</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle>
       <ion-item (click)="goToDbSettings()">
-        <ion-icon name="logo-capacitor" slot="start"></ion-icon>
+        <ion-icon class="iconColor" name="logo-capacitor" slot="start"></ion-icon>
         <ion-label>Set Database Values</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle>
-      <ion-item>
-        <ion-icon name="logo-apple" slot="start"></ion-icon>
+      <ion-item >
+        <ion-icon class="iconColor" name="logo-apple" slot="start"></ion-icon>
         <ion-label>App Version {{ currentApplicationVersion }}</ion-label>
       </ion-item>
     </ion-menu-toggle>

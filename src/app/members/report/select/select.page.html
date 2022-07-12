@@ -28,7 +28,7 @@
       <ion-label>Vessel</ion-label>
       <ion-select interface="action-sheet" placeholder="{{selectedOption.vesselName}}"
       (ionChange)="selectedVessel($event)">
-      <ion-select-option [value]="selected.vesselName">{{ selectedOption.vesselName }}</ion-select-option>
+      <ion-select-option [value]="selectedOption.vesselName">{{ selectedOption.vesselName }}</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -332,5 +332,5 @@
       </ion-card-content>
     </ion-card>
   </div>
-  <ion-button (click)="next()" color="#009ca6" expand="block">Next</ion-button>
+  <ion-button [disabled]="!selectedOption" (click)="next()" color="#009ca6" expand="block">Next</ion-button>
 </ion-content>
