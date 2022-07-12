@@ -18,7 +18,7 @@ export class SelectPage implements OnInit {
   skidSelected: boolean = false;
   vesselSelected: boolean = false;
   baronSelected: boolean = false;
-  selectedOption = false;
+  selectedOption;
   clientSelected = false;
   boatSelected = false;
   clientFullName = [];
@@ -34,7 +34,7 @@ export class SelectPage implements OnInit {
     private clientService: DbDataService
   ) {
     this.clientService.getClients().subscribe((res) => {
-      console.log('thisone?', res);
+      console.log('getClients Service :', res);
       this.clients = res;
     });
   }
@@ -58,7 +58,7 @@ export class SelectPage implements OnInit {
   
   selected(event) {
 
-    console.log(event);
+    console.log('selected event 1st step: ', event);
 
     this.clientSelected = true;
     this.boatSelected = false;
@@ -67,7 +67,7 @@ export class SelectPage implements OnInit {
 
     this.clientLast = event.detail.value.lName;
     this.data.clientLast = event.detail.value.lName;
-    console.log('client L name : ', this.clientLast);
+    console.log('client Last name : ', this.clientLast);
 
     this.engineCount = event.detail.value.noEngines;
     this.data.engineCount = event.detail.value.noEngines;
@@ -90,38 +90,45 @@ export class SelectPage implements OnInit {
      };
   }
 
+  boatPicked(event){
+    this.boatSelected = true;
+    console.log('the event : ', event);
+    this.data.vessel = event.detail.value.vesselName;
+    console.log('data.vessel : ', this.data.vessel);
+  }
+
   updateValues() {
     this.data.customer = this.clientFullName;
   }
 
   selectedVessel(value): void {
     console.log('is vesselSelected : ', value);
-    const bools = value.target.value;
+    // const bools = value.target.value;
     this.data.vessel = value.target.value;
     console.log('data.vessel : ', value.target.value);
-    if (bools == 'What the F?') {
-      this.vesselSelected = true;
-      this.skidSelected = false;
-      this.crewSelected = false;
-      this.baronSelected = false;
-    }
-    if (bools == 'Skid Marks') {
-      this.skidSelected = true;
-      this.vesselSelected = false;
-      this.crewSelected = false;
-      this.baronSelected = false;
-    }
-    if (bools == 'A Crewed Interest') {
-      this.skidSelected = false;
-      this.vesselSelected = false;
-      this.crewSelected = true;
-      this.baronSelected = false;
-    }
-    if (bools == 'Baron Trenck') {
-      this.skidSelected = false;
-      this.vesselSelected = false;
-      this.crewSelected = false;
-      this.baronSelected = true;
-    }
+    // if (bools == 'What the F?') {
+    //   this.vesselSelected = true;
+    //   this.skidSelected = false;
+    //   this.crewSelected = false;
+    //   this.baronSelected = false;
+    // }
+    // if (bools == 'Skid Marks') {
+    //   this.skidSelected = true;
+    //   this.vesselSelected = false;
+    //   this.crewSelected = false;
+    //   this.baronSelected = false;
+    // }
+    // if (bools == 'A Crewed Interest') {
+    //   this.skidSelected = false;
+    //   this.vesselSelected = false;
+    //   this.crewSelected = true;
+    //   this.baronSelected = false;
+    // }
+    // if (bools == 'Baron Trenck') {
+    //   this.skidSelected = false;
+    //   this.vesselSelected = false;
+    //   this.crewSelected = false;
+    //   this.baronSelected = true;
+    // }
   }
 }

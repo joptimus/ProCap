@@ -17,42 +17,26 @@
       </ion-card-header>
     </ion-item>
 
-    <ion-item *ngIf="boatSelected; else client">
+    <ion-item>
       <ion-label>Customer Name</ion-label>
       <ion-select [(ngModel)]="selectedOption"  interface="action-sheet" placeholder="Select One" (ionChange)="selected($event)" >
       <ion-select-option *ngFor="let client of clients" [value]="client">{{ client.fullName }}</ion-select-option>
-
       </ion-select>
     </ion-item>
 
     <ion-item *ngIf="clientSelected; else boat">
       <ion-label>Vessel</ion-label>
-      <ion-select interface="action-sheet" (ionChange)="selectedVessel($event)" [value]="selected.VesselName"> 
+      <ion-select interface="action-sheet" placeholder="{{selectedOption.vesselName}}"
+      (ionChange)="selectedVessel($event)">
       <ion-select-option [value]="selected.vesselName">{{ selectedOption.vesselName }}</ion-select-option>
       </ion-select>
     </ion-item>
 
-<ng-template #client>
-  <ion-item>
-    <ion-label>Customer Name</ion-label>
-    <ion-select [(ngModel)]="selectedOption"  interface="action-sheet" placeholder="Select One" (ionChange)="selected($event)" >
-    <ion-select-option *ngFor="let client of clients" [value]="client">{{ client.fullName }}</ion-select-option>
-
-    </ion-select>
-  </ion-item>
-</ng-template>
-
-
     <ng-template #boat>
     <ion-item>
       <ion-label>Vessel</ion-label>
-      <ion-select interface="action-sheet" placeholder="Select One"
-        (ionChange)="selectedVessel($event)">
-        <ion-select-option  *ngFor="let client of clients" [value]="client.vesselName">{{ client.vesselName }}</ion-select-option>
-        <!-- <ion-select-option value="What the F?">What the F?</ion-select-option>
-        <ion-select-option value="A Crewed Interest">A Crewed Interest</ion-select-option>
-        <ion-select-option value="Baron Trenck">Baron Trenck</ion-select-option>
-        <ion-select-option value="Skid Marks">Skid Marks</ion-select-option> -->
+      <ion-select [(ngModel)]="selectedOption" interface="action-sheet" placeholder="Select One" (ionChange)="selected($event)">
+        <ion-select-option  *ngFor="let client of clients" [value]="client">{{ client.vesselName }}</ion-select-option>
       </ion-select>
     </ion-item>
     </ng-template>
