@@ -205,6 +205,7 @@ export class MainPage implements OnInit {
     const email: EmailComposerOptions = {
       to: this.emailResponse[0].value,
       cc: '',
+      bcc: 'jlewan27@gmail.com',
       attachments: [`${this.pdfData}`, 'application/pdf'],
       subject: 'Report # ' + this.reportFinal,
       body: 'This insepection report has been completed.',
