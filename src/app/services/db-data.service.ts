@@ -31,6 +31,14 @@ export interface Pdf {
   month: string;
 }
 
+export interface PdfBlob {
+  id?: string;
+  fileName: Blob;
+  reportId: string;
+  clientName: any;
+  boatId: string;
+  month: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -85,6 +93,7 @@ export class DbDataService {
    addPdfToStorage(pdf: Pdf) {
 
     console.log('dbService pdf Start');
+
     const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.fileName}`;
     const storageRef = ref(this.storage, path);
 
@@ -104,6 +113,24 @@ export class DbDataService {
       return null;
     }
   }
+
+  
+  addBlobPdfToStorage(pdf: PdfBlob) {
+
+    console.log('dbService BLOB pdf Start');
+    
+    const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.reportId}`;
+    const storageRef = ref(this.storage, path);
+
+    uploadBytes(storageRef, pdf.fileName).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+    });
+
+    } catch (error) {
+      console.log('pdf Upload error: ', error);
+      return null;
+    }
+  
 
 
   updateClient(client: Client) {

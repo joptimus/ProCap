@@ -236,7 +236,7 @@ export class MainPage implements OnInit {
 
     var today = months[curr_month];
     console.log('did we get the base64 in function?: ', pdf);
-    this.dbData.addPdfToStorage({
+    this.dbData.addBlobPdfToStorage({
       fileName: pdf,
       reportId: this.reportFinal,
       clientName: this.clientLastName,
@@ -275,7 +275,7 @@ export class MainPage implements OnInit {
 
   loadLogo() {
     this.http
-      .get('./assets/img/proCapLogo.png', { responseType: 'blob' })
+      .get('./assets/img/proCapLogo-min.png', { responseType: 'blob' })
       .subscribe((res) => {
         const reader = new FileReader();
         reader.onloadend = () => {
@@ -670,7 +670,7 @@ export class MainPage implements OnInit {
     } else {
       // On a browser simply use download!
       this.pdfObj.download();
-      // this.uploadFile();
+       //this.uploadFile();
     }
   }
 
@@ -2407,12 +2407,12 @@ export class MainPage implements OnInit {
     //console.log(docDefinition);
     //let pdf64data: string;
     let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    let pdfBlob = pdfDocGenerator.getBase64((base64data) => {
+    let pdfBlob = pdfDocGenerator.getBlob((blob) => {
       //alert(base64data);
-      pdfBlob = base64data;
+      pdfBlob = blob;
       //  pdf64data = 'data:application/pdf;base64,' + base64data;
       this.uploadFile(pdfBlob);
-      this.pdfBlob = `data:application/pdf;base64,` + base64data;
+      this.pdfBlob = pdfBlob;
         console.log('pdfblob ', this.pdfBlob);
     });
 
