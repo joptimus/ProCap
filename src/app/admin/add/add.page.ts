@@ -66,8 +66,9 @@ export class AddPage implements OnInit {
     //console.log('the local photo Data ON INIT', this.photoData);
   }
 
-  ionViewWillEnter () {
+  ionViewDidEnter () {
     this.photoData = this.data.tempBoatUpload[0].data;
+  //  console.log('is there any photo data? ', this.photoData);
    // console.log('the local photo Data REFRESH', this.photoData);
   }
 
