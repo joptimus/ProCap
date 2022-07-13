@@ -19,7 +19,11 @@ const routes: Routes = [
   { path: 'options', loadChildren: () => import('./admin/options/options.module').then( m => m.OptionsPageModule) },
   { path: 'settings', loadChildren: () => import('./admin/settings/settings.module').then( m => m.SettingsPageModule) },
 
-  { path: '**', redirectTo: 'landing', pathMatch: 'full' },
+  { path: '**', redirectTo: 'landing', pathMatch: 'full' },  {
+    path: 'inspections',
+    loadChildren: () => import('./admin/previous/inspections/inspections.module').then( m => m.InspectionsPageModule)
+  },
+
 
 
 

@@ -236,7 +236,7 @@ export class MainPage implements OnInit {
     );
 
     var today = months[curr_month];
-    console.log('did we get the base64 in function?: ', pdf);
+    //console.log('did we get the base64 in function?: ', pdf);
     this.dbData.addBlobPdfToStorage({
       fileName: pdf,
       reportId: this.reportFinal,

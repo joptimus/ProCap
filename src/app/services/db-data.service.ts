@@ -43,7 +43,11 @@ export interface PdfBlob {
   providedIn: 'root',
 })
 export class DbDataService {
-  constructor(private firestore: Firestore, private storage: Storage, private auth: Auth) {}
+  constructor(
+    private firestore: Firestore,
+    private storage: Storage,
+    private auth: Auth
+  ) {}
 
   getClients(): Observable<Client[]> {
     const notesRef = collection(this.firestore, 'clients');
@@ -90,23 +94,22 @@ export class DbDataService {
     return updateDoc(ref, { name: setting.name, value: setting.value });
   }
 
-   addPdfToStorage(pdf: Pdf) {
-
+  addPdfToStorage(pdf: Pdf) {
     console.log('dbService pdf Start');
 
     const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.fileName}`;
     const storageRef = ref(this.storage, path);
 
     try {
-       uploadString(storageRef, pdf.fileName, 'base64').then((snapshot) => {
+      uploadString(storageRef, pdf.fileName, 'base64').then((snapshot) => {
         console.log('Uploaded a base64 string!');
       });
-      
-      const fileUrl =  getDownloadURL(storageRef);
+
+      const fileUrl = getDownloadURL(storageRef);
 
       const userDocRef = doc(this.firestore, `pdfs/${pdf.boatId}`);
       setDoc(userDocRef, { fileUrl });
-   
+
       return true;
     } catch (error) {
       console.log('pdf Upload error: ', error);
@@ -114,24 +117,20 @@ export class DbDataService {
     }
   }
 
-  
   addBlobPdfToStorage(pdf: PdfBlob) {
-
     console.log('dbService BLOB pdf Start');
-    
+
     const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.reportId}`;
     const storageRef = ref(this.storage, path);
 
     uploadBytes(storageRef, pdf.fileName).then((snapshot) => {
       console.log('Uploaded a blob or file!');
     });
-
-    } catch (error) {
-      console.log('pdf Upload error: ', error);
-      return null;
-    }
-  
-
+  }
+  catch(error) {
+    console.log('pdf Upload error: ', error);
+    return null;
+  }
 
   updateClient(client: Client) {
     const noteDocRef = doc(this.firestore, `clients/${client.id}`);
