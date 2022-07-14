@@ -23,6 +23,7 @@ export class UsersPage implements OnInit {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      displayName: [''],
     });
   }
   get email() {
@@ -54,5 +55,10 @@ export class UsersPage implements OnInit {
       buttons: ['OK'],
     });
     await alert.present();
+  }
+
+  updateDisplay() {
+    console.log('did we pass id corectly? :', this.credentials.value.displayName);
+    this.authService.updateDisplayName(this.credentials.value.displayName);
   }
 }

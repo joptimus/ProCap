@@ -26,7 +26,14 @@
       <div class="btnClass">
         <ion-button expand="block" (click)="register()">Add User</ion-button>
       </div>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" formControlName="displayName"></ion-input>
+      </ion-item>
     </form>
+    <ion-item>
 
+      <ion-button expand="block" (click)="updateDisplay()">Add User</ion-button>
+    </ion-item>
   </ion-card>
 </ion-content>

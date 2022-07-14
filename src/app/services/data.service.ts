@@ -167,6 +167,9 @@ export class DataService {
   public isDataAlreadyThere = [
     { answer: false },
   ]
+  public captainName = [
+    { displayName: '' },
+  ]
   public clients = [
     { id: '', fName: 'Bob', lName: 'Files', fullName: 'Bob Files' },
     { id: '', fName: 'Shaquelle', lName: "O'Neil", fullName: "Shaquelle O'Neil" },

@@ -855,6 +855,7 @@ export class MainPage implements OnInit {
     this.validatePicturesForReport();
     this.validateBoatImg();
     this.validateTextFields();
+    this.authService.getCurrentUser();
 
     const reportId = this.reportFinal;
 
@@ -862,6 +863,7 @@ export class MainPage implements OnInit {
     const portHours = this.data.engineHoursPort[0].hours;
     const starHours = this.data.engineHoursStarboard[0].hours;
     const genHours = this.data.genHours[0].hours;
+    const capt = this.data.captainName[0].displayName;
 
     var date = new Date();
     let dateText = date.toLocaleDateString();
@@ -950,7 +952,7 @@ export class MainPage implements OnInit {
                       },
 
                       {
-                        text: 'Capt. Bob Files',
+                        text: 'Capt. ' + capt,
                         bold: true,
                         color: '#333333',
                         fontSize: 10,
@@ -1015,7 +1017,7 @@ export class MainPage implements OnInit {
               margin: [0, 20, 0, 5],
             },
             {
-              text: 'Report Comments',
+              text: 'Captain Comments',
               bold: true,
               color: '#aaaaab',
               alignment: 'right',
