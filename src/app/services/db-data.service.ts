@@ -48,6 +48,12 @@ export interface Files {
 
 }
 
+export interface SubFolder {
+  name?: string;
+  full: string;
+
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -191,8 +197,9 @@ export class DbDataService {
           console.log('Shashike this is subfolders Response', result);
           console.log('Shashike this is subfolders Response', listRef);
           this.subFolders.push({
-            name: listRef.bucket,
+            name: listRef.name,
             full: listRef.fullPath,
+            parent: listRef.parent,
             storage: listRef.storage,
             //url: folderRef.toString()
           });

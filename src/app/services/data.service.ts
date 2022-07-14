@@ -156,6 +156,10 @@ export class DataService {
     { data: '' },
   ];
 
+  public subFolderData = [
+    { filePath: '' },
+  ];
+
   public clients = [
     { id: '', fName: 'Bob', lName: 'Files', fullName: 'Bob Files' },
     { id: '', fName: 'Shaquelle', lName: "O'Neil", fullName: "Shaquelle O'Neil" },

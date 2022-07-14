@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
 import { DbDataService } from 'src/app/services/db-data.service';
 
 @Component({
@@ -12,7 +14,9 @@ export class InspectionsPage implements OnInit {
   folders = [];
   subfolders = [];
   constructor(
-    private dbService: DbDataService
+    private dbService: DbDataService,
+    private localData: DataService,
+    private route: Router
   ) { }
 
   ngOnInit() {
@@ -33,9 +37,11 @@ export class InspectionsPage implements OnInit {
   }
 
   getSubFolders(id) {
-    this.subfolders = this.dbService.getSubFolders(id);
+    //this.subfolders = this.dbService.getSubFolders(id);
+    this.localData.subFolderData[0].filePath = id;
     console.log('what was the id passed :', id);
-    console.log('this.subfolders ', this.subfolders);
+   // console.log('this.subfolders ', this.subfolders);
+    this.route.navigate(['subfolders']);
   } 
   
 
