@@ -20,6 +20,7 @@ import { getApp } from 'firebase/app';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 import { TitleCasePipe } from '@angular/common';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { TitleCasePipe } from '@angular/common';
     }
   }), 
   provideFirestore(() => getFirestore()), provideStorage(() => getStorage())],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener, EmailComposer, TitleCasePipe],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener, EmailComposer, TitleCasePipe, InAppBrowser],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

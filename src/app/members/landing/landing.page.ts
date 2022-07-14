@@ -27,6 +27,10 @@ export class LandingPage implements OnInit {
   admin() {
     this.route.navigate(['options']);
   }
+
+  inspections() {
+    this.route.navigate(['inspections']);
+  }
   
   async logout() {
     await this.authService.logout();

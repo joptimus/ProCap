@@ -21,7 +21,7 @@ export class InspectionsPage implements OnInit {
 
   ngOnInit() {
     // this.getInspect();
-    // this.getFolders();
+     this.getFolders();
   }
 
   getInspect() {

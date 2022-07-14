@@ -58,6 +58,7 @@ export interface SubFolder {
   providedIn: 'root',
 })
 export class DbDataService {
+  pdfReports = [];
   folders = [];
   temp = [];
   cloudFiles = [];
@@ -152,7 +153,6 @@ export class DbDataService {
     return null;
   }
 
-
   getFolders() {
     const storage = getStorage();
 
@@ -160,25 +160,22 @@ export class DbDataService {
     const listRef = ref(storage, '');
 
     // Find all the prefixes and items.
-    listAll(listRef).then(result => {
-        result.prefixes.forEach(async listRef => {
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-          
-          
-          console.log('Shashike this is listRef Response', result);
-          console.log('Shashike this is folderRef Response', listRef);
-          this.folders.push({
-            name: listRef.bucket,
-            full: listRef.fullPath,
-            storage: listRef.storage,
-            //url: folderRef.toString()
-          });
+    listAll(listRef).then((result) => {
+      result.prefixes.forEach(async (listRef) => {
+        // All the prefixes under listRef.
+        // You may call listAll() recursively on them.
 
+        console.log('Shashike this is listRef Response', result);
+        console.log('Shashike this is folderRef Response', listRef);
+        this.folders.push({
+          name: listRef.bucket,
+          full: listRef.fullPath,
+          storage: listRef.storage,
+          //url: folderRef.toString()
         });
-        
       });
-      return this.folders;
+    });
+    return this.folders;
   }
 
   getSubFolders(id) {
@@ -188,29 +185,77 @@ export class DbDataService {
     const listRef = ref(storage, `${id}/`);
 
     // Find all the prefixes and items.
-    listAll(listRef).then(result => {
-        result.prefixes.forEach(async listRef => {
-          // All the prefixes under listRef.
-          // You may call listAll() recursively on them.
-          
-          
-          console.log('Shashike this is subfolders Response', result);
-          console.log('Shashike this is subfolders Response', listRef);
-          this.subFolders.push({
-            name: listRef.name,
-            full: listRef.fullPath,
-            parent: listRef.parent,
-            storage: listRef.storage,
-            //url: folderRef.toString()
-          });
+    listAll(listRef).then((result) => {
+      result.prefixes.forEach(async (listRef) => {
+        // All the prefixes under listRef.
+        // You may call listAll() recursively on them.
 
+        console.log('pdfData Response', result);
+        console.log('pdf Data listRef', listRef);
+        this.subFolders.push({
+          name: listRef.name,
+          fullPath: listRef.fullPath,
+          parent: listRef.parent,
+          storage: listRef.storage,
+          url: ref.toString(),
+          ref: ref,
         });
-        
       });
-      return this.subFolders;
+    });
+    return this.subFolders;
   }
 
+  getDownloadURL(path) {
+    const storage = getStorage();
+    getDownloadURL(ref(storage, `${path}/`))
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
 
+        // This can be downloaded directly:
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        console.log('do ihave a blob file?', xhr.responseType);
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+          console.log('do ihave a blob file?', blob);
+        };
+        xhr.open('GET', url);
+        xhr.send();
+
+        // Or inserted into an <img> element
+        const img = document.getElementById('myimg');
+        img.setAttribute('src', url);
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
+  }
+
+  getReportDetails(path) {
+    const storage = getStorage();
+
+    // Create a reference under which you want to list
+    const listRef = ref(storage, `${path}/`);
+
+    // Find all the prefixes and items.
+    listAll(listRef).then((result) => {
+      result.items.forEach(async (listRef) => {
+        // All the prefixes under listRef.
+        // You may call listAll() recursively on them.
+
+        console.log('Shashike this is subfolders Response', result);
+        console.log('Shashike this is subfolders Response', listRef);
+        this.pdfReports.push({
+          name: listRef.name,
+          full: listRef.fullPath,
+          parent: listRef.parent,
+          storage: listRef.storage,
+          url: await getDownloadURL(listRef),
+        });
+      });
+    });
+    return this.pdfReports;
+  }
 
   getInspectionFiles() {
     const storage = getStorage();
@@ -220,7 +265,8 @@ export class DbDataService {
 
     // Find all the prefixes and items.
     listAll(listRef)
-      .then((res) => {res.prefixes.forEach((folderRef) => {
+      .then((res) => {
+        res.prefixes.forEach((folderRef) => {
           // All the prefixes under listRef.
           // You may call listAll() recursively on them.
           console.log('Shashike this is listRef Response', res);

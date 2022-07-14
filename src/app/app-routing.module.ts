@@ -20,17 +20,9 @@ const routes: Routes = [
   { path: 'settings', loadChildren: () => import('./admin/settings/settings.module').then( m => m.SettingsPageModule) },
   { path: 'inspections', loadChildren: () => import('./admin/previous/inspections/inspections.module').then( m => m.InspectionsPageModule)},
   { path: 'subfolders', loadChildren: () => import('./admin/previous/subfolders/subfolders.module').then( m => m.SubfoldersPageModule)},
-  { path: '**', redirectTo: 'landing', pathMatch: 'full' },  {
-    path: 'pcsreport',
-    loadChildren: () => import('./admin/previous/pcsreport/pcsreport.module').then( m => m.PcsreportPageModule)
-  },
+  { path: 'pcsreport', loadChildren: () => import('./admin/previous/pcsreport/pcsreport.module').then( m => m.PcsreportPageModule)},
 
-
-
-
-
-
-
+  { path: '**', redirectTo: 'landing', pathMatch: 'full' },
 
 ];
 

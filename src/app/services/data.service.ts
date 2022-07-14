@@ -160,6 +160,13 @@ export class DataService {
     { filePath: '' },
   ];
 
+  public pdfReportData = [
+    { filePath: '' },
+  ];
+
+  public isDataAlreadyThere = [
+    { answer: false },
+  ]
   public clients = [
     { id: '', fName: 'Bob', lName: 'Files', fullName: 'Bob Files' },
     { id: '', fName: 'Shaquelle', lName: "O'Neil", fullName: "Shaquelle O'Neil" },

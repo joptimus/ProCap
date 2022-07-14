@@ -10,22 +10,12 @@
 
 <ion-content>
 
-  <ion-button (click)="getFolders()">Fold</ion-button>
 
   <ion-list>
     <ion-item *ngFor="let f of folders" (click)="getSubFolders(f.full)">
-      <ion-button slot="start" >
-        <ion-icon name="open" slot="icon-only"></ion-icon>
-      </ion-button>
-      
-      <ion-label class="ion-text-wrap">
-        {{ f.name }}
-        <p>{{ f.full }}</p>
-      </ion-label>
- 
-      <ion-button slot="end" (click)="deleteFile(f.ref)" color="danger">
-        <ion-icon name="trash" slot="icon-only"></ion-icon>
-      </ion-button>
+      <ion-icon class="iconWidth" name="folder"></ion-icon>
+      <ion-label class="label">{{ f.full }}</ion-label>
+      <ion-icon name="more" slot="end"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>
