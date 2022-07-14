@@ -25,7 +25,7 @@ export class PcsreportPage implements OnInit {
     this.iab.create(url, '_blank', {
       toolbarcolor: '#009ca6',
       toolbarposition: 'top',
-      closebuttoncolor: '#fff',
+      closebuttoncolor: '#fff'
     });
   }
 

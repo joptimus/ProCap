@@ -875,6 +875,7 @@ export class MainPage implements OnInit {
     const docDefinition = {
       compress: true,
       content: [
+        // #region ////////// PDF Header //////////
         {
           columns: [
             {
@@ -895,6 +896,27 @@ export class MainPage implements OnInit {
               },
               {
                 stack: [
+                  {
+                    columns: [
+                      {
+                        text: 'Client',
+                        color: '#aaaaab',
+                        bold: true,
+                        width: '*',
+                        fontSize: 10,
+                        alignment: 'right',
+                      },
+
+                      {
+                        text: this.customer,
+                        bold: true,
+                        color: '#333333',
+                        fontSize: 10,
+                        alignment: 'right',
+                        width: 100,
+                      },
+                    ],
+                  },
                   {
                     columns: [
                       {
@@ -993,7 +1015,7 @@ export class MainPage implements OnInit {
               margin: [0, 20, 0, 5],
             },
             {
-              text: 'Client',
+              text: 'Report Comments',
               bold: true,
               color: '#aaaaab',
               alignment: 'right',
@@ -1009,10 +1031,12 @@ export class MainPage implements OnInit {
               height: 100,
             },
             {
-              text: this.customer + '\n  \n  \n',
+              text: this.engineComments,
+              fontSize: 8,
               bold: true,
               color: '#333333',
               alignment: 'right',
+              height: 300,
             },
           ],
         },
@@ -1032,7 +1056,10 @@ export class MainPage implements OnInit {
             },
           ],
         },
-        '\n\n',
+         // #endregion ////////// PDF Header //////////
+        
+        // #region ////////// Data Table //////////
+         '\n\n',
         {
           width: '100%',
           alignment: 'center',
@@ -1996,36 +2023,13 @@ export class MainPage implements OnInit {
           },
         },
         '\n\n\n\n',
-        {
-          table: {
-            widths: ['*'],
-            body: [
-              [
-                {
-                  //Engines Table
-                  //Column 1
-                  text: 'Report Comments',
-                  style: 'header',
-                  colSpan: 1,
-                  border: [false, false, false, false],
-                },
-              ],
-              [
-                {
-                  //Engines Table
-                  //Column 1
-                  text: this.engineComments,
-                  colSpan: 1,
-                  border: [false, false, false, false],
-                },
-              ],
-            ],
-          },
-        },
+        // #endregion ////////// Data Table //////////
+
         '\n\n\n',
+            // #region ///////// Report Images Section /////////
         {
           table: {
-            widths: ['*', 160, '*'],
+            widths: ['*', 10, 160, 10, '*'],
             body: [
               [
                 {
@@ -2039,6 +2043,11 @@ export class MainPage implements OnInit {
                   width: 150,
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2047,6 +2056,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2071,6 +2085,11 @@ export class MainPage implements OnInit {
                   style: 'picTitle',
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2079,6 +2098,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2097,7 +2121,7 @@ export class MainPage implements OnInit {
         '\n',
         {
           table: {
-            widths: ['*', 160, '*'],
+            widths: ['*', 10, 160, 10, '*'],
             body: [
               [
                 {
@@ -2111,6 +2135,11 @@ export class MainPage implements OnInit {
                   width: 150,
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2119,6 +2148,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2143,6 +2177,11 @@ export class MainPage implements OnInit {
                   style: 'picTitle',
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2151,6 +2190,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2169,7 +2213,7 @@ export class MainPage implements OnInit {
         '\n',
         {
           table: {
-            widths: ['*', 160, '*'],
+            widths: ['*', 10, 160, 10, '*'],
             body: [
               [
                 {
@@ -2183,6 +2227,11 @@ export class MainPage implements OnInit {
                   width: 150,
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2191,6 +2240,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2215,6 +2269,11 @@ export class MainPage implements OnInit {
                   style: 'picTitle',
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2223,6 +2282,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2238,10 +2302,10 @@ export class MainPage implements OnInit {
             ],
           },
         },
-        '\n',
+        {text: '\n', pageBreak: 'before'},
         {
           table: {
-            widths: ['*', 160, '*'],
+            widths: ['*', 10, 160, 10, '*'],
             body: [
               [
                 {
@@ -2255,6 +2319,11 @@ export class MainPage implements OnInit {
                   width: 150,
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2263,6 +2332,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2287,6 +2361,11 @@ export class MainPage implements OnInit {
                   style: 'picTitle',
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2295,6 +2374,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2311,10 +2395,10 @@ export class MainPage implements OnInit {
           },
         },
         '\n',
-        '\n',
+        '\n', 
         {
           table: {
-            widths: ['*', 160, '*'],
+            widths: ['*', 10, 160, 10, '*'],
             body: [
               [
                 {
@@ -2328,6 +2412,11 @@ export class MainPage implements OnInit {
                   width: 150,
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2336,6 +2425,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   width: 150,
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2360,6 +2454,11 @@ export class MainPage implements OnInit {
                   style: 'picTitle',
                 },
                 {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
+                },
+                {
                   //Engines Table
                   //Column 1
                   //text: 'Starboard',
@@ -2368,6 +2467,11 @@ export class MainPage implements OnInit {
                   alignment: 'center',
                   border: [false, false, false, false],
                   style: 'picTitle',
+                },
+                {
+                  // Spacer
+                  text: '',
+                  border: [false, false, false, false],
                 },
                 {
                   //Engines Table
@@ -2384,7 +2488,15 @@ export class MainPage implements OnInit {
           },
         },
       ],
+      // #endregion ///////// Report Images Section /////////
 
+      // #region //////// PageBreak Function ///////////
+      pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
+        return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
+      },
+      // #endregion //////// PageBreak Function /////////
+
+      // #region //////// Styles ///////////
       styles: {
         header: {
           fontSize: 12,
@@ -2408,6 +2520,7 @@ export class MainPage implements OnInit {
           alignment: 'center',
         },
       },
+      // #endregion //////// Styles ///////////
     };
     this.pdfObj = pdfMake.createPdf(docDefinition);
 
