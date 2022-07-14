@@ -23,6 +23,8 @@ export class OptionsPage implements OnInit {
   goToSettings() {
     this.route.navigate(['settings']);
   }
-
+  goToReports() {
+    this.route.navigate(['inspections']);
+  }
 
 }

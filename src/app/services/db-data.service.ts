@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc, setDoc } from '@angular/fire/firestore';
-import { getDownloadURL, ref, Storage, uploadBytes, uploadString } from '@angular/fire/storage';
+import { getDownloadURL, getStorage, listAll, ref, Storage, uploadBytes, uploadString } from '@angular/fire/storage';
 import { Auth } from '@angular/fire/auth';
 import { Photo } from '@capacitor/camera';
 import { Observable } from 'rxjs';
+import { DataService } from './data.service';
+import { arrayBuffer } from 'stream/consumers';
 
 export interface Client {
   id?: string;
@@ -39,13 +41,25 @@ export interface PdfBlob {
   boatId: string;
   month: string;
 }
+
+export interface Files {
+  name?: string;
+  full: string;
+
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class DbDataService {
+  folders = [];
+  temp = [];
+  cloudFiles = [];
+  subFolders = [];
   constructor(
     private firestore: Firestore,
     private storage: Storage,
+    private data: DataService,
     private auth: Auth
   ) {}
 
@@ -120,7 +134,7 @@ export class DbDataService {
   addBlobPdfToStorage(pdf: PdfBlob) {
     console.log('dbService BLOB pdf Start');
 
-    const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.reportId}`;
+    const path = `${pdf.month}/${pdf.boatId}/${pdf.reportId}`;
     const storageRef = ref(this.storage, path);
 
     uploadBytes(storageRef, pdf.fileName).then((snapshot) => {
@@ -130,6 +144,102 @@ export class DbDataService {
   catch(error) {
     console.log('pdf Upload error: ', error);
     return null;
+  }
+
+
+  getFolders() {
+    const storage = getStorage();
+
+    // Create a reference under which you want to list
+    const listRef = ref(storage, '');
+
+    // Find all the prefixes and items.
+    listAll(listRef).then(result => {
+        result.prefixes.forEach(async listRef => {
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+          
+          
+          console.log('Shashike this is listRef Response', result);
+          console.log('Shashike this is folderRef Response', listRef);
+          this.folders.push({
+            name: listRef.bucket,
+            full: listRef.fullPath,
+            storage: listRef.storage,
+            //url: folderRef.toString()
+          });
+
+        });
+        
+      });
+      return this.folders;
+  }
+
+  getSubFolders(id) {
+    const storage = getStorage();
+
+    // Create a reference under which you want to list
+    const listRef = ref(storage, `${id}/`);
+
+    // Find all the prefixes and items.
+    listAll(listRef).then(result => {
+        result.prefixes.forEach(async listRef => {
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+          
+          
+          console.log('Shashike this is subfolders Response', result);
+          console.log('Shashike this is subfolders Response', listRef);
+          this.subFolders.push({
+            name: listRef.bucket,
+            full: listRef.fullPath,
+            storage: listRef.storage,
+            //url: folderRef.toString()
+          });
+
+        });
+        
+      });
+      return this.subFolders;
+  }
+
+
+
+  getInspectionFiles() {
+    const storage = getStorage();
+
+    // Create a reference under which you want to list
+    const listRef = ref(storage, 'pdfUploads/July');
+
+    // Find all the prefixes and items.
+    listAll(listRef)
+      .then((res) => {res.prefixes.forEach((folderRef) => {
+          // All the prefixes under listRef.
+          // You may call listAll() recursively on them.
+          console.log('Shashike this is listRef Response', res);
+          console.log('Shashike this is folderRef Response', folderRef);
+          this.cloudFiles.push({
+            name: folderRef.name,
+            full: folderRef.fullPath,
+          });
+        });
+        res.items.forEach((itemRef) => {
+          console.log('Shashike this is itemRef Response ', itemRef);
+          // All the items under listRef.
+
+          this.cloudFiles.push({
+            name: itemRef.name,
+            full: itemRef.fullPath,
+          });
+        });
+        console.log('cloudfiles', this.cloudFiles);
+      })
+      .catch((error) => {
+        console.log('error : ', error);
+        // Uh-oh, an error occurred!
+      });
+    console.log('log at end of function', this.cloudFiles);
+    return this.cloudFiles;
   }
 
   updateClient(client: Client) {

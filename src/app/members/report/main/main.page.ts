@@ -219,6 +219,7 @@ export class MainPage implements OnInit {
     // Calculate Month for File Path
     var d = new Date();
     var curr_month = d.getMonth();
+    var curr_year = d.getFullYear();
     console.log(curr_month);
     var months = new Array(
       'January',
@@ -234,7 +235,7 @@ export class MainPage implements OnInit {
       'November',
       'December'
     );
-
+    console.log('What year did we get?', curr_year);
     var today = months[curr_month];
     //console.log('did we get the base64 in function?: ', pdf);
     this.dbData.addBlobPdfToStorage({
@@ -242,7 +243,7 @@ export class MainPage implements OnInit {
       reportId: this.reportFinal,
       clientName: this.clientLastName,
       boatId: this.vessel,
-      month: today,
+      month: today + ' ' + curr_year,
     });
     console.log('this.pdfblob', pdf);
     console.log('Upload File was a success');

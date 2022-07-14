@@ -1,9 +1,31 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>inspections</ion-title>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="toolbarTitle">Previous Inspections</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content>
 
 <ion-content>
 
+  <ion-button (click)="getFolders()">Fold</ion-button>
+
+  <ion-list>
+    <ion-item *ngFor="let f of folders" (click)="getSubFolders(f.full)">
+      <ion-button slot="start" >
+        <ion-icon name="open" slot="icon-only"></ion-icon>
+      </ion-button>
+      
+      <ion-label class="ion-text-wrap">
+        {{ f.name }}
+        <p>{{ f.full }}</p>
+      </ion-label>
+ 
+      <ion-button slot="end" (click)="deleteFile(f.ref)" color="danger">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

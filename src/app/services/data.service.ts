@@ -8,7 +8,7 @@ export class engineCheck {
   }
   id: string;
   label: string;
-  isChecked: boolean;
+  isChecked: boolean; 
   toDisplay?: string;
 }
 
@@ -111,6 +111,7 @@ export class DataService {
     
   ];
 
+  public cloudFiles = [ ];
   public customer = [
     { value: '' },
   ];

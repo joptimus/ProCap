@@ -9,11 +9,15 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./landing.page.scss'],
 })
 export class LandingPage implements OnInit {
+
   currentApplicationVersion;
   constructor(private route: Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.currentApplicationVersion = environment.appVersion;
+
+    
+    
   }
 
   startReport() {
@@ -28,5 +32,4 @@ export class LandingPage implements OnInit {
     await this.authService.logout();
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
-
 }
