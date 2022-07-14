@@ -25,11 +25,6 @@ export class SubfoldersPage implements OnInit {
 
   getSubFolders() {
 
-    if(this.localData.isDataAlreadyThere[0].answer === true) {
-      console.log('Data present do not run');
-      this.subfolders;
-    } else {
-console.log('is there data already?', this.subfolders);
       let id = this.localData.subFolderData[0].filePath;
       this.dataPresent = true;
       this.localData.isDataAlreadyThere[0].answer = this.dataPresent;
@@ -38,8 +33,7 @@ console.log('is there data already?', this.subfolders);
       console.log('what was the id passed :', id);
       console.log('this.subfolders ', this.subfolders);
       
-    }
-         
+    
       
 
 }

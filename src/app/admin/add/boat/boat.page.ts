@@ -61,11 +61,15 @@ export class BoatPage implements OnInit {
       source: CameraSource.Photos,
     });
 
-    const loading = await this.loadingCtrl.create();
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading Photo',
+    });
     await loading.present();
 
     this.myImage = image.dataUrl;
     this.croppedImage = null;
+
+    await loading.dismiss();
     // if (image) {
     //   this.compressFile(image.dataUrl);
     // }
@@ -127,7 +131,9 @@ export class BoatPage implements OnInit {
   }
 
   async cropImage() {
-    const loading = await this.loadingCtrl.create();
+    const loading = await this.loadingCtrl.create({
+      message: 'Cropping and saving photo to database...'
+    });
     await loading.present();
 
     this.croppedImage = this.cropper.crop().base64;
@@ -139,6 +145,8 @@ export class BoatPage implements OnInit {
     this.myImage = null;
     this.navigateBack();
   }
+
+  // #endregion /////
 
   navigateBack() {
     this.route.navigate(['add']);

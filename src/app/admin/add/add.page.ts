@@ -135,13 +135,16 @@ export class AddPage implements OnInit {
       source: CameraSource.Photos,
     });
 
-    // const loading = await this.loadingCtrl.create();
-    // await loading.present();
+     const loading = await this.loadingCtrl.create({
+      message: 'Compressing image...'
+     });
+     await loading.present();
 
     
     // this.croppedImage = null;
     if (image) {
       this.compressFile(image.dataUrl);
+      await loading.dismiss();
     }
   }
   compressFile(image) {

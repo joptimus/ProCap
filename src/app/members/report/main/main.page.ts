@@ -405,9 +405,14 @@ export class MainPage implements OnInit {
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
     });
+    const loading = await this.loadingController.create({
+      message: 'Uploading photo...',
+     });
+    await loading.present();
 
     if (image) {
       this.compressFile(image.dataUrl);
+      loading.dismiss();
     }
   }
 
