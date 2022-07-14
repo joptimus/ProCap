@@ -22,7 +22,11 @@ export class PcsreportPage implements OnInit {
   }
 
   openExternal(url) {
-    this.iab.create(url, '_blank');
+    this.iab.create(url, '_blank', {
+      toolbarcolor: '#009ca6',
+      toolbarposition: 'top',
+      closebuttoncolor: '#fff',
+    });
   }
 
 
