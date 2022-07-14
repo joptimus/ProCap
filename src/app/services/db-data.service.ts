@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { DataService } from './data.service';
 import { arrayBuffer } from 'stream/consumers';
 
+// #region Interfaces //
 export interface Client {
   id?: string;
   fullName: string;
@@ -45,14 +46,14 @@ export interface PdfBlob {
 export interface Files {
   name?: string;
   full: string;
-
 }
 
 export interface SubFolder {
   name?: string;
   full: string;
-
 }
+
+// #endregion
 
 @Injectable({
   providedIn: 'root',
@@ -70,6 +71,7 @@ export class DbDataService {
     private auth: Auth
   ) {}
 
+  // #region Client Services
   getClients(): Observable<Client[]> {
     const notesRef = collection(this.firestore, 'clients');
     return collectionData(notesRef, { idField: 'id' }) as Observable<Client[]>;
@@ -89,6 +91,22 @@ export class DbDataService {
     const noteDocRef = doc(this.firestore, `clients/${client.id}`);
     return deleteDoc(noteDocRef);
   }
+  updateClient(client: Client) {
+    const noteDocRef = doc(this.firestore, `clients/${client.id}`);
+    return updateDoc(noteDocRef, {
+      fullName: client.fullName,
+      fName: client.fName,
+      lName: client.lName,
+      vesselName: client.vesselName,
+      vesselPhoto: client.vesselPhoto,
+      noEngines: client.noEngines,
+      email: client.email,
+    });
+  }
+
+  // #endregion
+
+  // #region Settings Services
 
   getSettingsValues(): Observable<Settings[]> {
     const ref = collection(this.firestore, 'settings');
@@ -114,6 +132,10 @@ export class DbDataService {
     const ref = doc(this.firestore, `settings/${setting.id}`);
     return updateDoc(ref, { name: setting.name, value: setting.value });
   }
+
+  // #endregion
+
+  // #region Storing PDF Services
 
   addPdfToStorage(pdf: Pdf) {
     console.log('dbService pdf Start');
@@ -153,7 +175,12 @@ export class DbDataService {
     return null;
   }
 
+  // #endregion
+
+  // #region FileTree Services
+
   getFolders() {
+    this.folders = [];
     const storage = getStorage();
 
     // Create a reference under which you want to list
@@ -179,6 +206,7 @@ export class DbDataService {
   }
 
   getSubFolders(id) {
+    this.subFolders = [];
     const storage = getStorage();
 
     // Create a reference under which you want to list
@@ -232,6 +260,7 @@ export class DbDataService {
   }
 
   getReportDetails(path) {
+    this.pdfReports = [];
     const storage = getStorage();
 
     // Create a reference under which you want to list
@@ -258,6 +287,7 @@ export class DbDataService {
   }
 
   getInspectionFiles() {
+    this.cloudFiles = [];
     const storage = getStorage();
 
     // Create a reference under which you want to list
@@ -295,16 +325,5 @@ export class DbDataService {
     return this.cloudFiles;
   }
 
-  updateClient(client: Client) {
-    const noteDocRef = doc(this.firestore, `clients/${client.id}`);
-    return updateDoc(noteDocRef, {
-      fullName: client.fullName,
-      fName: client.fName,
-      lName: client.lName,
-      vesselName: client.vesselName,
-      vesselPhoto: client.vesselPhoto,
-      noEngines: client.noEngines,
-      email: client.email,
-    });
-  }
+  // #endregion
 }
