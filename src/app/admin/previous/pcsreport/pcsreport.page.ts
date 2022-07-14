@@ -22,7 +22,7 @@ export class PcsreportPage implements OnInit {
   }
 
   openExternal(url) {
-    this.iab.create(url);
+    this.iab.create(url, '_blank');
   }
 
 
