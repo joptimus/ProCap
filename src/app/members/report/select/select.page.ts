@@ -85,8 +85,8 @@ export class SelectPage implements OnInit {
     } else {   
       this.data.boatImg[0].value = event.detail.value.vesselPhoto;
       this.data.boatImg[0].isNull = false;
-      console.log('data service boatImg = ', this.data.boatImg);
-      console.log('event detail  = ', event.detail.value.vesselPhoto);
+      //console.log('data service boatImg = ', this.data.boatImg);
+      //console.log('event detail  = ', event.detail.value.vesselPhoto);
      };
   }
 

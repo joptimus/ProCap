@@ -173,3 +173,8 @@ ion-textarea {
   margin: 0;
   padding: 0;
 }
+.ion-text-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  overscroll-behavior-x: hidden;
+}
