@@ -375,39 +375,6 @@ export class MainPage implements OnInit {
     console.log('this.type = ', this.type);
   }
 
-  compressFile(image) {
-    this.bytesBefore = this.imageCompress.byteCount(image);
-    console.log('Before compression:', this.bytesBefore + ' bytes');
-    console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
-    console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
-    this.imageCompress.compressFile(image, 2, 50, 50).then(
-      (result: DataUrl) => {
-        this.imgResultAfterCompress = result;
-        this.saveImage(this.imgResultAfterCompress);
-        this.bytesAfter = this.imageCompress.byteCount(result);
-        this.difference = this.bytesBefore - this.bytesAfter;
-        this.percentage =
-          ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
-        let percent = this.percentage.toFixed(2);
-        console.log(
-          'Size in bytes after compression is now:',
-          this.bytesAfter + ' bytes'
-        );
-        console.log('After compression:', this.bytesAfter / 1000 + ' KB');
-        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-
-        console.log('File reduced by (KB):', this.difference / 1000 + ' KB');
-        console.log(
-          'File reduced by (MB):',
-          this.difference / 1000000 + ' MB or ',
-          percent,
-          '%'
-        );
-      },
-      (error: any) => console.error(error)
-    );
-  }
-
   async selectImage(value) {
     this.buttonId(value);
     const loading = await this.loadingController.create({
@@ -420,14 +387,38 @@ export class MainPage implements OnInit {
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
     });
-
-    
-
     if (image) {
       this.compressFile(image.dataUrl);
       loading.dismiss();
     }
   }
+
+  compressFile(image) {
+    this.bytesBefore = this.imageCompress.byteCount(image);
+    console.log('Before compression:', this.bytesBefore + ' bytes');
+    console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
+    console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
+    this.imageCompress.compressFile(image, 2, 50, 50).then(
+      (result: DataUrl) => {
+        this.imgResultAfterCompress = result;
+        this.saveImage(this.imgResultAfterCompress);
+        this.bytesAfter = this.imageCompress.byteCount(result);
+        this.difference = this.bytesBefore - this.bytesAfter;
+        this.percentage = ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
+        let percent = this.percentage.toFixed(2);
+        // console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        // console.log('After compression:', this.bytesAfter / 1000 + ' KB');
+        // console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        
+        console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
+        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
+      },
+      (error: any) => console.error(error)
+    );
+  }
+
+
 
   async saveImage(photoBase64: string) {
     //const base64Data = await this.readAsBase64(photo);
