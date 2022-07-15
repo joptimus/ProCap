@@ -399,16 +399,18 @@ export class MainPage implements OnInit {
 
   async selectImage(value) {
     this.buttonId(value);
+    const loading = await this.loadingController.create({
+      message: 'Uploading photo...',
+     });
+     await loading.present();
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
     });
-    const loading = await this.loadingController.create({
-      message: 'Uploading photo...',
-     });
-    await loading.present();
+
+    
 
     if (image) {
       this.compressFile(image.dataUrl);
