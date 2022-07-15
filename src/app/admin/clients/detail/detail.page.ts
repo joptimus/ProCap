@@ -46,8 +46,8 @@ export class DetailPage implements OnInit {
       this.client = res;
 
       this.photoData = this.client.vesselPhoto;
-      console.log('is there ngOnIt Photo Data?', this.photoData);
-      console.log('this.client', this.client);
+      //console.log('is there ngOnIt Photo Data?', this.photoData);
+      //console.log('this.client', this.client);
     });
     this.dbService.getSettingsValuesById(this.id).subscribe(res => {
       this.setting = res;
@@ -63,11 +63,11 @@ export class DetailPage implements OnInit {
   ionViewWillEnter(){
     console.log('ionViewWillEnter start');
     this.tempBoat = this.localData.tempBoatUpload[0].data;
-    console.log('tempBoat ', this.tempBoat, ' photoData ', this.photoData);
+    //console.log('tempBoat ', this.tempBoat, ' photoData ', this.photoData);
     if(this.tempBoat != '' && this.photoData == '') {
       this.photoData = this.tempBoat;
       this.client.vesselPhoto = this.photoData;
-      console.log('ionViewWIllEnter photodata : ', this.photoData)
+      //console.log('ionViewWIllEnter photodata : ', this.photoData)
     }
   }
 
@@ -145,15 +145,13 @@ compressFile(image) {
       this.percentage =
         ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
       let percent = this.percentage.toFixed(2);
-      console.log(
-        'Size in bytes after compression is now:',
-        this.bytesAfter + ' bytes'
-      );
-      console.log('After compression:', this.bytesAfter / 1000 + ' KB');
-      console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-
-      console.log('File reduced by (KB):', this.difference / 1000 + ' KB');
-      console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,'%');
+        // console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        // console.log('After compression:', this.bytesAfter / 1000 + ' KB');
+        // console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        
+        console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
+        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
       
     },
     (error: any) => console.error('this error', error)
