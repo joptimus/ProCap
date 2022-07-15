@@ -35,15 +35,8 @@ export class ClientsPage implements OnInit {
     });
   }
  
-  async openClient(client: Client) {
-    const modal = await this.modalCtrl.create({
-      component: ModalPage,
-      componentProps: { id: client.id },
-      breakpoints: [0, 0.7, 1],
-      initialBreakpoint: 1
-    });
- 
-    await modal.present();
+   openClient() {
+    this.route.navigate(['detail']);
   }
   async deleteClient() {
     await this.clientService.deleteClient(this.client);

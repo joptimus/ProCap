@@ -310,15 +310,27 @@ export class MainPage implements OnInit {
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
   async submitReport() {
-    // console.log(this.data.engineMain);
-    // console.log(this.data.enginePort);
-    // console.log(this.data.bilgeData);
-    // console.log(this.data.customer);
-    // console.log(this.data.engineComments);
-    // console.log(this.data.clients);
-    // console.log(this.data.photos);
-    // console.log(this.reportFinal);
-    this.engineHoursCheck();
+    const loading = await this.loadingController.create();
+    await loading.present();
+    if (this.data.engineHoursPort[0].hours == 0) {
+      await loading.dismiss();
+    //  this.showPortAlert();
+    } else if (this.data.engineHoursStarboard[0].hours == 0) {
+      await loading.dismiss();
+    //  this.showStarAlert();
+    } else if (this.data.genHours[0].hours == 0) {
+      await loading.dismiss();
+     // this.showGenAlert();
+    } else {
+
+      this.createPdf();
+      
+      await loading.dismiss();
+      this.deleteAllPictures();
+      this.engineComments = [''];
+      this.showSuccess();
+    }
+
   }
 
   deleteAllPictures() {
@@ -566,25 +578,7 @@ export class MainPage implements OnInit {
   }
 
   async engineHoursCheck() {
-    const loading = await this.loadingController.create();
-    await loading.present();
-    if (this.data.engineHoursPort[0].hours == 0) {
-      await loading.dismiss();
-    //  this.showPortAlert();
-    } else if (this.data.engineHoursStarboard[0].hours == 0) {
-      await loading.dismiss();
-    //  this.showStarAlert();
-    } else if (this.data.genHours[0].hours == 0) {
-      await loading.dismiss();
-     // this.showGenAlert();
-    } else {
-
-      await this.createPdf();
-      await loading.dismiss();
-      this.deleteAllPictures();
-      this.redirectHome();
-      this.engineComments = [''];
-    }
+   
   }
 
   resetAllValues() {
@@ -656,6 +650,43 @@ export class MainPage implements OnInit {
     await alert.present();
   }
 
+  async showSuccess() {
+    const alert = await this.alertController.create({
+      header: 'Success',
+      subHeader: 'Inspection Report Filed',
+      message:
+        'Your inspection report has been submitted and uploaded successfully',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.redirectHome();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async downloadPdfError(error) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: 'There was an error downloading the PDF',
+      message: error,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+          
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
   downloadPdf() {
     if (this.platform.is('cordova')) {
       this.pdfObj.getBase64(async (data) => {
@@ -677,6 +708,7 @@ export class MainPage implements OnInit {
             this.fileOpener.open(`${result.uri}`, 'application/pdf');
           }
         } catch (e) {
+          this.downloadPdfError(e);
           console.error('Unable to write file', e);
         }
       });
@@ -2527,35 +2559,23 @@ export class MainPage implements OnInit {
           fillColor: '#009ca6',
           alignment: 'center',
         },
-      },
+      }
       // #endregion //////// Styles ///////////
     };
     
-    this.pdfObj = pdfMake.createPdf(docDefinition).getBlob((blob) => {
-     // pdfBlob = blob;
-      this.uploadFile(this.pdfObj);
-      console.log('there was an NO error: ');
-
-    }, error => {
-      console.log('there was an error: ', error);
-    });
-  
+    this.pdfObj = pdfMake.createPdf(docDefinition);
 
     //console.log(docDefinition);
     //let pdf64data: string;
-    // let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    // let pdfBlob = pdfDocGenerator.getBlob((blob) => {
-    //   //alert(base64data);
-    //   pdfBlob = blob;
-    //   //  pdf64data = 'data:application/pdf;base64,' + base64data;
-    //   this.uploadFile(pdfBlob);
-    //   this.pdfBlob = pdfBlob;
-    //     console.log('pdfblob ', this.pdfBlob);
-    // }, error => {
-     
-    // }
-    
-    // );
+    let pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    let pdfBlob = pdfDocGenerator.getBase64((base64data) => {
+      //alert(base64data);
+      pdfBlob = base64data;
+      //  pdf64data = 'data:application/pdf;base64,' + base64data;
+      this.uploadFile(pdfBlob);
+      this.pdfBlob = base64data;
+      //  console.log('pdfblob ', pdf64data);
+    });
 
     this.downloadPdf();
   }

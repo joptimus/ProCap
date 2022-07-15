@@ -6,12 +6,14 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
  
+
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.page.html',
-  styleUrls: ['./modal.page.scss'],
+  selector: 'app-detail',
+  templateUrl: './detail.page.html',
+  styleUrls: ['./detail.page.scss'],
 })
-export class ModalPage implements OnInit {
+export class DetailPage implements OnInit {
+
   @Input() id: string;
   client: Client = null;
   setting: Settings = null;
@@ -23,7 +25,7 @@ export class ModalPage implements OnInit {
   difference: number;
   percentage: number;
   photoData = null;
- 
+
   constructor(
     private dbService: DbDataService,
     private modalCtrl: ModalController,
@@ -32,8 +34,8 @@ export class ModalPage implements OnInit {
     private loadingCtrl: LoadingController,
     private route: Router,
     private localData: DataService
-    ) { }
- 
+  ) { }
+
   ngOnInit() {
     this.dbService.getClientById(this.id).subscribe(res => {
       this.client = res;
@@ -47,12 +49,11 @@ export class ModalPage implements OnInit {
 
       console.log('this.setting', this.setting);
     });
-
   }
 
   goToBoatImg() {
     this.route.navigate(['add', 'boat']);
-    this.localData.fromWhereIcame[0].from = 'modal';
+    this.localData.fromWhereIcame[0].from = 'detail';
   }
 
   // DB Calls
@@ -132,8 +133,9 @@ compressFile(image) {
   );
 }
 
-refresh(){
-  this.imgResultAfterCompress
-}
+// refresh(){
+//   this.imgResultAfterCompress
+// }
+
 
 }

@@ -27,6 +27,8 @@ export class BoatPage implements OnInit {
   croppedImage: any = '';
   myImage = null;
 
+  fromWhere;
+
   isMobile = Capacitor.getPlatform() !== 'web';
 
   bytesBefore: number;
@@ -50,6 +52,7 @@ export class BoatPage implements OnInit {
 
   ngOnInit() {
     this.selectImage();
+    this.fromWhere = this.dataService.fromWhereIcame[0].from;
   }
 
   async selectImage() {
@@ -149,7 +152,15 @@ export class BoatPage implements OnInit {
   // #endregion /////
 
   navigateBack() {
-    this.route.navigate(['add']);
-    this.loadingCtrl.dismiss();
+
+    if (this.fromWhere === 'addPage') {
+      this.route.navigate(['add']);
+      this.loadingCtrl.dismiss();
+    }
+    if (this.fromWhere === 'detail') {
+      this.route.navigate(['detail']);
+      this.loadingCtrl.dismiss();
+    }
+   
   }
 }
