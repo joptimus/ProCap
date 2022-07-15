@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { DbDataService, Client } from 'src/app/services/db-data.service';
 import { ModalPage } from '../modal/modal.page';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-clients',
@@ -19,7 +20,8 @@ export class ClientsPage implements OnInit {
     private clientService: DbDataService, 
     private route: Router, 
     private cd: ChangeDetectorRef, 
-    private alertCtrl: AlertController, 
+    private alertCtrl: AlertController,
+    private localData: DataService, 
     private modalCtrl: ModalController) { 
     this.clientService.getClients().subscribe(res => {
       console.log(res);
@@ -35,8 +37,12 @@ export class ClientsPage implements OnInit {
     });
   }
  
-   openClient() {
-    this.route.navigate(['detail']);
+   openClient(client: Client) {
+
+    console.log('data sent to local ',client);
+    this.localData.detailClientId[0] = client;
+    this.route.navigate(['clients','detail']);
+    
   }
   async deleteClient() {
     await this.clientService.deleteClient(this.client);

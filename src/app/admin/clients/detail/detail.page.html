@@ -1,10 +1,14 @@
 <ion-header>
   <ion-toolbar color=#009ca6>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title class="toolbarTitle">Client Details</ion-title>
   </ion-toolbar>
 </ion-header>
  
 <ion-content>
+
   <div *ngIf="client">
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
@@ -26,26 +30,9 @@
       <ion-label position="floating" lines="none">Ship Photo
        
       </ion-label>
-      <img *ngIf="photoData" [src]="client.vesselPhoto"/>
+      <img *ngIf="photoData" [src]="photoData"/>
 
     </ion-item>
-
-    <!-- <div *ngIf="client?.vesselPhoto; else placeholder_vessel">
-    <ion-item >
-      <ion-label position="stacked">Vessel Photo</ion-label>
-      <ion-img (click)="selectImage()" [(ngModel)]="client.vesselPhoto" name="client.vesselPhoto" [src]="client.vesselPhoto"></ion-img>
-    </ion-item>
-  </div>
-
-  <ng-template #placeholder_vessel>
-    <div >
-      <ion-item >
-        <ion-label position="stacked">Vessel Photo</ion-label>
-        <ion-input (click)="selectImage()" placeholder="Click to Upload Image" name="client.vesselPhoto" [(ngModel)]="client.vesselPhoto"></ion-input>
-      </ion-item>
-    </div>
-
-  </ng-template> -->
 
     <ion-item>
       <ion-label position="stacked">Number of Engines</ion-label>
@@ -66,25 +53,5 @@
       Delete
     </ion-button>
   </div>
-
-  <div *ngIf="setting">
-    <ion-item>
-      <ion-label position="stacked">Db Name</ion-label>
-      <ion-input [(ngModel)]="setting.name"></ion-input>
-    </ion-item>
- 
-    <ion-item>
-      <ion-label position="stacked">DB Value</ion-label>
-      <ion-textarea [(ngModel)]="setting.value" rows="8"></ion-textarea>
-    </ion-item>
-
-    <ion-button  class="btnColor" expand="block" (click)="updateSetting()">
-      <ion-icon name="save" slot="start"></ion-icon>
-      Update
-    </ion-button>
-
-  </div>
- 
- 
  
 </ion-content>

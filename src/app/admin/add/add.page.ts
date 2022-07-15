@@ -112,6 +112,8 @@ export class AddPage implements OnInit {
   }
 
   goToBoatImg() {
+    
+    this.data.fromWhereIcame[0].from = 'addPage';
     this.route.navigate(['add', 'boat']);
   }
 

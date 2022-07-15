@@ -53,6 +53,7 @@ export class BoatPage implements OnInit {
   ngOnInit() {
     this.selectImage();
     this.fromWhere = this.dataService.fromWhereIcame[0].from;
+    console.log('onInit :', this.fromWhere);
   }
 
   async selectImage() {
@@ -83,7 +84,7 @@ export class BoatPage implements OnInit {
     console.log('Before compression:', this.bytesBefore + ' bytes');
     console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
     console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
-    this.imageCompress.compressFile(image, 2, 10, 10).then(
+    this.imageCompress.compressFile(image, 2, 30, 30).then(
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
        // this.myImage = result;
@@ -119,8 +120,11 @@ export class BoatPage implements OnInit {
       directory: Directory.Data,
     });
     console.log('saved: ', savedFile);
-    this.dataService.tempBoatUpload[0].data = photoBase64;
+
     this.croppedImage = photoBase64;
+    this.dataService.tempBoatUpload[0].data = this.croppedImage;
+    console.log('this.cropped Image = ', this.croppedImage);
+    this.navigateBack();
   }
 
   // #region This is the CROPPER IMAGE CODE
@@ -142,23 +146,24 @@ export class BoatPage implements OnInit {
     this.croppedImage = this.cropper.crop().base64;
     this.compressFile(this.croppedImage);
     //console.log(this.croppedImage);
-    this.croppedImage = this.dataService.tempBoatUpload[0].data;
+   
     
     console.log('DATA SERVICE', this.dataService.tempBoatUpload[0].data);
     this.myImage = null;
-    this.navigateBack();
+    
   }
 
   // #endregion /////
 
   navigateBack() {
-
+    console.log('what is this.Fromwhere start ', this.fromWhere);
     if (this.fromWhere === 'addPage') {
       this.route.navigate(['add']);
       this.loadingCtrl.dismiss();
     }
     if (this.fromWhere === 'detail') {
-      this.route.navigate(['detail']);
+      console.log('what is this.Fromwhere ', this.fromWhere);
+      this.route.navigate(['clients','detail']);
       this.loadingCtrl.dismiss();
     }
    

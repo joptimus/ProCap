@@ -314,20 +314,19 @@ export class MainPage implements OnInit {
     await loading.present();
     if (this.data.engineHoursPort[0].hours == 0) {
       await loading.dismiss();
-    //  this.showPortAlert();
+      this.showPortAlert();
     } else if (this.data.engineHoursStarboard[0].hours == 0) {
       await loading.dismiss();
-    //  this.showStarAlert();
+      this.showStarAlert();
     } else if (this.data.genHours[0].hours == 0) {
       await loading.dismiss();
-     // this.showGenAlert();
+      this.showGenAlert();
     } else {
 
       this.createPdf();
-      
-      await loading.dismiss();
       this.deleteAllPictures();
       this.engineComments = [''];
+      await loading.dismiss();
       this.showSuccess();
     }
 

@@ -175,6 +175,9 @@ export class DataService {
     { from: '' },
   ]
 
+  public detailClientId = [
+    ,
+  ]
 
   public clients = [
     { id: '', fName: 'Bob', lName: 'Files', fullName: 'Bob Files' },

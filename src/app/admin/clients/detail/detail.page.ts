@@ -15,7 +15,7 @@ import { DataService } from 'src/app/services/data.service';
 export class DetailPage implements OnInit {
 
   @Input() id: string;
-  client: Client = null;
+  client: Client;
   setting: Settings = null;
   boatImage: string = null;
   imgResultUpload: DataUrl = '';
@@ -25,6 +25,10 @@ export class DetailPage implements OnInit {
   difference: number;
   percentage: number;
   photoData = null;
+
+  tempBoat;
+
+  clientData = [];
 
   constructor(
     private dbService: DbDataService,
@@ -37,10 +41,12 @@ export class DetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dbService.getClientById(this.id).subscribe(res => {
+    this.clientData = this.localData.detailClientId;
+    this.dbService.getClientById(this.clientData[0].id).subscribe(res => {
       this.client = res;
 
       this.photoData = this.client.vesselPhoto;
+      console.log('is there ngOnIt Photo Data?', this.photoData);
       console.log('this.client', this.client);
     });
     this.dbService.getSettingsValuesById(this.id).subscribe(res => {
@@ -49,6 +55,20 @@ export class DetailPage implements OnInit {
 
       console.log('this.setting', this.setting);
     });
+  
+    this.tempBoat = this.localData.tempBoatUpload[0].data;
+
+  }
+
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter start');
+    this.tempBoat = this.localData.tempBoatUpload[0].data;
+    console.log('tempBoat ', this.tempBoat, ' photoData ', this.photoData);
+    if(this.tempBoat != '' && this.photoData == '') {
+      this.photoData = this.tempBoat;
+      this.client.vesselPhoto = this.photoData;
+      console.log('ionViewWIllEnter photodata : ', this.photoData)
+    }
   }
 
   goToBoatImg() {
@@ -59,20 +79,27 @@ export class DetailPage implements OnInit {
   // DB Calls
  
   async deleteClient() {
-    await this.dbService.deleteClient(this.client)
-    this.modalCtrl.dismiss();
+    await this.dbService.deleteClient(this.client);
+    const toast = await this.toastCtrl.create({
+      message: 'This client has been DELETED!',
+      duration: 2000
+    });
+    
+    toast.present();
+    this.route.navigate(['clients']);
   }
  
   async updateClient() {
+    
     await this.dbService.updateClient(this.client);
     console.log(this.client);
     const toast = await this.toastCtrl.create({
       message: 'This client has been updated!',
       duration: 2000
     });
-    this.modalCtrl.dismiss();
-    toast.present();
     
+    toast.present();
+    this.localData.tempBoatUpload[0].data = '';
  
   }
 
