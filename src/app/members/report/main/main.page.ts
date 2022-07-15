@@ -566,15 +566,19 @@ export class MainPage implements OnInit {
   }
 
   async engineHoursCheck() {
+    const loading = await this.loadingController.create();
+    await loading.present();
     if (this.data.engineHoursPort[0].hours == 0) {
-      this.showPortAlert();
+      await loading.dismiss();
+    //  this.showPortAlert();
     } else if (this.data.engineHoursStarboard[0].hours == 0) {
-      this.showStarAlert();
+      await loading.dismiss();
+    //  this.showStarAlert();
     } else if (this.data.genHours[0].hours == 0) {
-      this.showGenAlert();
+      await loading.dismiss();
+     // this.showGenAlert();
     } else {
-      const loading = await this.loadingController.create();
-      await loading.present();
+
       await this.createPdf();
       await loading.dismiss();
       this.deleteAllPictures();
@@ -2526,19 +2530,32 @@ export class MainPage implements OnInit {
       },
       // #endregion //////// Styles ///////////
     };
-    this.pdfObj = pdfMake.createPdf(docDefinition);
+    
+    this.pdfObj = pdfMake.createPdf(docDefinition).getBlob((blob) => {
+     // pdfBlob = blob;
+      this.uploadFile(this.pdfObj);
+      console.log('there was an NO error: ');
+
+    }, error => {
+      console.log('there was an error: ', error);
+    });
+  
 
     //console.log(docDefinition);
     //let pdf64data: string;
-    let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    let pdfBlob = pdfDocGenerator.getBlob((blob) => {
-      //alert(base64data);
-      pdfBlob = blob;
-      //  pdf64data = 'data:application/pdf;base64,' + base64data;
-      this.uploadFile(pdfBlob);
-      this.pdfBlob = pdfBlob;
-        console.log('pdfblob ', this.pdfBlob);
-    });
+    // let pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    // let pdfBlob = pdfDocGenerator.getBlob((blob) => {
+    //   //alert(base64data);
+    //   pdfBlob = blob;
+    //   //  pdf64data = 'data:application/pdf;base64,' + base64data;
+    //   this.uploadFile(pdfBlob);
+    //   this.pdfBlob = pdfBlob;
+    //     console.log('pdfblob ', this.pdfBlob);
+    // }, error => {
+     
+    // }
+    
+    // );
 
     this.downloadPdf();
   }
