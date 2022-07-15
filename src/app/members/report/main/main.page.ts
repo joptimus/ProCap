@@ -2558,13 +2558,13 @@ export class MainPage implements OnInit {
     //console.log(docDefinition);
     //let pdf64data: string;
     let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    let pdfBlob = pdfDocGenerator.getBase64((base64data) => {
+    let pdfBlob = pdfDocGenerator.getBlob((blob) => {
       //alert(base64data);
-      pdfBlob = base64data;
+      pdfBlob = blob;
       //  pdf64data = 'data:application/pdf;base64,' + base64data;
       this.uploadFile(pdfBlob);
-      this.pdfBlob = base64data;
-      //  console.log('pdfblob ', pdf64data);
+      this.pdfBlob = pdfBlob;
+        console.log('pdfblob ', this.pdfBlob);
     });
 
     this.downloadPdf();
