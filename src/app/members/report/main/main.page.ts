@@ -174,6 +174,17 @@ export class MainPage implements OnInit {
     console.log(this.clientLastName);
   }
 
+  async presentAlert(header, sub, message) {
+    const alert = await this.alertController.create({
+      header: header,
+      subHeader: sub,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
   getCurrentMonth() {
     var d = new Date();
     var curr_month = d.getMonth();
@@ -377,27 +388,36 @@ export class MainPage implements OnInit {
 
   async selectImage(value) {
     this.buttonId(value);
-    const loading = await this.loadingController.create({
-      message: 'Uploading photo...',
-     });
-     await loading.present();
+
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
     });
+    const loading = await this.loadingController.create({
+      message: 'Sending photo for compression...',
+     });
+     await loading.present();
     if (image) {
+      loading.dismiss();
       this.compressFile(image.dataUrl);
       loading.dismiss();
     }
   }
 
-  compressFile(image) {
+  async compressFile(image) {
+    const loading = await this.loadingController.create({
+      message: 'Start of compression...',
+      duration: 2000
+     });
+     await loading.present();
+
+
     this.bytesBefore = this.imageCompress.byteCount(image);
-    console.log('Before compression:', this.bytesBefore + ' bytes');
-    console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
-    console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
+    // console.log('Before compression:', this.bytesBefore + ' bytes');
+    // console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
+    // console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
     this.imageCompress.compressFile(image, 2, 50, 50).then(
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
@@ -414,8 +434,14 @@ export class MainPage implements OnInit {
         console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
         console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
       },
-      (error: any) => console.error(error)
+      (error: any) => {
+        loading.dismiss();
+        console.error(error);
+        this.presentAlert('Compression Error', 'Error compressing Image', error);
+        
+      }
     );
+    loading.dismiss();
   }
 
 
@@ -425,6 +451,11 @@ export class MainPage implements OnInit {
     //console.log(base64Data);
     // console.log('compressed Image : ', photoBase64);
 
+    const loading = await this.loadingController.create({
+      message: 'Saving image to filesystem...',
+     });
+     await loading.present();
+
     const fileName = this.type + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
       path: `${IMAGE_DIR}/${fileName}`,
@@ -432,6 +463,7 @@ export class MainPage implements OnInit {
       directory: Directory.Data,
     });
     console.log('saved: ', savedFile);
+    loading.dismiss();
     this.loadFiles();
   }
 
