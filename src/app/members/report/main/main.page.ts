@@ -172,6 +172,7 @@ export class MainPage implements OnInit {
     this.disableCheck();
     this.checkAccount();
     console.log(this.clientLastName);
+    this.authService.getCurrentUser();
   }
 
   async presentAlert(header, sub, message) {
@@ -409,7 +410,6 @@ export class MainPage implements OnInit {
   async compressFile(image) {
     const loading = await this.loadingController.create({
       message: 'Start of compression...',
-      duration: 2000
      });
      await loading.present();
 
@@ -908,6 +908,10 @@ export class MainPage implements OnInit {
       this.clientBoatImg = this.comingSoon;
       console.log('Boat Image is null', this.data.boatImg);
     }
+  }
+
+  whoIsLoggedIn() {
+    console.log('who is logged in:', this.authService.getCurrentUser());
   }
 
   // #region ------- All code for Generating the PDF Template --------

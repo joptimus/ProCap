@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, user, updateProfile, getAuth } from '@angular/fire/auth';
-import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from './data.service';
@@ -15,7 +16,18 @@ export class AuthenticationService {
   captainName: any;
 
 
-  constructor(private auth: Auth, private localData: DataService) {}
+  constructor(private auth: Auth, private localData: DataService, private route: Router, private alertController: AlertController) {}
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Token Expired',
+      subHeader: 'Unable to Authenticate',
+      message: 'Unable to re-authenticate session. You must relog in again',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 
   async register ({ email, password}) {
     try {
@@ -57,6 +69,9 @@ export class AuthenticationService {
       // No user is signed in.
       console.log('no one is logged in so we sign out');
       this.logout();
+      this.presentAlert();
+      this.route.navigateByUrl('/', { replaceUrl: true });
+      
     }
 
   }

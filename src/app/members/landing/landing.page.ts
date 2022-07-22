@@ -36,4 +36,9 @@ export class LandingPage implements OnInit {
     await this.authService.logout();
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
+
+  // For Debugging
+  // whoIsLoggedIn() {
+  //   console.log('who is logged in:', this.authService.getCurrentUser());
+  // }
 }
