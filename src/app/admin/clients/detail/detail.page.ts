@@ -53,7 +53,7 @@ export class DetailPage implements OnInit {
       this.setting = res;
 
 
-      console.log('this.setting', this.setting);
+      //console.log('this.setting', this.setting);
     });
   
     this.tempBoat = this.localData.tempBoatUpload[0].data;
