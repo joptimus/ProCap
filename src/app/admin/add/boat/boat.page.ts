@@ -5,7 +5,7 @@ import { Directory, Filesystem, Encoding } from '@capacitor/filesystem';
 import { DataUrl, DOC_ORIENTATION, NgxImageCompressService, UploadResponse } from 'ngx-image-compress';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { ImageCroppedEvent, LoadedImage, ImageCropperComponent } from 'ngx-image-cropper';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 
@@ -47,13 +47,24 @@ export class BoatPage implements OnInit {
     private imageCompress: NgxImageCompressService,
     private loadingCtrl: LoadingController,
     private dataService: DataService,
-    private route: Router
+    private route: Router,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
     this.selectImage();
     this.fromWhere = this.dataService.fromWhereIcame[0].from;
     console.log('onInit :', this.fromWhere);
+  }
+
+  async presentAlert(header, sub, message) {
+    const alert = await this.alertController.create({
+      header: header,
+      subHeader: sub,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
   async selectImage() {
@@ -80,14 +91,18 @@ export class BoatPage implements OnInit {
   }
 
   compressFile(image) {
-    this.bytesBefore = this.imageCompress.byteCount(image);
-    console.log('Before compression:', this.bytesBefore + ' bytes');
-    console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
-    console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
     this.imageCompress.compressFile(image, 2, 30, 30).then(
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
-       // this.myImage = result;
+        if (this.imageCompress.byteCount(result) > 1000000) {
+          this.loadingCtrl.dismiss();
+          console.log('did this work?');
+          this.presentAlert(
+            'Compression Error', 
+            'Photo exceeds max size allowed', 
+            'The image is too big. The current size is ' + this.imageCompress.byteCount(result) /1000000 + ' MB and the max size is 1MB. Please try cropping the image smaller');
+        } else {
+
        this.saveImage(this.imgResultAfterCompress);
         //this.dataService.tempBoatUpload[0].data = this.myImage;
         this.bytesAfter = this.imageCompress.byteCount(result);
@@ -101,6 +116,7 @@ export class BoatPage implements OnInit {
         console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
         console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
         console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
+        }
       },
       (error: any) => console.error(error)
     );

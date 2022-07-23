@@ -1,16 +1,23 @@
 ion-toolbar {
-            background-color: #009ca6 !important;
-          }
-          .btnColor {
-            --color: #fff;
-            --background: #009ca6 !important;
-          }
-          ion-title {
-            --color: #fff;
-            font-size: 20px;
-            font-weight: 500;
-          }
-          ion-content {
-            min-height: 90vh;
-            overflow-y: scroll !important;
-          }
+  background-color: #009ca6 !important;
+}
+
+.btnColor {
+  --color: #fff;
+  --background: #009ca6 !important;
+}
+
+ion-title {
+  --color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+ion-content {
+  min-height: 90vh;
+  overflow-y: scroll !important;
+}
+
+.paddingBottom {
+  padding-bottom: 20px;
+}

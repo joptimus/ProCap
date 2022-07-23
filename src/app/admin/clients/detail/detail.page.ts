@@ -130,11 +130,14 @@ export class DetailPage implements OnInit {
   }
 }
 compressFile(image) {
+
+  const MAX_MEGABYTE = 1;
   this.bytesBefore = this.imageCompress.byteCount(image);
   console.log('Before compression:', this.bytesBefore + ' bytes');
   console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
   console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
-  this.imageCompress.compressFile(image, 2, 50, 50).then(
+ // this.imageCompress.compressFile(image, 2, 50, 50).then(
+  this.imageCompress.uploadAndGetImageWithMaxSize(MAX_MEGABYTE).then(
     (result: DataUrl) => {
       this.imgResultAfterCompress = result;
       this.client.vesselPhoto = result;
