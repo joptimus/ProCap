@@ -91,6 +91,7 @@ export class BoatPage implements OnInit {
   }
 
   compressFile(image) {
+    this.bytesBefore = this.imageCompress.byteCount(image);
     this.imageCompress.compressFile(image, 2, 30, 30).then(
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
@@ -116,7 +117,7 @@ export class BoatPage implements OnInit {
         console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
         console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
         console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
-        }
+        };
       },
       (error: any) => console.error(error)
     );

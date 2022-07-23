@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { OnInit } from '@angular/core';
 import { DbDataService, Client } from 'src/app/services/db-data.service';
 import { ModalPage } from '../modal/modal.page';
@@ -22,7 +22,8 @@ export class ClientsPage implements OnInit {
     private cd: ChangeDetectorRef, 
     private alertCtrl: AlertController,
     private localData: DataService, 
-    private modalCtrl: ModalController) { 
+    private modalCtrl: ModalController,
+    private loadingController: LoadingController) { 
     this.clientService.getClients().subscribe(res => {
       console.log(res);
       this.clients = res;
@@ -30,11 +31,18 @@ export class ClientsPage implements OnInit {
     })
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const loading = await this.loadingController.create({
+      message: 'Loading clients...',
+      duration: 5000,
+     });
+     await loading.present();
+    
     this.clientService.getClientById(this.id).subscribe(res => {
       this.client = res;
       console.log('clientService : ', res);
     });
+    loading.dismiss();
   }
  
    openClient(client: Client) {

@@ -28,6 +28,7 @@ export class AddPage implements OnInit {
   base64Str: any;
   kbytes: number;
   photoData = null;
+  vesselName = null;
 
   bytesBefore: number;
   bytesAfter: number;
@@ -83,8 +84,17 @@ export class AddPage implements OnInit {
     return this.credentials.get('password');
   }
 
+  vesselNameCheck() {
+    if (this.credentials.get('vessel').value === null) {
+      let noName = 'No Name - ';
+      this.vesselName = noName;
+    }
+  }
+
   async addClient() {
-    const loading = await this.loadingController.create();
+    const loading = await this.loadingController.create({
+      message: 'Sending client to database...',
+    });
     await loading.present();
     let transform = this.titleCase.transform(
       this.credentials.get('fullName').value
@@ -93,6 +103,13 @@ export class AddPage implements OnInit {
     let firstName = names[0];
     let lastName = names[1];
 
+    if (this.credentials.get('vessel').value === '') {
+      let noName = 'No Name - ';
+      this.vesselName = noName + lastName;
+    } else {
+      this.vesselName = this.credentials.get('vessel').value;
+    }
+
     console.log(transform);
     console.log('Split Full name : ', names,' firstName : ', firstName,' lastName : ', lastName);
 
@@ -100,7 +117,7 @@ export class AddPage implements OnInit {
       fullName: transform,
       fName: firstName,
       lName: lastName,
-      vesselName: this.credentials.get('vessel').value,
+      vesselName: this.vesselName,
       vesselPhoto: this.photoData,
       noEngines: this.credentials.get('noEngines').value,
       email: this.credentials.get('email').value,
@@ -117,8 +134,6 @@ export class AddPage implements OnInit {
     this.route.navigate(['add', 'boat']);
   }
 
-
-  
   async showAlert(header, message) {
     const alert = await this.alertController.create({
       header,
