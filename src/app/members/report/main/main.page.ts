@@ -389,7 +389,10 @@ export class MainPage implements OnInit {
 
   async selectImage(value) {
     this.buttonId(value);
-
+    const start = await this.loadingController.create({
+      message: 'Selecting Photo...',
+     });
+     await start.present();
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: false,
@@ -399,6 +402,7 @@ export class MainPage implements OnInit {
     const loading = await this.loadingController.create({
       message: 'Sending photo for compression...',
      });
+     start.dismiss();
      await loading.present();
     if (image) {
       loading.dismiss();
