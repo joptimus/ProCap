@@ -29,6 +29,12 @@
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle>
+      <ion-item (click)="goToProfile()">
+        <ion-icon class="iconColor" name="person-circle" slot="start"></ion-icon>
+        <ion-label>User Profile</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
       <ion-item (click)="goToClients()">
         <ion-icon class="iconColor" name="people" slot="start"></ion-icon>
         <ion-label>View Client List</ion-label>
@@ -39,7 +45,7 @@
         <ion-icon class="iconColor" name="settings" slot="start"></ion-icon>
         <ion-label>Admin</ion-label>
       </ion-item>
-    </ion-menu-toggle>
+    </ion-menu-toggle>Adam Moussad
     <ion-menu-toggle>
       <ion-item (click)="goToDbSettings()">
         <ion-icon class="iconColor" name="logo-capacitor" slot="start"></ion-icon>

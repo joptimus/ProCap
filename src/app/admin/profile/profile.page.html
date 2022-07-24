@@ -1,9 +1,31 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
+  <ion-toolbar color='#009ca6'>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="toolbarTitle">User Profile</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
+<ion-card>
+  <ion-list>
+  <ion-item>
+    <ion-label position="stacked">Display Name</ion-label>
+    <ion-input (ionChange)="updateUserDisplay($event.detail.value)" id="userDis" placeholder="{{userDisplay}}"></ion-input>
+  </ion-item>
 
+  <ion-item>
+    <ion-label position="stacked">User Email</ion-label>
+    <ion-input [disabled]="true">{{ userEmail }}</ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">User UID</ion-label>
+    <ion-input [disabled]="true">{{ userUid }}</ion-input>
+  </ion-item>
+</ion-list>
+</ion-card>
+<ion-button class="btnColor" expand="block" (click)="updateUser()">Update</ion-button>
 </ion-content>

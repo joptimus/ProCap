@@ -23,5 +23,27 @@ ion-list-header {
 }
 .label {
   font-size: 18px;
-  padding-left: 20px;
+  // padding-left: 20px;
 }
+
+.container {
+  display: flex;
+  width: 100vw;
+  flex-wrap:nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.middle {
+  flex-direction: column;
+  flex-grow: inherit;
+}
+.label2 {
+  font-size: 12px;
+}
+.pad {
+  max-width: 60px;
+}
+// .end {
+//   align-self: flex-end;
+// }

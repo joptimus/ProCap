@@ -13,8 +13,22 @@
     <ion-item *ngFor="let p of pdfReports" (click)="openExternal(p.url)">
       <ion-icon class="iconWidth" name="document"></ion-icon>
       <ion-label class="label">{{ p.name + '.pdf' }}</ion-label>
+      <!-- <ion-text class="label">{{ p.timeCreated | date }}</ion-text> -->
+      <ion-label class="label pad">{{ p.size | number: '1.1-1'}} MB</ion-label>
       <ion-icon name="ellipsis-horizontal-sharp" slot="end"></ion-icon>
     </ion-item>
 
   </ion-list>
+
+  <!-- <div class="container" *ngFor="let p of pdfReports" (click)="openExternal(p.url)">
+    <div class="iconWidth">
+      <ion-icon class="iconWidth" name="document"></ion-icon>
+    </div>
+    <div class="middle">
+        <div><ion-label class="label">{{ p.name + '.pdf' }}</ion-label></div>
+        <div><ion-text class="label2">{{ p.timeCreated | date }}</ion-text></div>
+    </div>
+    <div class="size"><ion-label class="label">{{ p.size | number: '1.1-1'}} MB</ion-label></div>
+    <div class="end"><ion-icon name="ellipsis-horizontal-sharp" slot="end"></ion-icon></div>
+  </div> -->
 </ion-content>

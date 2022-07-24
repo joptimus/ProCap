@@ -21,11 +21,10 @@ const routes: Routes = [
   { path: 'inspections', loadChildren: () => import('./admin/previous/inspections/inspections.module').then( m => m.InspectionsPageModule)},
   { path: 'subfolders', loadChildren: () => import('./admin/previous/subfolders/subfolders.module').then( m => m.SubfoldersPageModule)},
   { path: 'pcsreport', loadChildren: () => import('./admin/previous/pcsreport/pcsreport.module').then( m => m.PcsreportPageModule)},
+  { path: 'profile', loadChildren: () => import('./admin/profile/profile.module').then( m => m.ProfilePageModule)},
 
-  { path: '**', redirectTo: 'landing', pathMatch: 'full' },  {
-    path: 'profile',
-    loadChildren: () => import('./admin/profile/profile.module').then( m => m.ProfilePageModule)
-  },
+  { path: '**', redirectTo: 'landing', pathMatch: 'full' },
+
 
 
 ];

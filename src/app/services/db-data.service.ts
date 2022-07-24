@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc, setDoc } from '@angular/fire/firestore';
-import { getDownloadURL, getStorage, listAll, ref, Storage, uploadBytes, uploadString } from '@angular/fire/storage';
+import { getDownloadURL, getStorage, listAll, ref, Storage, uploadBytes, uploadString, getMetadata } from '@angular/fire/storage';
 import { Auth } from '@angular/fire/auth';
 import { Photo } from '@capacitor/camera';
 import { Observable } from 'rxjs';
@@ -192,8 +192,8 @@ export class DbDataService {
         // All the prefixes under listRef.
         // You may call listAll() recursively on them.
 
-        console.log('Shashike this is listRef Response', result);
-        console.log('Shashike this is folderRef Response', listRef);
+       // console.log('Shashike this is listRef Response', result);
+       // console.log('Shashike this is folderRef Response', listRef);
         this.folders.push({
           name: listRef.bucket,
           full: listRef.fullPath,
@@ -262,6 +262,7 @@ export class DbDataService {
   getReportDetails(path) {
     this.pdfReports = [];
     const storage = getStorage();
+    let pdfSize;
 
     // Create a reference under which you want to list
     const listRef = ref(storage, `${path}/`);
@@ -271,16 +272,33 @@ export class DbDataService {
       result.items.forEach(async (listRef) => {
         // All the prefixes under listRef.
         // You may call listAll() recursively on them.
-
-        console.log('Shashike this is subfolders Response', result);
-        console.log('Shashike this is subfolders Response', listRef);
-        this.pdfReports.push({
-          name: listRef.name,
-          full: listRef.fullPath,
-          parent: listRef.parent,
-          storage: listRef.storage,
-          url: await getDownloadURL(listRef),
-        });
+        getMetadata(listRef).then(async (metadata) => {
+    // Metadata now contains the metadata for 'images/forest.jpg'
+    pdfSize = (metadata.size * .95) / 1000000;
+    console.log('metadata size: ', metadata.size);
+    console.log('converted size', pdfSize);
+    this.pdfReports.push({
+      name: listRef.name,
+      full: listRef.fullPath,
+      parent: listRef.parent,
+      storage: listRef.storage,
+      timeCreated: metadata.timeCreated,
+      size: pdfSize,
+      url: await getDownloadURL(listRef),
+    });
+  })
+  .catch((error) => {
+    // Uh-oh, an error occurred!
+  });
+        console.log('Shashike this is getReportDetails Response', result);
+        console.log('Shashike this is getReportDetails Response', listRef);
+        // this.pdfReports.push({
+        //   name: listRef.name,
+        //   full: listRef.fullPath,
+        //   parent: listRef.parent,
+        //   storage: listRef.storage,
+        //   url: await getDownloadURL(listRef),
+        // });
       });
     });
     return this.pdfReports;

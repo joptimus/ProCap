@@ -45,6 +45,9 @@ export class AppComponent {
   startNewReport() {
     this.route.navigate(['members','select']);
   }
+  goToProfile() {
+    this.route.navigate(['profile']);
+  }
   async logout() {
     await this.authService.logout();
     this.route.navigateByUrl('/', { replaceUrl: true });

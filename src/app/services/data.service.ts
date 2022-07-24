@@ -175,6 +175,10 @@ export class DataService {
     { from: '' },
   ]
 
+  public userProfile = [
+    { uid: '', displayName: '', email: '' },
+  ]
+
   public detailClientId = [
     ,
   ]
