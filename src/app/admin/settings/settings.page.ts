@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { DataService } from 'src/app/services/data.service';
 import { DbDataService } from 'src/app/services/db-data.service';
 import { ModalPage } from '../modal/modal.page';
 
@@ -11,8 +13,11 @@ import { ModalPage } from '../modal/modal.page';
 export class SettingsPage implements OnInit {
 
   settings = [];
+  userDisplay;
 
-  constructor(private dataService: DbDataService, private modalCtrl: ModalController) { 
+  constructor(private dataService: DbDataService, private modalCtrl: ModalController, private localData: DataService, private route: Router) { 
+
+    this.checkIfAbleToView();
 
     this.dataService.getSettingsValues().subscribe(response => {
       console.log(response);
@@ -21,6 +26,7 @@ export class SettingsPage implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   async openSetting(i) {
@@ -34,4 +40,18 @@ export class SettingsPage implements OnInit {
     modal.present();
   }
 
+  checkIfAbleToView() {
+  
+    this.userDisplay = this.localData.captainName[0].displayName;
+    //console.log('user display', this.userDisplay, this.localData.captainName[0].displayName);
+    if (this.userDisplay === 'James Lewandowski') {
+      this.localData.canView[0].view = true;
+     // console.log('canView is true');
+    } else {
+     
+      this.localData.canView[0].view = false;
+      this.route.navigate(['landing']);
+    
+    }
+  }
 }

@@ -14,6 +14,12 @@
           <ion-label>Start New Report</ion-label>
         </ion-item>
       </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item (click)="goToProfile()">
+          <ion-icon class="iconColor" name="person-circle" slot="start"></ion-icon>
+          <ion-label>User Profile</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
 
     <ion-menu-toggle>
       <ion-item (click)="goToAddClients()">
@@ -22,18 +28,7 @@
       </ion-item>
     </ion-menu-toggle>
 
-    <ion-menu-toggle>
-      <ion-item (click)="goToAddNewUser()">
-        <ion-icon class="iconColor" name="finger-print" slot="start"></ion-icon>
-        <ion-label>User Management</ion-label>
-      </ion-item>
-    </ion-menu-toggle>
-    <ion-menu-toggle>
-      <ion-item (click)="goToProfile()">
-        <ion-icon class="iconColor" name="person-circle" slot="start"></ion-icon>
-        <ion-label>User Profile</ion-label>
-      </ion-item>
-    </ion-menu-toggle>
+
     <ion-menu-toggle> 
       <ion-item (click)="goToClients()">
         <ion-icon class="iconColor" name="people" slot="start"></ion-icon>
@@ -44,6 +39,12 @@
       <ion-item (click)="goToAdmin()">
         <ion-icon class="iconColor" name="settings" slot="start"></ion-icon>
         <ion-label>Admin</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item (click)="goToAddNewUser()">
+        <ion-icon class="iconColor" name="finger-print" slot="start"></ion-icon>
+        <ion-label>User Management</ion-label>
       </ion-item>
     </ion-menu-toggle>
     <ion-menu-toggle>

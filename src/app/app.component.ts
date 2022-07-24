@@ -13,15 +13,16 @@ import { environment } from 'src/environments/environment';
 export class AppComponent {
   currentApplicationVersion;
   date = Date.now();
+  canView = true;
+  userDisplay;
 
   constructor(
     private plaform: Platform,
     private checklistService: DataService,
     private authService: AuthenticationService,
+    private localData: DataService,
     private route: Router
-  ) {
-    this.ngOnInit();
-  }
+  ) {  }
 
   ngOnInit() {
     this.currentApplicationVersion = environment.appVersion;
@@ -48,6 +49,19 @@ export class AppComponent {
   goToProfile() {
     this.route.navigate(['profile']);
   }
+  // checkIfAbleToView() {
+  //   this.authService.getCurrentUser();
+  //   this.userDisplay = this.localData.captainName[0].displayName;
+  //   console.log('user display', this.userDisplay, this.localData.captainName[0].displayName);
+  //   if (this.userDisplay === 'James Lewandowski') {
+  //     this.canView = true;
+  //     console.log(this.authService.getCurrentUser.name);
+  //   } else {
+  //     this.canView = false;
+  //     console.log(this.authService.getCurrentUser.name);
+  //   }
+  // }
+
   async logout() {
     await this.authService.logout();
     this.route.navigateByUrl('/', { replaceUrl: true });

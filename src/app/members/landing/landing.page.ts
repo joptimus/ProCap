@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-landing',
@@ -11,13 +12,12 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class LandingPage implements OnInit {
 
   currentApplicationVersion;
-  constructor(private route: Router, private authService: AuthenticationService) { }
+  userDisplay;
+  canView = false;
+  constructor(private route: Router, private authService: AuthenticationService, private localData: DataService) { }
 
   ngOnInit() {
-    this.currentApplicationVersion = environment.appVersion;
-
-    
-    
+    this.currentApplicationVersion = environment.appVersion;   
   }
 
   startReport() {
@@ -37,6 +37,19 @@ export class LandingPage implements OnInit {
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
 
+  // checkIfAbleToView() {
+  //   this.authService.getCurrentUser();
+  //   this.userDisplay = this.localData.captainName[0].displayName;
+  //   console.log('user display', this.userDisplay, this.localData.captainName[0].displayName);
+  //   if (this.userDisplay === 'James Lewandowski') {
+  //     this.localData.canView[0].view = true;
+  //     console.log('canView is true');
+  //   } else {
+  //     this.canView = false;
+  //     this.localData.canView[0].view = false;
+    
+  //   }
+  // }
 
   // For Debugging
   // whoIsLoggedIn() {

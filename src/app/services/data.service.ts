@@ -183,6 +183,10 @@ export class DataService {
     ,
   ]
 
+  public canView = [
+    { view: false },
+  ]
+
   public clients = [
     { id: '', fName: 'Bob', lName: 'Files', fullName: 'Bob Files' },
     { id: '', fName: 'Shaquelle', lName: "O'Neil", fullName: "Shaquelle O'Neil" },
