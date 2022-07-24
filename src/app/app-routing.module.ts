@@ -22,7 +22,11 @@ const routes: Routes = [
   { path: 'subfolders', loadChildren: () => import('./admin/previous/subfolders/subfolders.module').then( m => m.SubfoldersPageModule)},
   { path: 'pcsreport', loadChildren: () => import('./admin/previous/pcsreport/pcsreport.module').then( m => m.PcsreportPageModule)},
 
-  { path: '**', redirectTo: 'landing', pathMatch: 'full' },
+  { path: '**', redirectTo: 'landing', pathMatch: 'full' },  {
+    path: 'profile',
+    loadChildren: () => import('./admin/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+
 
 ];
 
