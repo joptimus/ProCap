@@ -37,8 +37,12 @@ export class LandingPage implements OnInit {
     this.route.navigateByUrl('/', { replaceUrl: true });
   }
 
+
   // For Debugging
   // whoIsLoggedIn() {
   //   console.log('who is logged in:', this.authService.getCurrentUser());
+  // }
+  // async sendPasswordReset() {
+  //   this.authService.sendPasswordReset();
   // }
 }

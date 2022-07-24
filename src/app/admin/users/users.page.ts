@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class UsersPage implements OnInit {
 
   credentials: FormGroup;
+  emailToReset;
 
   constructor(
     private authService: AuthenticationService, 
@@ -32,6 +33,9 @@ export class UsersPage implements OnInit {
   get password() {
     return this.credentials.get('password');
   }
+  get displayName() {
+    return this.credentials.get('displayName');
+  }
 
   async register() {
     const loading = await this.loadingController.create();
@@ -39,11 +43,16 @@ export class UsersPage implements OnInit {
 
 
     const user = await this.authService.register(this.credentials.value);
-    await loading.dismiss();
+  
 
     if (user) {
-      this.showAlert('Success','User Successfully added');
+      await loading.dismiss();
+      this.updateDisplay();
+      this.authService.sendPasswordReset();
+      this.showAlert('Success','User Successfully added and reset email sent');
+
     } else {
+      await loading.dismiss();
       this.showAlert('Registration Failed', 'Please try again');
     }
   }
@@ -56,9 +65,17 @@ export class UsersPage implements OnInit {
     });
     await alert.present();
   }
+  updateEmail(event) {
+    this.emailToReset = event;
+    console.log(event);
+  }
 
   updateDisplay() {
     console.log('did we pass id corectly? :', this.credentials.value.displayName);
     this.authService.updateDisplayName(this.credentials.value.displayName);
+  }
+
+  async sendPasswordResetNoEmail() {
+    this.authService.sendPasswordResetNoEmail(this.emailToReset);
   }
 }

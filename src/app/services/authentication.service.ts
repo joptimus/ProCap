@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, user, updateProfile, getAuth } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, user, updateProfile, getAuth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
@@ -34,17 +34,33 @@ export class AuthenticationService {
     await alert.present();
   }
 
-  async register({ email, password }) {
+  async login({ email, password }) {
     try {
-      const user = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
-        password
+      const user = await signInWithEmailAndPassword(this.auth, email, password);
+      console.log('logging user', user);
+      this.localData.captainName[0].displayName = user.user.displayName;
+      console.log(
+        'Set user display name as: ',
+        this.localData.captainName[0].displayName
       );
+      return user;
+    } catch (error) {
+      console.log('auth service return error: ', error);
+      return null;
+    }
+  }
+
+  async register({ email, password, display }) {
+    try {
+      const user = await createUserWithEmailAndPassword(this.auth, email, password);
       return user;
     } catch (error) {
       return null;
     }
+  }
+
+  logout() {
+    return signOut(this.auth);
   }
 
   async updateDisplayName(displayName) {
@@ -53,9 +69,7 @@ export class AuthenticationService {
     });
     await loading.present();
     const auth = getAuth();
-    updateProfile(auth.currentUser, {
-      displayName: displayName,
-    })
+    updateProfile(auth.currentUser, { displayName: displayName })
       .then(() => {
         // Profile updated!
 
@@ -77,6 +91,58 @@ export class AuthenticationService {
           'Display Name not Updated',
           'ERROR: ' + error
         );
+      });
+  }
+
+  async sendPasswordReset() {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, auth.currentUser.email)
+      .then(() => {
+        // Password reset email sent!
+        // ..
+
+        this.presentAlert(
+          'Success',
+          'Password Reset',
+          'An email has been sent. Please follow the link to reset your password'
+        );
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        this.presentAlert(
+          'Error',
+          'Password Reset Error',
+          'ERROR CODE: ' + errorCode + ' : MESSAGE: ' + errorMessage
+        );
+        // ..
+      });
+  }
+
+  async sendPasswordResetNoEmail(email) {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        // Password reset email sent!
+        // ..
+
+        this.presentAlert(
+          'Success',
+          'Password Reset',
+          'An email has been sent to the user. Please inform them to follow the link to reset thier password'
+        );
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        this.presentAlert(
+          'Error',
+          'Password Reset Error',
+          'ERROR CODE: ' + errorCode + ' : MESSAGE: ' + errorMessage
+        );
+        // ..
       });
   }
 
@@ -105,25 +171,5 @@ export class AuthenticationService {
       this.logout();
     }
     return this.response;
-  }
-
-  async login({ email, password }) {
-    try {
-      const user = await signInWithEmailAndPassword(this.auth, email, password);
-      console.log('logging user', user);
-      this.localData.captainName[0].displayName = user.user.displayName;
-      console.log(
-        'Set user display name as: ',
-        this.localData.captainName[0].displayName
-      );
-      return user;
-    } catch (error) {
-      console.log('auth service return error: ', error);
-      return null;
-    }
-  }
-
-  logout() {
-    return signOut(this.auth);
   }
 }

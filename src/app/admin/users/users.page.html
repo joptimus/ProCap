@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title class="toolbarTitle">Add Users</ion-title>
+    <ion-title class="toolbarTitle">User Management</ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -11,9 +11,14 @@
 <ion-content>
 
   <ion-card>
+    <ion-card-header>Add New User</ion-card-header>
 
     <form [formGroup]="credentials">
       <div class="creds">
+        <ion-item>
+          <ion-label position="floating">Display Name</ion-label>
+          <ion-input formControlName="displayName" autocapitalize="words"></ion-input>
+        </ion-item>
         <ion-item>
           <ion-label position="floating">Email</ion-label>
           <ion-input type="email" formControlName="email"></ion-input>
@@ -22,18 +27,25 @@
           <ion-label position="floating">Password</ion-label>
           <ion-input formControlName="password" type="password"></ion-input>
         </ion-item>
+
       </div>
       <div class="btnClass">
-        <ion-button expand="block" (click)="register()">Add User</ion-button>
+        <ion-button class="user" expand="block" (click)="register()">Add User</ion-button>
       </div>
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="text" formControlName="displayName"></ion-input>
-      </ion-item>
     </form>
-    <ion-item>
 
-      <ion-button expand="block" (click)="updateDisplay()">Add User</ion-button>
-    </ion-item>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>Reset User by email</ion-card-header>
+    <ion-card-content>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input (ionChange)="updateEmail($event.detail.value)" type="email"></ion-input>
+    </ion-item>
+    <ion-button class="reset" expand="block" (click)="sendPasswordResetNoEmail()">Send reset email</ion-button>
+  </ion-card-content>
+  </ion-card>
+
+
 </ion-content>
