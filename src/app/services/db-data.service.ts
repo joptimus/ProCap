@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc, setDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc, setDoc, orderBy, query } from '@angular/fire/firestore';
 import { getDownloadURL, getStorage, listAll, ref, Storage, uploadBytes, uploadString, getMetadata } from '@angular/fire/storage';
 import { Auth } from '@angular/fire/auth';
 import { Photo } from '@capacitor/camera';
@@ -73,7 +73,7 @@ export class DbDataService {
 
   // #region Client Services
   getClients(): Observable<Client[]> {
-    const notesRef = collection(this.firestore, 'clients');
+    const notesRef = query(collection(this.firestore, 'clients'), orderBy("lName"));
     return collectionData(notesRef, { idField: 'id' }) as Observable<Client[]>;
   }
 
