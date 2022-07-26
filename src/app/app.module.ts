@@ -21,22 +21,41 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 import { TitleCasePipe } from '@angular/common';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-
+import { LoggerModule } from 'ngx-logger';
+import { Logger } from './services/logger.service';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, AppRoutingModule, IonicStorageModule.forRoot(),  provideStorage(() => getStorage()), provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => {
-    if (Capacitor.isNativePlatform()) {
-      return initializeAuth(getApp(), {
-        persistence: indexedDBLocalPersistence,
-      });
-    } else {
-      return getAuth();
-    }
-  }), 
-  provideFirestore(() => getFirestore()), provideStorage(() => getStorage())],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } , FileOpener, EmailComposer, TitleCasePipe, InAppBrowser],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    HttpClientModule,
+    AppRoutingModule,
+    IonicStorageModule.forRoot(),
+    LoggerModule.forRoot(environment.logging),
+    provideStorage(() => getStorage()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => {
+      if (Capacitor.isNativePlatform()) {
+        return initializeAuth(getApp(), {
+          persistence: indexedDBLocalPersistence,
+        });
+      } else {
+        return getAuth();
+      }
+    }),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
+  ],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FileOpener,
+    EmailComposer,
+    TitleCasePipe,
+    InAppBrowser,
+    Logger
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,3 +1,5 @@
+import { NgxLoggerLevel } from "ngx-logger";
+
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
@@ -12,8 +14,13 @@ export const environment = {
     authDomain: 'procapdb.firebaseapp.com',
     messagingSenderId: '206498918561',
   },
-  appVersion: require('../../package.json').version + '-dev',
-  production: false
+  appVersion: require('../../package.json').version + ' - DEV',
+  production: false,
+  logging: {
+    serverLoggingUrl: 'https://procaptainstaffing.free.beeceptor.com/logs',
+    level: NgxLoggerLevel.DEBUG,
+    serverLogLevel: NgxLoggerLevel.ERROR
+  }
 };
 
 

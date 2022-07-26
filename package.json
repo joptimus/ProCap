@@ -46,6 +46,7 @@
     "ng2-search-filter": "^0.5.1",
     "ngx-image-compress": "^13.1.13",
     "ngx-image-cropper": "^6.2.1",
+    "ngx-logger": "^5.0.11",
     "pdfmake": "^0.2.5",
     "rxjs": "~7.5.5",
     "tslib": "^2.4.0",

@@ -180,7 +180,7 @@ export class MainPage implements OnInit {
       header: header,
       subHeader: sub,
       message: message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
     await alert.present();
@@ -227,6 +227,8 @@ export class MainPage implements OnInit {
   }
 
   async uploadFile(pdf) {
+
+    
     console.log('Upload File Started');
     // Calculate Month for File Path
     var d = new Date();
@@ -262,6 +264,7 @@ export class MainPage implements OnInit {
     return true;
   }
   catch(e) {
+    this.presentAlert('Failure', 'Upload PDF Failed', 'There was an error uploading the document. Error : ' + e);
     console.log('Upload file errored out: ', e);
     return null;
   }
@@ -334,14 +337,12 @@ export class MainPage implements OnInit {
       await loading.dismiss();
       this.showGenAlert();
     } else {
-
       this.createPdf();
       this.deleteAllPictures();
       this.engineComments = [''];
       await loading.dismiss();
       this.showSuccess();
     }
-
   }
 
   deleteAllPictures() {
@@ -389,21 +390,20 @@ export class MainPage implements OnInit {
 
   async selectImage(value) {
     this.buttonId(value);
-    const start = await this.loadingController.create({
-      message: 'Selecting Photo...',
-     });
-     await start.present();
+    const start = await this.loadingController.create({ message: 'Selecting Photo...',});
+    await start.present();
+
     const image = await Camera.getPhoto({
-      quality: 50,
+      //quality: 50,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
     });
-    const loading = await this.loadingController.create({
-      message: 'Sending photo for compression...',
-     });
-     start.dismiss();
-     await loading.present();
+
+    start.dismiss();
+    const loading = await this.loadingController.create({ message: 'Sending photo for compression...',});
+    await loading.present();
+
     if (image) {
       loading.dismiss();
       this.compressFile(image.dataUrl);
@@ -414,9 +414,8 @@ export class MainPage implements OnInit {
   async compressFile(image) {
     const loading = await this.loadingController.create({
       message: 'Start of compression...',
-     });
-     await loading.present();
-
+    });
+    await loading.present();
 
     this.bytesBefore = this.imageCompress.byteCount(image);
     // console.log('Before compression:', this.bytesBefore + ' bytes');
@@ -433,22 +432,28 @@ export class MainPage implements OnInit {
         // console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
         // console.log('After compression:', this.bytesAfter / 1000 + ' KB');
         // console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-        
+
         console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
         console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
+        console.log(
+          'File reduced by (MB):',
+          this.difference / 1000000 + ' MB or ',
+          percent,
+          '%'
+        );
       },
       (error: any) => {
         loading.dismiss();
         console.error(error);
-        this.presentAlert('Compression Error', 'Error compressing Image', error);
-        
+        this.presentAlert(
+          'Compression Error',
+          'Error compressing Image',
+          error
+        );
       }
     );
     loading.dismiss();
   }
-
-
 
   async saveImage(photoBase64: string) {
     //const base64Data = await this.readAsBase64(photo);
@@ -457,8 +462,8 @@ export class MainPage implements OnInit {
 
     const loading = await this.loadingController.create({
       message: 'Saving image to filesystem...',
-     });
-     await loading.present();
+    });
+    await loading.present();
 
     const fileName = this.type + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -603,9 +608,7 @@ export class MainPage implements OnInit {
     console.log('disable check value : ', this.submitBtnDisable);
   }
 
-  async engineHoursCheck() {
-   
-  }
+  async engineHoursCheck() {}
 
   resetAllValues() {
     this.getCurrentMonth();
@@ -703,9 +706,7 @@ export class MainPage implements OnInit {
       buttons: [
         {
           text: 'OK',
-          handler: () => {
-          
-          },
+          handler: () => {},
         },
       ],
     });
@@ -741,7 +742,7 @@ export class MainPage implements OnInit {
     } else {
       // On a browser simply use download!
       this.pdfObj.download();
-       //this.uploadFile();
+      //this.uploadFile();
     }
   }
 
@@ -1126,10 +1127,10 @@ export class MainPage implements OnInit {
             },
           ],
         },
-         // #endregion ////////// PDF Header //////////
-        
+        // #endregion ////////// PDF Header //////////
+
         // #region ////////// Data Table //////////
-         '\n\n',
+        '\n\n',
         {
           width: '100%',
           alignment: 'center',
@@ -2096,7 +2097,7 @@ export class MainPage implements OnInit {
         // #endregion ////////// Data Table //////////
 
         '\n\n\n',
-            // #region ///////// Report Images Section /////////
+        // #region ///////// Report Images Section /////////
         {
           table: {
             widths: ['*', 10, 160, 10, '*'],
@@ -2372,7 +2373,7 @@ export class MainPage implements OnInit {
             ],
           },
         },
-        {text: '\n', pageBreak: 'before'},
+        { text: '\n', pageBreak: 'before' },
         {
           table: {
             widths: ['*', 10, 160, 10, '*'],
@@ -2465,7 +2466,7 @@ export class MainPage implements OnInit {
           },
         },
         '\n',
-        '\n', 
+        '\n',
         {
           table: {
             widths: ['*', 10, 160, 10, '*'],
@@ -2561,8 +2562,15 @@ export class MainPage implements OnInit {
       // #endregion ///////// Report Images Section /////////
 
       // #region //////// PageBreak Function ///////////
-      pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
-        return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
+      pageBreakBefore: function (
+        currentNode,
+        followingNodesOnPage,
+        nodesOnNextPage,
+        previousNodesOnPage
+      ) {
+        return (
+          currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0
+        );
       },
       // #endregion //////// PageBreak Function /////////
 
@@ -2589,10 +2597,10 @@ export class MainPage implements OnInit {
           fillColor: '#009ca6',
           alignment: 'center',
         },
-      }
+      },
       // #endregion //////// Styles ///////////
     };
-    
+
     this.pdfObj = pdfMake.createPdf(docDefinition);
 
     //console.log(docDefinition);
@@ -2604,7 +2612,7 @@ export class MainPage implements OnInit {
       //  pdf64data = 'data:application/pdf;base64,' + base64data;
       this.uploadFile(pdfBlob);
       this.pdfBlob = pdfBlob;
-        console.log('pdfblob ', this.pdfBlob);
+      console.log('pdfblob ', this.pdfBlob);
     });
 
     this.downloadPdf();

@@ -8,6 +8,7 @@ import { ImageCroppedEvent, LoadedImage, ImageCropperComponent } from 'ngx-image
 import { AlertController, LoadingController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
+import { Logger } from 'src/app/services/logger.service';
 
 const IMAGE_DIR = 'stored-images';
 
@@ -48,13 +49,14 @@ export class BoatPage implements OnInit {
     private loadingCtrl: LoadingController,
     private dataService: DataService,
     private route: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private logger: Logger
   ) {}
 
   ngOnInit() {
     this.selectImage();
     this.fromWhere = this.dataService.fromWhereIcame[0].from;
-    console.log('onInit :', this.fromWhere);
+    this.logger.debug('onInit :', this.fromWhere);
   }
 
   async presentAlert(header, sub, message) {
@@ -64,6 +66,11 @@ export class BoatPage implements OnInit {
       message: message,
       buttons: ['OK']
     });
+    this.logger.error('Error Alert presented',
+    'header: ' + header,
+    'subHeader: ' + sub,
+    'message: ' + message, 
+    );
     await alert.present();
   }
 
@@ -97,7 +104,7 @@ export class BoatPage implements OnInit {
         this.imgResultAfterCompress = result;
         if (this.imageCompress.byteCount(result) > 1000000) {
           this.loadingCtrl.dismiss();
-          console.log('did this work?');
+          this.logger.debug('did this work?');
           this.presentAlert(
             'Compression Error', 
             'Photo exceeds max size allowed', 
@@ -110,13 +117,13 @@ export class BoatPage implements OnInit {
         this.difference = this.bytesBefore - this.bytesAfter;
         this.percentage = ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
         let percent = this.percentage.toFixed(2);
-        // console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
-        // console.log('After compression:', this.bytesAfter / 1000 + ' KB');
-        // console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        // this.logger.debug('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000 + ' KB');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
         
-        console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
-        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
+        this.logger.debug('Original Size: ', this.bytesBefore / 1000000 + ' MB');
+        this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
+        this.logger.debug('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
         };
       },
       (error: any) => console.error(error)
@@ -125,8 +132,8 @@ export class BoatPage implements OnInit {
 
   async saveImage(photoBase64: string) {
     //const base64Data = await this.readAsBase64(photo);
-    //console.log(base64Data);
-    // console.log('compressed Image : ', photoBase64);
+    //this.logger.debug(base64Data);
+    // this.logger.debug('compressed Image : ', photoBase64);
 
     const fileName = 'tempUpload' + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -134,11 +141,11 @@ export class BoatPage implements OnInit {
       data: photoBase64,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    this.logger.info('saved: ', savedFile);
 
     this.croppedImage = photoBase64;
     this.dataService.tempBoatUpload[0].data = this.croppedImage;
-    //console.log('this.cropped Image = ', this.croppedImage);
+    //this.logger.debug('this.cropped Image = ', this.croppedImage);
     this.navigateBack();
   }
 
@@ -149,7 +156,7 @@ export class BoatPage implements OnInit {
   }
 
   loadImageFailed() {
-    console.log('Image failed to Load');
+    this.logger.error('Image failed to Load');
   }
 
   async cropImage() {
@@ -160,10 +167,10 @@ export class BoatPage implements OnInit {
 
     this.croppedImage = this.cropper.crop().base64;
     this.compressFile(this.croppedImage);
-    //console.log(this.croppedImage);
+    //this.logger.debug(this.croppedImage);
    
     
-    //console.log('DATA SERVICE', this.dataService.tempBoatUpload[0].data);
+    //this.logger.debug('DATA SERVICE', this.dataService.tempBoatUpload[0].data);
     this.myImage = null;
     
   }
@@ -171,13 +178,13 @@ export class BoatPage implements OnInit {
   // #endregion /////
 
   navigateBack() {
-    console.log('what is this.Fromwhere start ', this.fromWhere);
+    this.logger.debug('what is this.Fromwhere start ', this.fromWhere);
     if (this.fromWhere === 'addPage') {
       this.route.navigate(['add']);
       this.loadingCtrl.dismiss();
     }
     if (this.fromWhere === 'detail') {
-      console.log('what is this.Fromwhere ', this.fromWhere);
+      this.logger.debug('what is this.Fromwhere ', this.fromWhere);
       this.route.navigate(['clients','detail']);
       this.loadingCtrl.dismiss();
     }

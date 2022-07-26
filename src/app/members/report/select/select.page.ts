@@ -44,7 +44,7 @@ export class SelectPage implements OnInit {
     this.clientFullName = this.data.customer;
     this.clientLast = this.data.clientLast;
 
-    console.log('Address?', this.client);
+    //console.log('Address?', this.client);
   }
 
   next() {
