@@ -5,6 +5,7 @@ import { DbDataService, Client } from 'src/app/services/db-data.service';
 import { ModalPage } from '../modal/modal.page';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import { Logger } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-clients',
@@ -23,9 +24,11 @@ export class ClientsPage implements OnInit {
     private alertCtrl: AlertController,
     private localData: DataService, 
     private modalCtrl: ModalController,
-    private loadingController: LoadingController) { 
+    private loadingController: LoadingController,
+    private logger: Logger
+    ) { 
     this.clientService.getClients().subscribe(res => {
-      console.log(res);
+      this.logger.debug(res);
       this.clients = res;
       this.cd.detectChanges();
     })
@@ -40,14 +43,14 @@ export class ClientsPage implements OnInit {
     
     this.clientService.getClientById(this.id).subscribe(res => {
       this.client = res;
-      console.log('clientService : ', res);
+      //this.logger.debug('clientService : ', res);
     });
     loading.dismiss();
   }
  
    openClient(client: Client) {
 
-    console.log('data sent to local ',client);
+    this.logger.debug('data sent to local ',client);
     this.localData.detailClientId[0] = client;
     this.route.navigate(['clients','detail']);
     

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Logger } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginPage implements OnInit {
     private route: Router, 
     private fb: FormBuilder, 
     private loadingController: LoadingController, 
-    private alertController: AlertController
+    private alertController: AlertController,
+    private logger: Logger
     ) { }
 
     get email() {
@@ -59,7 +61,7 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if (user) {
-      console.log("user success");
+      this.logger.debug("user success");
       this.route.navigateByUrl('/landing', {replaceUrl: true });
     } else {
       this.showAlert('Login Failed', 'Please try again');

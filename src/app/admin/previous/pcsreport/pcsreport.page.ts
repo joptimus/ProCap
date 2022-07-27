@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { DbDataService } from 'src/app/services/db-data.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Logger } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-pcsreport',
@@ -14,7 +15,8 @@ export class PcsreportPage implements OnInit {
   constructor(
     private dbData: DbDataService,
     private localData: DataService,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    private logger: Logger
   ) { }
 
   ngOnInit() {
@@ -35,9 +37,9 @@ export class PcsreportPage implements OnInit {
     let path = this.localData.pdfReportData[0].filePath
     this.pdfReports = this.dbData.getReportDetails(path);
 
- //  console.log('what was the id passed :', id);
-    console.log('what was the path passed :', path);
-    console.log('this.subfolders ', this.pdfReports);
+ //  this.logger.debug('what was the id passed :', id);
+    this.logger.debug('what was the path passed :', path);
+    this.logger.debug('this.subfolders ', this.pdfReports);
   } 
 
 }

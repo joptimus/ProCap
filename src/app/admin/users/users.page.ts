@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Logger } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,8 @@ export class UsersPage implements OnInit {
     private authService: AuthenticationService, 
     private loadingController: LoadingController, 
     private fb: FormBuilder, 
-    private alertController: AlertController
+    private alertController: AlertController,
+    private logger: Logger
   ) { }
 
   ngOnInit() {
@@ -67,11 +69,11 @@ export class UsersPage implements OnInit {
   }
   updateEmail(event) {
     this.emailToReset = event;
-    console.log(event);
+    this.logger.debug(event);
   }
 
   updateDisplay() {
-    console.log('did we pass id corectly? :', this.credentials.value.displayName);
+    this.logger.debug('did we pass id corectly? :', this.credentials.value.displayName);
     this.authService.updateDisplayName(this.credentials.value.displayName);
   }
 

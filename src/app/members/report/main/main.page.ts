@@ -16,6 +16,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { HttpClient } from '@angular/common/http';
 import { DbDataService } from 'src/app/services/db-data.service';
 import { DataUrl, DOC_ORIENTATION, NgxImageCompressService, UploadResponse } from 'ngx-image-compress';
+import { Logger } from 'src/app/services/logger.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -145,13 +146,14 @@ export class MainPage implements OnInit {
     private emailComposer: EmailComposer,
     private data: DataService,
     private dbData: DbDataService,
-    private imageCompress: NgxImageCompressService
+    private imageCompress: NgxImageCompressService,
+    private logger: Logger
   ) {
     this.photoService.getUserProfile().subscribe((data) => {
       this.profile = data;
     });
     this.dbData.getSettingsValues().subscribe((response) => {
-      console.log(response);
+      this.logger.debug(response);
       this.emailResponse = response;
     });
     this.generateReportId();
@@ -163,7 +165,7 @@ export class MainPage implements OnInit {
     this.vessel = this.data.vessel;
     this.image = this.data.photos;
     this.clientLastName = this.data.clientLast;
-    console.log('vessel = ' + this.vessel);
+    this.logger.debug('vessel = ' + this.vessel);
 
     this.loadFiles();
     this.loadPlaceHolder();
@@ -171,7 +173,7 @@ export class MainPage implements OnInit {
     this.loadComingSoon();
     this.disableCheck();
     this.checkAccount();
-    console.log(this.clientLastName);
+    this.logger.debug(this.clientLastName);
     this.authService.getCurrentUser();
   }
 
@@ -189,7 +191,7 @@ export class MainPage implements OnInit {
   getCurrentMonth() {
     var d = new Date();
     var curr_month = d.getMonth();
-    console.log(curr_month);
+    this.logger.debug(curr_month);
     var months = new Array(
       'January',
       'February',
@@ -206,12 +208,12 @@ export class MainPage implements OnInit {
     );
 
     var today = months[curr_month];
-    console.log('month is : ', today);
+    this.logger.debug('month is : ', today);
   }
 
   async checkAccount() {
     this.hasAccount = await this.emailComposer.hasAccount();
-    console.log('Does this have an account? : ', this.hasAccount);
+    this.logger.debug('Does this have an account? : ', this.hasAccount);
   }
   async openEmail() {
     const email: EmailComposerOptions = {
@@ -229,12 +231,12 @@ export class MainPage implements OnInit {
   async uploadFile(pdf) {
 
     
-    console.log('Upload File Started');
+    this.logger.debug('Upload File Started');
     // Calculate Month for File Path
     var d = new Date();
     var curr_month = d.getMonth();
     var curr_year = d.getFullYear();
-    console.log(curr_month);
+    this.logger.debug(curr_month);
     var months = new Array(
       'January',
       'February',
@@ -249,9 +251,9 @@ export class MainPage implements OnInit {
       'November',
       'December'
     );
-    console.log('What year did we get?', curr_year);
+    this.logger.debug('What year did we get?', curr_year);
     var today = months[curr_month];
-    //console.log('did we get the base64 in function?: ', pdf);
+    //this.logger.debug('did we get the base64 in function?: ', pdf);
     this.dbData.addBlobPdfToStorage({
       fileName: pdf,
       reportId: this.reportFinal,
@@ -259,13 +261,13 @@ export class MainPage implements OnInit {
       boatId: this.vessel,
       month: today + ' ' + curr_year,
     });
-    console.log('this.pdfblob', pdf);
-    console.log('Upload File was a success');
+    this.logger.debug('this.pdfblob', pdf);
+    this.logger.debug('Upload File was a success');
     return true;
   }
   catch(e) {
     this.presentAlert('Failure', 'Upload PDF Failed', 'There was an error uploading the document. Error : ' + e);
-    console.log('Upload file errored out: ', e);
+    this.logger.debug('Upload file errored out: ', e);
     return null;
   }
 
@@ -275,7 +277,7 @@ export class MainPage implements OnInit {
     var string2 = new String(this.reportNumber);
     var string3 = string1.concat(string2.toString());
     this.reportFinal = string3;
-    console.log(string1, string2, string3);
+    this.logger.debug(string1, string2, string3);
   }
 
   loadPlaceHolder() {
@@ -317,7 +319,7 @@ export class MainPage implements OnInit {
   updateRemarks(event) {
     this.engineComments = event.target.value;
     this.data.engineComments[0].comments = this.engineComments;
-    console.log(this.engineComments);
+    this.logger.debug(this.engineComments);
   }
 
   async logout() {
@@ -378,14 +380,14 @@ export class MainPage implements OnInit {
   // #region Images Code
 
   buttonId(event) {
-    console.log(event);
-    console.log('target id is: ', event.target.id);
+    this.logger.debug(event);
+    this.logger.debug('target id is: ', event.target.id);
     if (this.type == '') {
       console.warn('TARGET ID IS EMPTY');
     } else {
       this.type = event.target.id;
     }
-    console.log('this.type = ', this.type);
+    this.logger.debug('this.type = ', this.type);
   }
 
   async selectImage(value) {
@@ -418,9 +420,9 @@ export class MainPage implements OnInit {
     await loading.present();
 
     this.bytesBefore = this.imageCompress.byteCount(image);
-    // console.log('Before compression:', this.bytesBefore + ' bytes');
-    // console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
-    // console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
+    // this.logger.debug('Before compression:', this.bytesBefore + ' bytes');
+    // this.logger.debug('Before compression:', this.bytesBefore / 1000 + ' KB');
+    // this.logger.debug('Before compression:', this.bytesBefore / 1000000 + ' MB');
     this.imageCompress.compressFile(image, 2, 50, 50).then(
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
@@ -429,13 +431,13 @@ export class MainPage implements OnInit {
         this.difference = this.bytesBefore - this.bytesAfter;
         this.percentage = ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
         let percent = this.percentage.toFixed(2);
-        // console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
-        // console.log('After compression:', this.bytesAfter / 1000 + ' KB');
-        // console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        // this.logger.debug('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000 + ' KB');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
 
-        console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
-        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-        console.log(
+        this.logger.debug('Original Size: ', this.bytesBefore / 1000000 + ' MB');
+        this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
+        this.logger.debug(
           'File reduced by (MB):',
           this.difference / 1000000 + ' MB or ',
           percent,
@@ -457,8 +459,8 @@ export class MainPage implements OnInit {
 
   async saveImage(photoBase64: string) {
     //const base64Data = await this.readAsBase64(photo);
-    //console.log(base64Data);
-    // console.log('compressed Image : ', photoBase64);
+    //this.logger.debug(base64Data);
+    // this.logger.debug('compressed Image : ', photoBase64);
 
     const loading = await this.loadingController.create({
       message: 'Saving image to filesystem...',
@@ -471,14 +473,14 @@ export class MainPage implements OnInit {
       data: photoBase64,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    this.logger.debug('saved: ', savedFile);
     loading.dismiss();
     this.loadFiles();
   }
 
   async loadFiles() {
     this.images = [];
-    console.log(this.images);
+    this.logger.debug(this.images);
     const loading = await this.loadingCtrl.create({
       message: 'Loading data...',
     });
@@ -493,7 +495,7 @@ export class MainPage implements OnInit {
           this.loadFileData(result.files);
         },
         async (err) => {
-          console.log('error in load images: ', err);
+          this.logger.debug('error in load images: ', err);
           // Folder does not yet exists!
           await Filesystem.mkdir({
             path: IMAGE_DIR,
@@ -605,21 +607,21 @@ export class MainPage implements OnInit {
     // } else {
     //   this.submitBtnDisable = true;
     // }
-    console.log('disable check value : ', this.submitBtnDisable);
+    this.logger.debug('disable check value : ', this.submitBtnDisable);
   }
 
   async engineHoursCheck() {}
 
   resetAllValues() {
     this.getCurrentMonth();
-    console.log('this.current', this.currentMonth);
-    console.log(this.getCurrentMonth());
-    console.log('data value customer before', this.clientLastName);
-    console.log('data value vessel before', this.vessel);
+    this.logger.debug('this.current', this.currentMonth);
+    this.logger.debug(this.getCurrentMonth());
+    this.logger.debug('data value customer before', this.clientLastName);
+    this.logger.debug('data value vessel before', this.vessel);
     this.clientLastName = this.resetNull;
     this.vessel = this.resetNull;
-    console.log('data value customer after', this.clientLastName);
-    console.log('data value after before', this.vessel);
+    this.logger.debug('data value customer after', this.clientLastName);
+    this.logger.debug('data value after before', this.vessel);
   }
 
   async showPortAlert() {
@@ -888,8 +890,8 @@ export class MainPage implements OnInit {
     // Find the Index number of the array to check
     let thrusters = data.findIndex((x) => x.label === 'Thrusters');
     let water = data.findIndex((x) => x.label === 'Water Tank Filled');
-    console.log('index - thrusters', thrusters);
-    console.log('index - water', water);
+    this.logger.debug('index - thrusters', thrusters);
+    this.logger.debug('index - water', water);
 
     if (this.data.miscData[thrusters].checked == true) {
       this.textThrusters = 'N/A';
@@ -901,22 +903,22 @@ export class MainPage implements OnInit {
     } else {
       this.textWaterFilled = '√';
     }
-    console.log('textThrusters = ', this.textThrusters);
-    console.log('textWaterFilled = ', this.textWaterFilled);
+    this.logger.debug('textThrusters = ', this.textThrusters);
+    this.logger.debug('textWaterFilled = ', this.textWaterFilled);
   }
 
   validateBoatImg() {
     if (this.data.boatImg[0].isNull == false) {
       this.clientBoatImg = this.data.boatImg[0].value;
-      console.log('clientBoatImg = ', this.clientBoatImg);
+      this.logger.debug('clientBoatImg = ', this.clientBoatImg);
     } else {
       this.clientBoatImg = this.comingSoon;
-      console.log('Boat Image is null', this.data.boatImg);
+      this.logger.debug('Boat Image is null', this.data.boatImg);
     }
   }
 
   whoIsLoggedIn() {
-    console.log('who is logged in:', this.authService.getCurrentUser());
+    this.logger.debug('who is logged in:', this.authService.getCurrentUser());
   }
 
   // #region ------- All code for Generating the PDF Template --------
@@ -938,10 +940,10 @@ export class MainPage implements OnInit {
     let dateText = date.toLocaleDateString();
 
     // Debug Logs
-    // console.log();
-    // console.log(path);
-    // console.log(portHours);
-    // console.log(this.strainerDirty);
+    // this.logger.debug();
+    // this.logger.debug(path);
+    // this.logger.debug(portHours);
+    // this.logger.debug(this.strainerDirty);
 
     const docDefinition = {
       compress: true,
@@ -2603,7 +2605,7 @@ export class MainPage implements OnInit {
 
     this.pdfObj = pdfMake.createPdf(docDefinition);
 
-    //console.log(docDefinition);
+    //this.logger.debug(docDefinition);
     //let pdf64data: string;
     let pdfDocGenerator = pdfMake.createPdf(docDefinition);
     let pdfBlob = pdfDocGenerator.getBlob((blob) => {
@@ -2612,7 +2614,7 @@ export class MainPage implements OnInit {
       //  pdf64data = 'data:application/pdf;base64,' + base64data;
       this.uploadFile(pdfBlob);
       this.pdfBlob = pdfBlob;
-      console.log('pdfblob ', this.pdfBlob);
+      this.logger.debug('pdfblob ', this.pdfBlob);
     });
 
     this.downloadPdf();

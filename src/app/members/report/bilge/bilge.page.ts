@@ -8,6 +8,7 @@ import {
   Photo,
 } from '@capacitor/camera';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
+import { Logger } from 'src/app/services/logger.service';
 
 const IMAGE_DIR = 'stored-images';
 
@@ -30,7 +31,8 @@ export class BilgePage implements OnInit {
   constructor(
     private data: DataService,
     private platform: Platform,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private logger: Logger
   ) {}
 
   ngOnInit() {
@@ -103,7 +105,7 @@ export class BilgePage implements OnInit {
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
     });
-    console.log(image);
+    this.logger.debug(image);
     if (image) {
       this.saveImage(image);
     }
@@ -111,7 +113,7 @@ export class BilgePage implements OnInit {
 
   async saveImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
+    this.logger.debug(base64Data);
 
     const fileName = 'BILGE' + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -119,7 +121,7 @@ export class BilgePage implements OnInit {
       data: base64Data,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    this.logger.debug('saved: ', savedFile);
     this.loadFiles();
   }
 
@@ -159,6 +161,6 @@ export class BilgePage implements OnInit {
 
   log() {
     this.data.bilgeData = this.bilgeData;
-    console.log(this.bilgeData);
+    this.logger.debug(this.bilgeData);
   }
 }

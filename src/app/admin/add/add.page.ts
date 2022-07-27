@@ -10,6 +10,7 @@ import { ImageCroppedEvent, LoadedImage, ImageCropperComponent } from 'ngx-image
 import { Capacitor } from '@capacitor/core';
 import { Route, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import { Logger } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-add',
@@ -50,7 +51,8 @@ export class AddPage implements OnInit {
     private titleCase: TitleCasePipe,
     private imageCompress: NgxImageCompressService,
     private route: Router,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private logger: Logger
   ) {}
 
   ngOnInit() {
@@ -64,13 +66,13 @@ export class AddPage implements OnInit {
       email: [''],
     });
     this.photoData = this.data.tempBoatUpload[0].data;
-    //console.log('the local photo Data ON INIT', this.photoData);
+    //this.logger.info('the local photo Data ON INIT', this.photoData);
   }
 
   ionViewDidEnter () {
     this.photoData = this.data.tempBoatUpload[0].data;
-  //  console.log('is there any photo data? ', this.photoData);
-   // console.log('the local photo Data REFRESH', this.photoData);
+  //  this.logger.debug('is there any photo data? ', this.photoData);
+   // this.logger.debug('the local photo Data REFRESH', this.photoData);
   }
 
   update() {
@@ -110,8 +112,8 @@ export class AddPage implements OnInit {
       this.vesselName = this.credentials.get('vessel').value;
     }
 
-    console.log(transform);
-    console.log('Split Full name : ', names,' firstName : ', firstName,' lastName : ', lastName);
+    this.logger.debug(transform);
+    this.logger.debug('Split Full name : ', names,' firstName : ', firstName,' lastName : ', lastName);
 
     this.clientService.addClient({
       fullName: transform,
@@ -166,9 +168,9 @@ export class AddPage implements OnInit {
   }
   compressFile(image) {
     this.bytesBefore = this.imageCompress.byteCount(image);
-    console.log('Before compression:', this.bytesBefore + ' bytes');
-    console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
-    console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
+    // this.logger.debug('Before compression:', this.bytesBefore + ' bytes');
+    // this.logger.debug('Before compression:', this.bytesBefore / 1000 + ' KB');
+    // this.logger.debug('Before compression:', this.bytesBefore / 1000000 + ' MB');
     this.imageCompress.compressFile(image, 2, 50, 50).then(
       (result: DataUrl) => {
         this.imgResultAfterCompress = result;
@@ -177,13 +179,13 @@ export class AddPage implements OnInit {
         this.difference = this.bytesBefore - this.bytesAfter;
         this.percentage = ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
         let percent = this.percentage.toFixed(2);
-        // console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
-        // console.log('After compression:', this.bytesAfter / 1000 + ' KB');
-        // console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        // this.logger.debug('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000 + ' KB');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
         
-        console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
-        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
+        this.logger.debug('Original Size: ', this.bytesBefore / 1000000 + ' MB');
+        this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
+        this.logger.debug('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
       },
       (error: any) => console.error(error)
     );

@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
+import { Logger } from 'src/app/services/logger.service';
 
 const IMAGE_DIR = 'stored-images';
 
@@ -30,7 +31,8 @@ export class GeneratorPage implements OnInit {
     
     private data: DataService,
     private platform: Platform,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private logger: Logger
     
     ) { }
 
@@ -38,18 +40,18 @@ export class GeneratorPage implements OnInit {
     this.loadFiles();
     this.generatorData = this.data.generatorData;
     this.genHours = this.data.genHours;
-    console.log('ngOnInit generatorData = ', this.generatorData, ' genHours = ', this.genHours,'geratorhours ',this.generatorHours)
+    this.logger.debug('ngOnInit generatorData = ', this.generatorData, ' genHours = ', this.genHours,'geratorhours ',this.generatorHours)
   }
 
   log(){
-    console.log(this.generatorData)
+    this.logger.debug(this.generatorData)
     this.data.generatorData = this.generatorData;
   }
 
   updateGenHours(event) {
     this.genHours[0].hours = event.target.value;
     this.data.genHours = this.genHours;
-    console.log('dataService genHours = ', this.data.genHours[0].hours);
+    this.logger.debug('dataService genHours = ', this.data.genHours[0].hours);
   }
 
   // public generatorData = [
@@ -130,7 +132,7 @@ export class GeneratorPage implements OnInit {
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos
     });
-    console.log(image);
+    this.logger.debug(image);
     if (image) {
       this.saveImage(image);
     }
@@ -138,7 +140,7 @@ export class GeneratorPage implements OnInit {
 
   async saveImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
+    this.logger.debug(base64Data);
 
     const fileName = 'Gen' + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -146,7 +148,7 @@ export class GeneratorPage implements OnInit {
       data: base64Data,
       directory: Directory.Data
     });
-    console.log('saved: ', savedFile);
+    this.logger.debug('saved: ', savedFile);
     this.loadFiles();
   }
 

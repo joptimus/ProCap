@@ -43,10 +43,10 @@ export class LandingPage implements OnInit {
   // checkIfAbleToView() {
   //   this.authService.getCurrentUser();
   //   this.userDisplay = this.localData.captainName[0].displayName;
-  //   console.log('user display', this.userDisplay, this.localData.captainName[0].displayName);
+  //   this.logger.debug('user display', this.userDisplay, this.localData.captainName[0].displayName);
   //   if (this.userDisplay === 'James Lewandowski') {
   //     this.localData.canView[0].view = true;
-  //     console.log('canView is true');
+  //     this.logger.debug('canView is true');
   //   } else {
   //     this.canView = false;
   //     this.localData.canView[0].view = false;
@@ -56,7 +56,7 @@ export class LandingPage implements OnInit {
 
   // For Debugging
   // whoIsLoggedIn() {
-  //   console.log('who is logged in:', this.authService.getCurrentUser());
+  //   this.logger.debug('who is logged in:', this.authService.getCurrentUser());
   // }
   // async sendPasswordReset() {
   //   this.authService.sendPasswordReset();

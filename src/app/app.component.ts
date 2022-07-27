@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { AuthenticationService } from './services/authentication.service';
 import { DataService } from './services/data.service';
 import { environment } from 'src/environments/environment';
+import { Logger } from './services/logger.service';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +22,13 @@ export class AppComponent {
     private checklistService: DataService,
     private authService: AuthenticationService,
     private localData: DataService,
-    private route: Router
+    private route: Router,
+    private logger: Logger
   ) {  }
 
   ngOnInit() {
     this.currentApplicationVersion = environment.appVersion;
-    console.log(this.currentApplicationVersion);
+    this.logger.debug(this.currentApplicationVersion);
   }
   goToAdmin() {
     this.route.navigate(['options']);
@@ -52,13 +54,13 @@ export class AppComponent {
   // checkIfAbleToView() {
   //   this.authService.getCurrentUser();
   //   this.userDisplay = this.localData.captainName[0].displayName;
-  //   console.log('user display', this.userDisplay, this.localData.captainName[0].displayName);
+  //   this.logger.debug('user display', this.userDisplay, this.localData.captainName[0].displayName);
   //   if (this.userDisplay === 'James Lewandowski') {
   //     this.canView = true;
-  //     console.log(this.authService.getCurrentUser.name);
+  //     this.logger.debug(this.authService.getCurrentUser.name);
   //   } else {
   //     this.canView = false;
-  //     console.log(this.authService.getCurrentUser.name);
+  //     this.logger.debug(this.authService.getCurrentUser.name);
   //   }
   // }
 

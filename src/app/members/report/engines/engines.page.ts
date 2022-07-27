@@ -5,6 +5,7 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { getHours } from 'src/app/model/localFile';
+import { Logger } from 'src/app/services/logger.service';
 // import { PhotosService } from 'src/app/services/photos.service';
 
 const IMAGE_DIR = 'stored-images';
@@ -49,7 +50,8 @@ export class EnginesPage implements OnInit {
     private route: Router,
     private platform: Platform,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private logger: Logger
   ) // private photo: PhotosService
 
   {}
@@ -76,7 +78,7 @@ export class EnginesPage implements OnInit {
   }
 
   disableTabCheck() {
-    console.log('engine count : ', this.engineCount);
+    this.logger.debug('engine count : ', this.engineCount);
  
     this.convertedEngineCount = Number(this.engineCount);
     if(this.convertedEngineCount == 1) {
@@ -91,7 +93,7 @@ export class EnginesPage implements OnInit {
   }
 
   loadFilesAgain() {
-    console.log('loaded files again');
+    this.logger.debug('loaded files again');
    // this.tabSelected = 'Port';
     this.loadFiles();
   }
@@ -161,7 +163,7 @@ export class EnginesPage implements OnInit {
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
     });
-    console.log(image);
+    this.logger.debug(image);
     if (image) {
       this.saveImage(image);
     }
@@ -169,7 +171,7 @@ export class EnginesPage implements OnInit {
 
   async saveImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
+    this.logger.debug(base64Data);
 
     const fileName = this.tabSelected + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -177,7 +179,7 @@ export class EnginesPage implements OnInit {
       data: base64Data,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    this.logger.debug('saved: ', savedFile);
     this.loadFiles();
   }
 
@@ -221,31 +223,31 @@ export class EnginesPage implements OnInit {
   // updateRemarks(event) {
   //   this.engineComments = event.target.value;
   //   this.data.engineComments[0].comments = this.engineComments;
-  //   console.log(this.engineComments);
+  //   this.logger.debug(this.engineComments);
   // }
 
   updateEngineHoursMain(event) {
     this.engineHoursMain = event.target.value;
     this.data.engineHoursMain[0].hours = this.engineHoursMain;
-    console.log('dataService engineHoursMain value = ', this.data.engineHoursMain[0].hours);
-    console.log('dataService event = ', event);
+    this.logger.debug('dataService engineHoursMain value = ', this.data.engineHoursMain[0].hours);
+    this.logger.debug('dataService event = ', event);
   }
 
   updateEngineHoursStarboard(event) {
     this.starHours[0].hours = event.target.value;
     this.data.engineHoursStarboard= this.starHours;
-    console.log('dataService starHours value = ', this.starHours[0].hours);
+    this.logger.debug('dataService starHours value = ', this.starHours[0].hours);
   }
 
   updateEngineHoursPort(event) {
     this.portHours[0].hours = event.target.value;
     this.data.engineHoursPort = this.portHours;
-    console.log('dataService engineHoursPort value = ', this.portHours[0].hours);
-    console.log('event target value : ', event.target.value);
+    this.logger.debug('dataService engineHoursPort value = ', this.portHours[0].hours);
+    this.logger.debug('event target value : ', event.target.value);
   }
 
   log() {
-    console.log('log again', this.enginePort);
+    this.logger.debug('log again', this.enginePort);
     this.data.enginePort = this.enginePort;
     
   }
@@ -253,8 +255,8 @@ export class EnginesPage implements OnInit {
   segmentChanged(ev: any) {
     this.tabSelected = ev.detail.value;
     this.loadFilesAgain();
-    console.log('Segment changed', ev.detail);
-    console.log(this.tabSelected);
-    console.log(ev.detail.value);
+    this.logger.debug('Segment changed', ev.detail);
+    this.logger.debug(this.tabSelected);
+    this.logger.debug(ev.detail.value);
   }
 }

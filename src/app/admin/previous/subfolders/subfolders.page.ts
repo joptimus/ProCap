@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { DbDataService } from 'src/app/services/db-data.service';
+import { Logger } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-subfolders',
@@ -16,7 +17,8 @@ export class SubfoldersPage implements OnInit {
   constructor(
     private dbData: DbDataService,
     private localData: DataService,
-    private route: Router
+    private route: Router,
+    private logger: Logger
   ) { }
 
   ngOnInit() {
@@ -30,8 +32,8 @@ export class SubfoldersPage implements OnInit {
       this.localData.isDataAlreadyThere[0].answer = this.dataPresent;
       this.subfolders = this.dbData.getSubFolders(id);
   
-      console.log('what was the id passed :', id);
-      console.log('this.subfolders ', this.subfolders);
+      this.logger.debug('what was the id passed :', id);
+      this.logger.debug('this.subfolders ', this.subfolders);
       
     
       
@@ -39,13 +41,13 @@ export class SubfoldersPage implements OnInit {
 }
   getPdfReports(path) {
     this.localData.pdfReportData[0].filePath = path;
-    console.log('id / path: ', path);
+    this.logger.debug('id / path: ', path);
     this.route.navigate(['pcsreport']);
   }
 
   resetArray() {
    // this.subfolders = [''];
-    console.log('resetArray ', this.subfolders);
+    this.logger.debug('resetArray ', this.subfolders);
   }
 
 }

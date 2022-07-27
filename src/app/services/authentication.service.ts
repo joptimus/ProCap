@@ -5,6 +5,7 @@ import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject } from 'rxjs';
 import { DataService } from './data.service';
+import { Logger } from './logger.service';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -20,7 +21,8 @@ export class AuthenticationService {
     private localData: DataService,
     private route: Router,
     private alertController: AlertController,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private logger: Logger
   ) {}
 
   async presentAlert(head, sub, msg) {
@@ -37,15 +39,15 @@ export class AuthenticationService {
   async login({ email, password }) {
     try {
       const user = await signInWithEmailAndPassword(this.auth, email, password);
-      console.log('logging user', user);
+      this.logger.debug('logging user', user);
       this.localData.captainName[0].displayName = user.user.displayName;
-      console.log(
+      this.logger.debug(
         'Set user display name as: ',
         this.localData.captainName[0].displayName
       );
       return user;
     } catch (error) {
-      console.log('auth service return error: ', error);
+      this.logger.debug('auth service return error: ', error);
       return null;
     }
   }
@@ -80,10 +82,10 @@ export class AuthenticationService {
           'Your display name has been successfully updated in the database'
         );
 
-        console.log('User Display Name Updated');
+        this.logger.debug('User Display Name Updated');
       })
       .catch((error) => {
-        console.log(error);
+        this.logger.debug(error);
         // An error occurred
 
         this.presentAlert(
@@ -161,7 +163,7 @@ export class AuthenticationService {
       this.localData.userProfile[0].email = user.email;
     } else {
       // No user is signed in.
-      console.log('no one is logged in so we sign out');
+      this.logger.debug('no one is logged in so we sign out');
       this.route.navigateByUrl('/', { replaceUrl: true });
       await this.presentAlert(
         'Token Expired',

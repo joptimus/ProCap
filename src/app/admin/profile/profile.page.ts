@@ -3,6 +3,7 @@ import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { DbDataService } from 'src/app/services/db-data.service';
+import { Logger } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,8 @@ export class ProfilePage implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private localData: DataService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private logger: Logger
   ) {}
 
   async ngOnInit() {
@@ -34,12 +36,12 @@ export class ProfilePage implements OnInit {
     await loading.present();
     const newValue = this.userDisplay;
     await this.authService.updateDisplayName(newValue);
-    console.log('did we get a display value? :', newValue);
+    this.logger.debug('did we get a display value? :', newValue);
     loading.dismiss();
   }
 
   updateUserDisplay(event) {
     this.userDisplay = event;
-    // console.log(event);
+    // this.logger.debug(event);
   }
 }

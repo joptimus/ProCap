@@ -5,6 +5,7 @@ import { DataUrl, DOC_ORIENTATION, NgxImageCompressService, UploadResponse } fro
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import { Logger } from 'src/app/services/logger.service';
  
 
 @Component({
@@ -37,7 +38,8 @@ export class DetailPage implements OnInit {
     private imageCompress: NgxImageCompressService,
     private loadingCtrl: LoadingController,
     private route: Router,
-    private localData: DataService
+    private localData: DataService,
+    private logger: Logger
   ) { }
 
   ngOnInit() {
@@ -46,14 +48,14 @@ export class DetailPage implements OnInit {
       this.client = res;
 
       this.photoData = this.client.vesselPhoto;
-      //console.log('is there ngOnIt Photo Data?', this.photoData);
-      //console.log('this.client', this.client);
+      //this.logger.debug('is there ngOnIt Photo Data?', this.photoData);
+      //this.logger.debug('this.client', this.client);
     });
     this.dbService.getSettingsValuesById(this.id).subscribe(res => {
       this.setting = res;
 
 
-      //console.log('this.setting', this.setting);
+      //this.logger.debug('this.setting', this.setting);
     });
   
     this.tempBoat = this.localData.tempBoatUpload[0].data;
@@ -61,13 +63,13 @@ export class DetailPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log('ionViewWillEnter start');
+    this.logger.debug('ionViewWillEnter start');
     this.tempBoat = this.localData.tempBoatUpload[0].data;
-    //console.log('tempBoat ', this.tempBoat, ' photoData ', this.photoData);
+    //this.logger.debug('tempBoat ', this.tempBoat, ' photoData ', this.photoData);
     if(this.tempBoat != '' && this.photoData == '') {
       this.photoData = this.tempBoat;
       this.client.vesselPhoto = this.photoData;
-      //console.log('ionViewWIllEnter photodata : ', this.photoData)
+      //this.logger.debug('ionViewWIllEnter photodata : ', this.photoData)
     }
   }
 
@@ -92,7 +94,7 @@ export class DetailPage implements OnInit {
   async updateClient() {
     
     await this.dbService.updateClient(this.client);
-    console.log(this.client);
+    this.logger.debug(this.client);
     const toast = await this.toastCtrl.create({
       message: 'This client has been updated!',
       duration: 2000
@@ -133,9 +135,9 @@ compressFile(image) {
 
   const MAX_MEGABYTE = 1;
   this.bytesBefore = this.imageCompress.byteCount(image);
-  console.log('Before compression:', this.bytesBefore + ' bytes');
-  console.log('Before compression:', this.bytesBefore / 1000 + ' KB');
-  console.log('Before compression:', this.bytesBefore / 1000000 + ' MB');
+  this.logger.debug('Before compression:', this.bytesBefore + ' bytes');
+  this.logger.debug('Before compression:', this.bytesBefore / 1000 + ' KB');
+  this.logger.debug('Before compression:', this.bytesBefore / 1000000 + ' MB');
  // this.imageCompress.compressFile(image, 2, 50, 50).then(
   this.imageCompress.uploadAndGetImageWithMaxSize(MAX_MEGABYTE).then(
     (result: DataUrl) => {
@@ -148,13 +150,13 @@ compressFile(image) {
       this.percentage =
         ((this.bytesBefore - this.bytesAfter) / this.bytesBefore) * 100;
       let percent = this.percentage.toFixed(2);
-        // console.log('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
-        // console.log('After compression:', this.bytesAfter / 1000 + ' KB');
-        // console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
+        // this.logger.debug('Size in bytes after compression is now:', this.bytesAfter + ' bytes');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000 + ' KB');
+        // this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
         
-        console.log('Original Size: ', this.bytesBefore / 1000000 + ' MB');
-        console.log('After compression:', this.bytesAfter / 1000000 + ' MB');
-        console.log('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
+        this.logger.debug('Original Size: ', this.bytesBefore / 1000000 + ' MB');
+        this.logger.debug('After compression:', this.bytesAfter / 1000000 + ' MB');
+        this.logger.debug('File reduced by (MB):', this.difference / 1000000 + ' MB or ', percent,  '%');
       
     },
     (error: any) => console.error('this error', error)

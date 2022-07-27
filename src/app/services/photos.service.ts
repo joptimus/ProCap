@@ -143,28 +143,6 @@ export class PhotosService {
       this.loadFiles();
       // this.presentToast('File removed.');
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     getUserProfile() {
       const user = this.auth.currentUser;
       const userDocRef = doc(this.firestore, `users/${user.uid}`);

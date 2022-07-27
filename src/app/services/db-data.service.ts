@@ -6,6 +6,7 @@ import { Photo } from '@capacitor/camera';
 import { Observable } from 'rxjs';
 import { DataService } from './data.service';
 import { arrayBuffer } from 'stream/consumers';
+import { Logger } from './logger.service';
 
 // #region Interfaces //
 export interface Client {
@@ -68,7 +69,8 @@ export class DbDataService {
     private firestore: Firestore,
     private storage: Storage,
     private data: DataService,
-    private auth: Auth
+    private auth: Auth,
+    private logger: Logger
   ) {}
 
   // #region Client Services
@@ -138,14 +140,14 @@ export class DbDataService {
   // #region Storing PDF Services
 
   addPdfToStorage(pdf: Pdf) {
-    console.log('dbService pdf Start');
+    this.logger.debug('dbService pdf Start');
 
     const path = `pdfUploads/${pdf.month}/${pdf.boatId}/${pdf.fileName}`;
     const storageRef = ref(this.storage, path);
 
     try {
       uploadString(storageRef, pdf.fileName, 'base64').then((snapshot) => {
-        console.log('Uploaded a base64 string!');
+        this.logger.debug('Uploaded a base64 string!');
       });
 
       const fileUrl = getDownloadURL(storageRef);
@@ -155,23 +157,23 @@ export class DbDataService {
 
       return true;
     } catch (error) {
-      console.log('pdf Upload error: ', error);
+      this.logger.debug('pdf Upload error: ', error);
       return null;
     }
   }
 
   addBlobPdfToStorage(pdf: PdfBlob) {
-    console.log('dbService BLOB pdf Start');
+    this.logger.debug('dbService BLOB pdf Start');
 
     const path = `${pdf.month}/${pdf.boatId}/${pdf.reportId}`;
     const storageRef = ref(this.storage, path);
 
     uploadBytes(storageRef, pdf.fileName).then((snapshot) => {
-      console.log('Uploaded a blob or file!');
+      this.logger.debug('Uploaded a blob or file!');
     });
   }
   catch(error) {
-    console.log('pdf Upload error: ', error);
+    this.logger.debug('pdf Upload error: ', error);
     return null;
   }
 
@@ -192,8 +194,8 @@ export class DbDataService {
         // All the prefixes under listRef.
         // You may call listAll() recursively on them.
 
-       // console.log('Shashike this is listRef Response', result);
-       // console.log('Shashike this is folderRef Response', listRef);
+       // this.logger.debug('Shashike this is listRef Response', result);
+       // this.logger.debug('Shashike this is folderRef Response', listRef);
         this.folders.push({
           name: listRef.bucket,
           full: listRef.fullPath,
@@ -218,8 +220,8 @@ export class DbDataService {
         // All the prefixes under listRef.
         // You may call listAll() recursively on them.
 
-        console.log('pdfData Response', result);
-        console.log('pdf Data listRef', listRef);
+        this.logger.debug('pdfData Response', result);
+        this.logger.debug('pdf Data listRef', listRef);
         this.subFolders.push({
           name: listRef.name,
           fullPath: listRef.fullPath,
@@ -242,10 +244,10 @@ export class DbDataService {
         // This can be downloaded directly:
         const xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
-        console.log('do ihave a blob file?', xhr.responseType);
+        this.logger.debug('do ihave a blob file?', xhr.responseType);
         xhr.onload = (event) => {
           const blob = xhr.response;
-          console.log('do ihave a blob file?', blob);
+          this.logger.debug('do ihave a blob file?', blob);
         };
         xhr.open('GET', url);
         xhr.send();
@@ -275,8 +277,8 @@ export class DbDataService {
         getMetadata(listRef).then(async (metadata) => {
     // Metadata now contains the metadata for 'images/forest.jpg'
     pdfSize = (metadata.size * .95) / 1000000;
-    console.log('metadata size: ', metadata.size);
-    console.log('converted size', pdfSize);
+    this.logger.debug('metadata size: ', metadata.size);
+    this.logger.debug('converted size', pdfSize);
     this.pdfReports.push({
       name: listRef.name,
       full: listRef.fullPath,
@@ -290,8 +292,8 @@ export class DbDataService {
   .catch((error) => {
     // Uh-oh, an error occurred!
   });
-        console.log('Shashike this is getReportDetails Response', result);
-        console.log('Shashike this is getReportDetails Response', listRef);
+        this.logger.debug('Shashike this is getReportDetails Response', result);
+        this.logger.debug('Shashike this is getReportDetails Response', listRef);
         // this.pdfReports.push({
         //   name: listRef.name,
         //   full: listRef.fullPath,
@@ -317,15 +319,15 @@ export class DbDataService {
         res.prefixes.forEach((folderRef) => {
           // All the prefixes under listRef.
           // You may call listAll() recursively on them.
-          console.log('Shashike this is listRef Response', res);
-          console.log('Shashike this is folderRef Response', folderRef);
+          this.logger.debug('Shashike this is listRef Response', res);
+          this.logger.debug('Shashike this is folderRef Response', folderRef);
           this.cloudFiles.push({
             name: folderRef.name,
             full: folderRef.fullPath,
           });
         });
         res.items.forEach((itemRef) => {
-          console.log('Shashike this is itemRef Response ', itemRef);
+          this.logger.debug('Shashike this is itemRef Response ', itemRef);
           // All the items under listRef.
 
           this.cloudFiles.push({
@@ -333,13 +335,13 @@ export class DbDataService {
             full: itemRef.fullPath,
           });
         });
-        console.log('cloudfiles', this.cloudFiles);
+        this.logger.debug('cloudfiles', this.cloudFiles);
       })
       .catch((error) => {
-        console.log('error : ', error);
+        this.logger.debug('error : ', error);
         // Uh-oh, an error occurred!
       });
-    console.log('log at end of function', this.cloudFiles);
+    this.logger.debug('log at end of function', this.cloudFiles);
     return this.cloudFiles;
   }
 

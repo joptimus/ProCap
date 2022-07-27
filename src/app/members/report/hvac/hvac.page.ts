@@ -8,6 +8,7 @@ import {
   Photo,
 } from '@capacitor/camera';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
+import { Logger } from 'src/app/services/logger.service';
 
 const IMAGE_DIR = 'stored-images';
 
@@ -36,7 +37,8 @@ export class HvacPage implements OnInit {
   constructor(
     private data: DataService,
     private platform: Platform,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private logger: Logger
   ) {}
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class HvacPage implements OnInit {
 
   log() {
     this.data.hvacData = this.hvacData;
-    console.log(this.data.hvacData);
+    this.logger.debug(this.data.hvacData);
   }
   async loadFiles() {
     this.images = [];
@@ -127,7 +129,7 @@ export class HvacPage implements OnInit {
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
     });
-    console.log(image);
+    this.logger.debug(image);
     if (image) {
       this.saveDirtyImage(image);
     }
@@ -135,7 +137,7 @@ export class HvacPage implements OnInit {
 
   async saveDirtyImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
+    this.logger.debug(base64Data);
 
     const fileName = 'HVAC-Dirty' + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -143,7 +145,7 @@ export class HvacPage implements OnInit {
       data: base64Data,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    this.logger.debug('saved: ', savedFile);
     this.loadFiles();
   }
 
@@ -155,7 +157,7 @@ export class HvacPage implements OnInit {
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
     });
-    console.log(image);
+    this.logger.debug(image);
     if (image) {
       this.saveCleanImage(image);
     }
@@ -163,7 +165,7 @@ export class HvacPage implements OnInit {
 
   async saveCleanImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
+    this.logger.debug(base64Data);
     this.calculateImageSize(base64Data);
     const fileName = 'HVAC-Clean' + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -171,7 +173,7 @@ export class HvacPage implements OnInit {
       data: base64Data,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    this.logger.debug('saved: ', savedFile);
     this.calculateImageSize(base64Data);
     this.loadFiles();
   }
@@ -223,11 +225,11 @@ export class HvacPage implements OnInit {
     }
 
     base64StringLength = base64String.length;
-    console.log(base64StringLength);
+    this.logger.debug(base64StringLength);
     inBytes = (base64StringLength / 4) * 3 - padding;
-    console.log(inBytes);
+    this.logger.debug(inBytes);
     this.kbytes = inBytes / 1000;
-    console.log(this.kbytes);
+    this.logger.debug(this.kbytes);
     return this.kbytes;
   }
 }

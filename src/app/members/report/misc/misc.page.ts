@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
+import { Logger } from 'src/app/services/logger.service';
 
 const IMAGE_DIR = 'stored-images';
 
@@ -26,7 +27,8 @@ export class MiscPage implements OnInit {
 
     private data: DataService,
     private platform: Platform,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private logger: Logger
     
     ) { }
 
@@ -100,7 +102,7 @@ export class MiscPage implements OnInit {
       resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
     });
-    console.log(image);
+    this.logger.debug(image);
     if (image) {
       this.saveImage(image);
     }
@@ -108,7 +110,7 @@ export class MiscPage implements OnInit {
 
   async saveImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
-    console.log(base64Data);
+    this.logger.debug(base64Data);
 
     const fileName = 'MISC' + new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -116,7 +118,7 @@ export class MiscPage implements OnInit {
       data: base64Data,
       directory: Directory.Data,
     });
-    console.log('saved: ', savedFile);
+    this.logger.debug('saved: ', savedFile);
     this.loadFiles();
   }
 
@@ -156,6 +158,6 @@ export class MiscPage implements OnInit {
 
   log(){
     this.data.miscData = this.miscData;
-    console.log('Updated miscData', this.miscData)
+    this.logger.debug('Updated miscData', this.miscData)
   }
 }

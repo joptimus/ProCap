@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { DbDataService, Client } from 'src/app/services/db-data.service';
+import { Logger } from 'src/app/services/logger.service';
 
 
 @Component({
@@ -31,10 +32,11 @@ export class SelectPage implements OnInit {
   constructor(
     private route: Router,
     private data: DataService,
-    private clientService: DbDataService
+    private clientService: DbDataService,
+    private logger: Logger
   ) {
     this.clientService.getClients().subscribe((res) => {
-      console.log('getClients Service :', res);
+      this.logger.debug('getClients Service :', res);
       this.clients = res;
     });
   }
@@ -44,7 +46,7 @@ export class SelectPage implements OnInit {
     this.clientFullName = this.data.customer;
     this.clientLast = this.data.clientLast;
 
-    //console.log('Address?', this.client);
+    //this.logger.debug('Address?', this.client);
   }
 
   next() {
@@ -53,48 +55,48 @@ export class SelectPage implements OnInit {
 
   boatSelect(event) {
     this.boatSelected = true;
-    console.log('boatSelect event: ',event);
+    this.logger.debug('boatSelect event: ',event);
   }
   
   selected(event) {
 
-    console.log('selected event 1st step: ', event);
+    this.logger.debug('selected event 1st step: ', event);
 
     this.clientSelected = true;
     this.boatSelected = false;
     this.data.vessel = event.detail.value.vesselName;
-    console.log('data.vessel : ', this.data.vessel);
+    this.logger.debug('data.vessel : ', this.data.vessel);
 
     this.clientLast = event.detail.value.lName;
     this.data.clientLast = event.detail.value.lName;
-    console.log('client Last name : ', this.clientLast);
+    this.logger.debug('client Last name : ', this.clientLast);
 
     this.engineCount = event.detail.value.noEngines;
     this.data.engineCount = event.detail.value.noEngines;
-    console.log('number of engines : ', this.engineCount);
+    this.logger.debug('number of engines : ', this.engineCount);
 
-    console.log('this is selectedOption : ', this.selectedOption);
+    this.logger.debug('this is selectedOption : ', this.selectedOption);
 
     this.clientFullName = event.detail.value.fullName;
     this.data.customer = event.detail.value.fullName;
-    console.log('clientFullName :', this.clientFullName);
+    this.logger.debug('clientFullName :', this.clientFullName);
 
     if(event.detail.value.vesselPhoto == '') { 
       this.data.boatImg[0].isNull = true;
-      console.log('The Boat Img is Null value set to true');
+      this.logger.debug('The Boat Img is Null value set to true');
     } else {   
       this.data.boatImg[0].value = event.detail.value.vesselPhoto;
       this.data.boatImg[0].isNull = false;
-      //console.log('data service boatImg = ', this.data.boatImg);
-      //console.log('event detail  = ', event.detail.value.vesselPhoto);
+      //this.logger.debug('data service boatImg = ', this.data.boatImg);
+      //this.logger.debug('event detail  = ', event.detail.value.vesselPhoto);
      };
   }
 
   boatPicked(event){
     this.boatSelected = true;
-    console.log('the event : ', event);
+    this.logger.debug('the event : ', event);
     this.data.vessel = event.detail.value.vesselName;
-    console.log('data.vessel : ', this.data.vessel);
+    this.logger.debug('data.vessel : ', this.data.vessel);
   }
 
   updateValues() {
@@ -102,10 +104,10 @@ export class SelectPage implements OnInit {
   }
 
   selectedVessel(value): void {
-    console.log('is vesselSelected : ', value);
+    this.logger.debug('is vesselSelected : ', value);
     // const bools = value.target.value;
     this.data.vessel = value.target.value;
-    console.log('data.vessel : ', value.target.value);
+    this.logger.debug('data.vessel : ', value.target.value);
     // if (bools == 'What the F?') {
     //   this.vesselSelected = true;
     //   this.skidSelected = false;
