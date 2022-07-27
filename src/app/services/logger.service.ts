@@ -49,9 +49,11 @@ export class Logger {
   }
 
   private log(func: Function, level: LogLevel, objects: any[]) {
-    const env = environment.production || 'development';
+    const env = environment.production;
     if (env !== true || (env === true && level === LogLevel.Error)) {
       func.apply(console, objects);
+      
+    } else if ((env === true && level === LogLevel.Error)) {
       this.ngx.error(objects);
     }
   }

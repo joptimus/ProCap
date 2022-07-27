@@ -267,7 +267,7 @@ export class MainPage implements OnInit {
   }
   catch(e) {
     this.presentAlert('Failure', 'Upload PDF Failed', 'There was an error uploading the document. Error : ' + e);
-    this.logger.debug('Upload file errored out: ', e);
+    this.logger.error('Upload file errored out: ', e);
     return null;
   }
 
@@ -292,29 +292,7 @@ export class MainPage implements OnInit {
       });
   }
 
-  loadLogo() {
-    this.http
-      .get('./assets/img/proCapLogo-min.png', { responseType: 'blob' })
-      .subscribe((res) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.logoData = reader.result;
-        };
-        reader.readAsDataURL(res);
-      });
-  }
 
-  loadComingSoon() {
-    this.http
-      .get('./assets/img/coming-soon.png', { responseType: 'blob' })
-      .subscribe((res) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.comingSoon = reader.result;
-        };
-        reader.readAsDataURL(res);
-      });
-  }
 
   updateRemarks(event) {
     this.engineComments = event.target.value;
@@ -379,11 +357,35 @@ export class MainPage implements OnInit {
 
   // #region Images Code
 
+  loadLogo() {
+    this.http
+      .get('./assets/img/proCapLogo-min.png', { responseType: 'blob' })
+      .subscribe((res) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.logoData = reader.result;
+        };
+        reader.readAsDataURL(res);
+      });
+  }
+
+  loadComingSoon() {
+    this.http
+      .get('./assets/img/coming-soon.png', { responseType: 'blob' })
+      .subscribe((res) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.comingSoon = reader.result;
+        };
+        reader.readAsDataURL(res);
+      });
+  }
+
   buttonId(event) {
     this.logger.debug(event);
     this.logger.debug('target id is: ', event.target.id);
     if (this.type == '') {
-      console.warn('TARGET ID IS EMPTY');
+      this.logger.warn('TARGET ID IS EMPTY');
     } else {
       this.type = event.target.id;
     }
@@ -446,7 +448,7 @@ export class MainPage implements OnInit {
       },
       (error: any) => {
         loading.dismiss();
-        console.error(error);
+        this.logger.error('Compression Error: ', error);
         this.presentAlert(
           'Compression Error',
           'Error compressing Image',
@@ -738,7 +740,7 @@ export class MainPage implements OnInit {
           }
         } catch (e) {
           this.downloadPdfError(e);
-          console.error('Unable to write file', e);
+          this.logger.error('Unable to write file', e);
         }
       });
     } else {

@@ -75,7 +75,10 @@ export class DbDataService {
 
   // #region Client Services
   getClients(): Observable<Client[]> {
-    const notesRef = query(collection(this.firestore, 'clients'), orderBy("lName"));
+    const notesRef = query(
+      collection(this.firestore, 'clients'),
+      orderBy('lName')
+    );
     return collectionData(notesRef, { idField: 'id' }) as Observable<Client[]>;
   }
 
@@ -157,7 +160,7 @@ export class DbDataService {
 
       return true;
     } catch (error) {
-      this.logger.debug('pdf Upload error: ', error);
+      this.logger.error('pdf Upload error: ', error);
       return null;
     }
   }
@@ -169,11 +172,11 @@ export class DbDataService {
     const storageRef = ref(this.storage, path);
 
     uploadBytes(storageRef, pdf.fileName).then((snapshot) => {
-      this.logger.debug('Uploaded a blob or file!');
+      this.logger.debug('Uploaded a !');
     });
   }
   catch(error) {
-    this.logger.debug('pdf Upload error: ', error);
+    this.logger.error('pdf Upload error: ', error);
     return null;
   }
 
@@ -194,8 +197,8 @@ export class DbDataService {
         // All the prefixes under listRef.
         // You may call listAll() recursively on them.
 
-       // this.logger.debug('Shashike this is listRef Response', result);
-       // this.logger.debug('Shashike this is folderRef Response', listRef);
+        // this.logger.debug('Shashike this is listRef Response', result);
+        // this.logger.debug('Shashike this is folderRef Response', listRef);
         this.folders.push({
           name: listRef.bucket,
           full: listRef.fullPath,
@@ -257,6 +260,7 @@ export class DbDataService {
         img.setAttribute('src', url);
       })
       .catch((error) => {
+        this.logger.error('error in getDownloadURL :', error);
         // Handle any errors
       });
   }
@@ -274,26 +278,28 @@ export class DbDataService {
       result.items.forEach(async (listRef) => {
         // All the prefixes under listRef.
         // You may call listAll() recursively on them.
-        getMetadata(listRef).then(async (metadata) => {
-    // Metadata now contains the metadata for 'images/forest.jpg'
-    pdfSize = (metadata.size * .95) / 1000000;
-    this.logger.debug('metadata size: ', metadata.size);
-    this.logger.debug('converted size', pdfSize);
-    this.pdfReports.push({
-      name: listRef.name,
-      full: listRef.fullPath,
-      parent: listRef.parent,
-      storage: listRef.storage,
-      timeCreated: metadata.timeCreated,
-      size: pdfSize,
-      url: await getDownloadURL(listRef),
-    });
-  })
-  .catch((error) => {
-    // Uh-oh, an error occurred!
-  });
-        this.logger.debug('Shashike this is getReportDetails Response', result);
-        this.logger.debug('Shashike this is getReportDetails Response', listRef);
+        getMetadata(listRef)
+          .then(async (metadata) => {
+            // Metadata now contains the metadata for 'images/forest.jpg'
+            pdfSize = (metadata.size * 0.95) / 1000000;
+            this.logger.debug('metadata size: ', metadata.size);
+            this.logger.debug('converted size', pdfSize);
+            this.pdfReports.push({
+              name: listRef.name,
+              full: listRef.fullPath,
+              parent: listRef.parent,
+              storage: listRef.storage,
+              timeCreated: metadata.timeCreated,
+              size: pdfSize,
+              url: await getDownloadURL(listRef),
+            });
+          })
+          .catch((error) => {
+            // Uh-oh, an error occurred!
+            this.logger.error('Error in getReportDetails : ', error);
+          });
+        this.logger.debug('getReportDetails result ', result);
+        this.logger.debug('getReportDetails listRef', listRef);
         // this.pdfReports.push({
         //   name: listRef.name,
         //   full: listRef.fullPath,
@@ -319,15 +325,15 @@ export class DbDataService {
         res.prefixes.forEach((folderRef) => {
           // All the prefixes under listRef.
           // You may call listAll() recursively on them.
-          this.logger.debug('Shashike this is listRef Response', res);
-          this.logger.debug('Shashike this is folderRef Response', folderRef);
+          this.logger.debug('getInspectedFiles listRef Response', res);
+          this.logger.debug('getInspectedFiles folderRef Response', folderRef);
           this.cloudFiles.push({
             name: folderRef.name,
             full: folderRef.fullPath,
           });
         });
         res.items.forEach((itemRef) => {
-          this.logger.debug('Shashike this is itemRef Response ', itemRef);
+          this.logger.debug('getInspectedFiles itemRef Response ', itemRef);
           // All the items under listRef.
 
           this.cloudFiles.push({
@@ -338,7 +344,7 @@ export class DbDataService {
         this.logger.debug('cloudfiles', this.cloudFiles);
       })
       .catch((error) => {
-        this.logger.debug('error : ', error);
+        this.logger.error('error : ', error);
         // Uh-oh, an error occurred!
       });
     this.logger.debug('log at end of function', this.cloudFiles);
