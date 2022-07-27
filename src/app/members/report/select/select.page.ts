@@ -41,19 +41,32 @@ export class SelectPage implements OnInit {
   }
 
   async ngOnInit() {
-    const start = await this.loadingController.create({ message: 'Loading Clients', duration: 6000 });
-    await start.present();
-    this.clientService.getClients().subscribe((res) => {
-     // this.logger.debug('getClients Service :', res);
-      this.clients = res;
-    });
- 
+
     this.client = this.data.clients;
     this.clientFullName = this.data.customer;
     this.clientLast = this.data.clientLast;
     //this.logger.debug('Address?', this.client);
+    this.logger.debug('this.data.clientList Length is: ', this.data.clientList.length);
+    if (this.data.clientList.length === 0) {
+      this.getClients();
+    } else {
+      this.clients = this.data.clientList;
+    }
+    
+    // start.dismiss();
+  }
 
-    start.dismiss();
+  async getClients (){
+
+    this.logger.info('Local clientList was null so made a server call');
+    const start = await this.loadingController.create({ message: 'Loading Clients.....' });
+    await start.present();
+    this.clientService.getClients().subscribe((res) => {
+     // this.logger.debug('getClients Service :', res);
+      this.clients = res;
+      start.dismiss();
+    });
+ 
   }
 
   next() {
