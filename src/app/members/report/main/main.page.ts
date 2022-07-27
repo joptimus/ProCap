@@ -395,7 +395,7 @@ export class MainPage implements OnInit {
 
   async selectImage(value) {
     this.buttonId(value);
-    
+
     try {
       const start = await this.loadingController.create({ message: 'Selecting Photo...', duration: 6000 });
       await start.present();
@@ -413,8 +413,11 @@ export class MainPage implements OnInit {
         this.compressFile(image.dataUrl);
         loading.dismiss();
       }
+      loading.dismiss();
     } catch (e) {
+      this.loadingController.dismiss();
       this.logger.warn('There was an error: ', e);
+      this.presentAlert('Error', '', 'There was an error selecting image. ' + e);
     }
   }
 
