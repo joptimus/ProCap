@@ -17,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { DbDataService } from 'src/app/services/db-data.service';
 import { DataUrl, DOC_ORIENTATION, NgxImageCompressService, UploadResponse } from 'ngx-image-compress';
 import { Logger } from 'src/app/services/logger.service';
+import { catchError } from 'rxjs';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -394,24 +395,26 @@ export class MainPage implements OnInit {
 
   async selectImage(value) {
     this.buttonId(value);
-    const start = await this.loadingController.create({ message: 'Selecting Photo...', duration: 6000});
-    await start.present();
-
-    const image = await Camera.getPhoto({
-      //quality: 50,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos,
-    });
-
-    start.dismiss();
-    const loading = await this.loadingController.create({ message: 'Sending photo for compression...',});
-    await loading.present();
-
-    if (image) {
-      loading.dismiss();
-      this.compressFile(image.dataUrl);
-      loading.dismiss();
+    
+    try {
+      const start = await this.loadingController.create({ message: 'Selecting Photo...', duration: 6000 });
+      await start.present();
+      const image = await Camera.getPhoto({
+        //quality: 50,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Photos,
+      });
+      start.dismiss();
+      const loading = await this.loadingController.create({ message: 'Sending photo for compression...', });
+      await loading.present();
+      if (image) {
+        loading.dismiss();
+        this.compressFile(image.dataUrl);
+        loading.dismiss();
+      }
+    } catch (e) {
+      this.logger.warn('There was an error: ', e);
     }
   }
 

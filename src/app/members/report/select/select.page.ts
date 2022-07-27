@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { DbDataService, Client } from 'src/app/services/db-data.service';
 import { Logger } from 'src/app/services/logger.service';
@@ -33,20 +34,26 @@ export class SelectPage implements OnInit {
     private route: Router,
     private data: DataService,
     private clientService: DbDataService,
+    private loadingController: LoadingController,
     private logger: Logger
   ) {
-    this.clientService.getClients().subscribe((res) => {
-      this.logger.debug('getClients Service :', res);
-      this.clients = res;
-    });
+
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const start = await this.loadingController.create({ message: 'Loading Clients', duration: 6000 });
+    await start.present();
+    this.clientService.getClients().subscribe((res) => {
+     // this.logger.debug('getClients Service :', res);
+      this.clients = res;
+    });
+ 
     this.client = this.data.clients;
     this.clientFullName = this.data.customer;
     this.clientLast = this.data.clientLast;
-
     //this.logger.debug('Address?', this.client);
+
+    start.dismiss();
   }
 
   next() {
