@@ -394,7 +394,7 @@ export class MainPage implements OnInit {
 
   async selectImage(value) {
     this.buttonId(value);
-    const start = await this.loadingController.create({ message: 'Selecting Photo...',});
+    const start = await this.loadingController.create({ message: 'Selecting Photo...', duration: 6000});
     await start.present();
 
     const image = await Camera.getPhoto({
