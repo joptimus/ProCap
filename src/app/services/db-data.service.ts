@@ -225,7 +225,7 @@ async updateProgress(progressBar) {
     await loading.present();
 
   } else {
-  const loading = await this.loadingController.create({ message: 'Saving to Database...' + progressBar + '%', duration: 4000});
+  const loading = await this.loadingController.create({ message: 'Saving to Database...' + progressBar + '%', duration: 2000});
   await loading.present();
   }
 }
