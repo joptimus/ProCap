@@ -66,6 +66,10 @@ export class MainPage implements OnInit {
 
   clientBoatImg;
 
+
+  folderContent = [];
+  currentFolder = '';
+  copyFile = null;
   // #endregion End of Report Variables
 
   image: any;
@@ -95,6 +99,7 @@ export class MainPage implements OnInit {
   headToliet = [];
   engineComments;
   pdfObj = null;
+  directoryFiles = [];
   //#endregion
 
   // Local Asset Pics
@@ -213,12 +218,14 @@ export class MainPage implements OnInit {
   }
 
   async checkAccount() {
+    this.logger.debug('Get Email Clients', this.emailComposer.getClients());
+
     this.hasAccount = await this.emailComposer.hasAccount();
     this.logger.debug('Does this have an account? : ', this.hasAccount);
   }
   async openEmail() {
     const email: EmailComposerOptions = {
-      to: this.emailResponse[0].value,
+      to: this.emailResponse[1].value,
       cc: '',
       bcc: 'jlewan27@gmail.com',
       attachments: [`${this.pdfData}`, 'application/pdf'],
@@ -255,7 +262,7 @@ export class MainPage implements OnInit {
     this.logger.debug('What year did we get?', curr_year);
     var today = months[curr_month];
     //this.logger.debug('did we get the base64 in function?: ', pdf);
-    this.dbData.addBlobPdfToStorage({
+    this.dbData.addBlob({
       fileName: pdf,
       reportId: this.reportFinal,
       clientName: this.clientLastName,
@@ -322,7 +329,7 @@ export class MainPage implements OnInit {
       this.deleteAllPictures();
       this.engineComments = [''];
       await loading.dismiss();
-      this.showSuccess();
+     // this.showSuccess();
     }
   }
 
@@ -724,6 +731,22 @@ export class MainPage implements OnInit {
     await alert.present();
   }
 
+  async getDirector() {
+    const APP_DIRECTORY = Directory.Documents;
+    const folderContent = await Filesystem.readdir({
+      directory: APP_DIRECTORY,
+      path: this.currentFolder
+    });
+    this.folderContent = folderContent.files.map(file => {
+      return {
+        name: file,
+        //isFile: file.includes('.')
+      }
+    });
+    this.logger.debug('this.folderContent: ', this.folderContent);
+    this.logger.debug('current folder: ', this.currentFolder);
+
+  }
   downloadPdf() {
     if (this.platform.is('cordova')) {
       this.pdfObj.getBase64(async (data) => {

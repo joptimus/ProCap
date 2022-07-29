@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, addDoc, deleteDoc, updateDoc, setDoc, orderBy, query } from '@angular/fire/firestore';
-import { getDownloadURL, getStorage, listAll, ref, Storage, uploadBytes, uploadString, getMetadata } from '@angular/fire/storage';
+import { getDownloadURL, getStorage, listAll, ref, Storage, uploadBytes, uploadString, getMetadata, uploadBytesResumable } from '@angular/fire/storage';
 import { Auth } from '@angular/fire/auth';
 import { Photo } from '@capacitor/camera';
 import { Observable } from 'rxjs';
 import { DataService } from './data.service';
 import { arrayBuffer } from 'stream/consumers';
 import { Logger } from './logger.service';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 // #region Interfaces //
 export interface Client {
@@ -69,9 +71,44 @@ export class DbDataService {
     private firestore: Firestore,
     private storage: Storage,
     private data: DataService,
+    private route: Router,
     private auth: Auth,
+    private alertController: AlertController,
+    private loadingController: LoadingController,
     private logger: Logger
   ) {}
+
+  redirectHome() {
+    this.route.navigate(['members', 'landing']);
+  }
+  async presentAlert(head, sub, msg) {
+    const alert = await this.alertController.create({
+      header: head,
+      subHeader: sub,
+      message: msg,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+  async showSuccess() {
+    const alert = await this.alertController.create({
+      header: 'Success',
+      subHeader: 'Inspection Report Filed',
+      message:
+        'Your inspection report has been submitted and uploaded successfully',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.redirectHome();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
 
   // #region Client Services
   getClients(): Observable<Client[]> {
@@ -170,15 +207,88 @@ export class DbDataService {
 
     const path = `${pdf.month}/${pdf.boatId}/${pdf.reportId}`;
     const storageRef = ref(this.storage, path);
-
+ 
+    try {
     uploadBytes(storageRef, pdf.fileName).then((snapshot) => {
-      this.logger.debug('Uploaded a !');
+      this.logger.debug('Uploaded file: ', snapshot);
     });
-  }
-  catch(error) {
+  } catch(error) {
     this.logger.error('pdf Upload error: ', error);
+    this.presentAlert('Error', 'Error in saving PDF', error);
     return null;
   }
+}
+async updateProgress(progressBar) {
+  if(progressBar === 100) {
+    
+    const loading = await this.loadingController.create({ message: 'Saving to Database...' + progressBar + '%', duration: 3000});
+    await loading.present();
+
+  } else {
+  const loading = await this.loadingController.create({ message: 'Saving to Database...' + progressBar + '%', duration: 4000});
+  await loading.present();
+  }
+}
+
+async addBlob(pdf: PdfBlob) {
+  let progressBar;
+  
+  const path = `${pdf.month}/${pdf.boatId}/${pdf.reportId}`;
+  const storageRef = ref(this.storage, path);
+  const uploadTask = uploadBytesResumable(storageRef, pdf.fileName);
+
+// Listen for state changes, errors, and completion of the upload.
+uploadTask.on('state_changed',
+  (snapshot) => {
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    progressBar = progress;
+    this.updateProgress(progress);
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case 'paused':
+        console.log('Upload is paused');
+        break;
+      case 'running':
+        console.log('Upload is running');
+        break;
+    }
+  }, 
+  (error) => {
+    // A full list of error codes is available at
+    // https://firebase.google.com/docs/storage/web/handle-errors
+    switch (error.code) {
+      case 'storage/unauthorized':
+        // User doesn't have permission to access the object
+        break;
+      case 'storage/canceled':
+        // User canceled the upload
+        break;
+
+      // ...
+
+      case 'storage/unknown':
+        // Unknown error occurred, inspect error.serverResponse
+        break;
+    }
+    this.logger.error('There was an upload error, erro code : ', error.code);
+  }, 
+  () => {
+    // Upload completed successfully, now we can get the download URL
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      console.log('File available at', downloadURL);
+    });
+    // loading.dismiss();
+    this.showSuccess();
+  }
+);
+
+
+
+
+
+
+}
 
   // #endregion
 
