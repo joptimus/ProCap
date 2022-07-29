@@ -112,6 +112,7 @@ export class DataService {
   ];
 
   public cloudFiles = [ ];
+  public clientList = [];
   public customer = [
     { value: '' },
   ];

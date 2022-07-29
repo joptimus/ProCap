@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
 import { Logger } from 'src/app/services/logger.service';
+import { DbDataService } from 'src/app/services/db-data.service';
+import { LoadingController } from '@ionic/angular';
 //import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -16,11 +18,35 @@ export class LandingPage implements OnInit {
   currentApplicationVersion;
   userDisplay;
   canView = false;
-  constructor(private route: Router, private authService: AuthenticationService, private localData: DataService, private logger: Logger) { }
+  constructor(
+    private route: Router, 
+    private authService: AuthenticationService, 
+    private localData: DataService, 
+    private clientService: DbDataService,
+    private loadingController: LoadingController,
+    private logger: Logger) { }
 
   ngOnInit() {
     this.currentApplicationVersion = environment.appVersion;   
     this.logger.warn('this logger service worked', this.currentApplicationVersion);
+    this.loadClients();
+
+  }
+
+  async loadClients() {
+
+    // * Temporary loading of Client List
+    // * Need to rework calls
+
+    const start = await this.loadingController.create({ message: 'Loading Clients...' });
+    await start.present();
+    await this.clientService.getClients().subscribe((res) => {
+      // this.logger.debug('getClients Service :', res);
+       this.localData.clientList = res;
+       this.logger.debug('triggered localData client list: ', this.localData.clientList);
+       start.dismiss();
+     });
+     
   }
 
   startReport() {
