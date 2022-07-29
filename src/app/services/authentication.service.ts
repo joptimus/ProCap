@@ -132,7 +132,7 @@ export class AuthenticationService {
         this.presentAlert(
           'Success',
           'Password Reset',
-          'An email has been sent to the user. Please inform them to follow the link to reset thier password'
+          'An email has been sent to ' + email + '. Please inform them to follow the link to reset thier password'
         );
       })
       .catch((error) => {
